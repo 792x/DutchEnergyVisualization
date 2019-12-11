@@ -2,9 +2,9 @@
 git clone
 ```
 
-##Server
+## Server
 
-###Installation
+### Installation
 ```
 cd dutch-energy-server
 ```
@@ -21,7 +21,7 @@ Make sure the 'postgres' user can access this folder.
 DATAPATH=/tmp/data/
 ```
 
-###Running
+### Running
 Running the server for the first time and importing the files, this also drops the tables (read: empties database).
 ```
 npm run start-overwrite
@@ -46,9 +46,9 @@ The server expects the following postgres configuration but can be changed in ``
 ```
 
 
-##Webapp
+## Webapp
 
-###Installation
+### Installation
 ```
 cd dutch-energy-webapp
 ```
@@ -57,7 +57,7 @@ cd dutch-energy-webapp
 npm install
 ```
 
-###Running
+### Running
 ```
 npm start
 ```
