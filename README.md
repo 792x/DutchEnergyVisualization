@@ -1,5 +1,11 @@
+## Clone repo
+
 ```
-git clone
+git clone https://github.com/caspertjuh/DutchEnergyVisualization.git
+```
+
+```
+cd DutchEnergyVisualization
 ```
 
 ## Server
