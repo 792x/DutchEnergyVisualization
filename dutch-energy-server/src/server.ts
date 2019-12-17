@@ -3,6 +3,7 @@ import { createServer } from 'http';
 import database from "./database";
 import {create_database} from "./database";
 import {loadData} from "./data"
+import * as energyRoutingFunctions from './API/EnergyRoutingFunctions';
 
 const cors = require('cors');
 
@@ -26,6 +27,12 @@ server.use(cors(corsOptions));
 server.use(express.json());
 
 server.get('/', (req, res) => res.status(200).send('server running yooo'));
+
+
+//Example api endpoint
+server.get('/annualcityconsumption',
+    energyRoutingFunctions.getAnnualCityConsumption
+);
 
 server.get('/message', (req, res) => {
     res.status(200).send({message: "yooo"})
