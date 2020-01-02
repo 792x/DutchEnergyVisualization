@@ -1,14 +1,12 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
-import ExampleRequestComponent from '../src/components/ExampleRequestComponent'
+// import ExampleRequestComponent from '../src/components/ExampleRequestComponent'
+import Main from '../src/components/Main';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <ExampleRequestComponent />
-      </header>
+        <Main />
     </div>
   );
 }
