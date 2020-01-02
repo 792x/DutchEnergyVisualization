@@ -48,10 +48,10 @@ class NeighbourhoodList extends Component {
                 <Grid container direction="column" justify="flex-start" style={{height: '100%'}}>
                 <Grid item style={{height:'50px'}}>
                         <Grid container direction="row" justify="space-between" style={{ width: '100%'}} >
-                            <Grid item ><Typography variant="h6">Neighbourhoods</Typography>
+                            <Grid item style={{paddingTop: '10px', paddingLeft: '10px'}}><Typography variant="h6">Neighbourhoods</Typography>
                             </Grid>
                             <Grid item >
-                                <TextField size="small" id="outlined-basic" label="Search" variant="outlined" onChange={this.handleSearch}/>
+                                <TextField size="small" id="outlined-basic" label="Search" variant="outlined" style={{width: '140px'}} onChange={this.handleSearch}/>
                             </Grid>
                         </Grid>
                     </Grid>
