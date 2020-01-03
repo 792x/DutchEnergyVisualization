@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles, createMuiTheme } from '@material-ui/core/styles';
 import { Grid, Paper } from '@material-ui/core';
+import { ThemeProvider } from '@material-ui/styles';
 import NeighbourhoodList from '../components/NeighbourhoodList';
 import Map from '../components/Map'
 import Settings from '../components/Settings';
@@ -20,11 +21,25 @@ const styles = theme => ({
     },
 });
 
+const theme = createMuiTheme({
+    palette: {
+      primary: {
+        main: '#FF9100'
+      },
+      secondary: {
+        main: '#B3B9C4'
+      }
+    },
+  });
+
 class Main extends Component {
     render() {
         const { classes } = this.props;
         return (
+            <ThemeProvider theme={theme}>
             <div className={classes.root}>
+
+                
                     <Grid container style={{height: '100%'}} direction="column" justify="space-between">
                         <Grid item style={{display: 'flex'}} xs={12}>
                             <Grid container direciton="column" justify="space-between">
@@ -52,6 +67,7 @@ class Main extends Component {
                         </Grid>
                     </Grid>
             </div>
+            </ThemeProvider>
         )
     }
 }

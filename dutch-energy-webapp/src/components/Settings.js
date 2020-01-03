@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import { Grid, Switch, Slider, Typography, FormControl, Select, InputLabel, FormLabel, Radio, RadioGroup, FormControlLabel } from '@material-ui/core';
+import { Grid, Switch, Button, Slider, Typography, FormControl, Select, InputLabel, FormLabel, Radio, RadioGroup, FormControlLabel } from '@material-ui/core';
 
 
 const styles = theme => ({
@@ -17,26 +17,6 @@ const styles = theme => ({
     },
 });
 
-
-const marks = [
-    {
-        value: 0,
-        label: '1',
-    },
-    {
-        value: 10,
-        label: '2',
-    },
-    {
-        value: 50,
-        label: '5',
-    },
-    {
-        value: 100,
-        label: 'All',
-    },
-];
-
 class Settings extends Component {
     state = {
         energySource: 'electricity',
@@ -48,9 +28,7 @@ class Settings extends Component {
     handleToggle = (e) => {
         this.setState({ energySource: e.target.value })
     }
-    valueLabelFormat = (value) => {
-        return marks.findIndex(mark => mark.value === value) + 1;
-    }
+
 
     render() {
         const { classes } = this.props;
@@ -60,11 +38,10 @@ class Settings extends Component {
                     <Grid item xs={12}>
                         <Typography align="left" variant="h6">Map Settings</Typography>
                     </Grid>
-                    <Grid item xs={12} style={{ paddingLeft: '10px', paddingRight: '10px', paddingTop: '20px' }}>
-                        <FormLabel component="legend">Energy Source</FormLabel>
+                    <Grid item xs={12} style={{ paddingTop: '10px' }}>
                         <FormControl className={classes.formControl} fullWidth>
                             <InputLabel htmlFor="outlined-age-native-simple">
-                                Select
+                            Energy Source
                              </InputLabel>
                             <Select
                                 native
@@ -83,11 +60,10 @@ class Settings extends Component {
                             </Select>
                         </FormControl>
                     </Grid>
-                    <Grid item xs={12} style={{ paddingLeft: '10px', paddingRight: '10px', paddingTop: '20px' }}>
-                        <FormLabel component="legend">Timeframe</FormLabel>
+                    <Grid item xs={12} style={{ paddingTop: '10px' }}>
                         <FormControl className={classes.formControl} fullWidth>
                             <InputLabel htmlFor="outlined-age-native-simple">
-                                Select
+                            Timeframe
                              </InputLabel>
                             <Select
                                 native
@@ -117,11 +93,10 @@ class Settings extends Component {
                             </Select>
                         </FormControl>
                     </Grid>
-                    <Grid item xs={12} style={{ paddingLeft: '10px', paddingRight: '10px', paddingTop: '30px' }}>
-                        <FormLabel component="legend">Map setting</FormLabel>
+                    <Grid item xs={12} style={{ paddingTop: '10px' }}>
                         <FormControl className={classes.formControl} fullWidth>
                             <InputLabel htmlFor="outlined-age-native-simple">
-                                Select
+                            Visualization
                              </InputLabel>
                             <Select
                                 native
@@ -143,11 +118,10 @@ class Settings extends Component {
                             </Select>
                         </FormControl>
                     </Grid>
-                    <Grid item xs={12} style={{ paddingLeft: '10px', paddingRight: '10px', paddingTop: '30px' }}>
-                        <FormLabel component="legend">Color setting</FormLabel>
+                    <Grid item xs={12} style={{paddingTop: '10px' }}>
                         <FormControl className={classes.formControl} fullWidth>
                             <InputLabel htmlFor="outlined-age-native-simple">
-                                Select
+                            Color
                              </InputLabel>
                             <Select
                                 native
@@ -168,6 +142,20 @@ class Settings extends Component {
                                 <option value={6}>Delivery percentage</option>
                             </Select>
                         </FormControl>
+                    </Grid>
+                    <Grid item xs={12} style={{ paddingTop: '30px' }}>
+                        <Grid container direction="row" justify="flex-end">
+                            <Grid item>
+                                <Button variant="contained" color="secondary" style={{ marginRight: '10px' }}>
+                                    Reset
+                        </Button>
+                            </Grid>
+                            <Grid item>
+                                <Button variant="contained" color="primary">
+                                    Apply
+                        </Button>
+                            </Grid>
+                        </Grid>
                     </Grid>
                 </Grid>
             </div>

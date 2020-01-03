@@ -62,6 +62,24 @@ export default class Electricity extends Model<Electricity> {
     @Column (DataType.FLOAT)
     smartmeter_perc?: number;
 
+    @Column
+    buurt2019?: string;
+
+    @Column
+    wijk2019?: string;
+
+    @Column
+    gemeente2019?: string;
+
+    @Column
+    wijknaam2019?: string;
+
+    @Column
+    gemeentenaam2019?: string;
+
+    @Column
+    buurtnaam2019?: string;
+
     @CreatedAt
     @Column
     createdAt!: Date;

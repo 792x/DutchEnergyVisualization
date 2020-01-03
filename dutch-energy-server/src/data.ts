@@ -15,7 +15,7 @@ function readdirAsync(path: any) {
     });
 }
 
-async function loadFileInDatabase(file: any) {
+async function loadFileInDatabase(file: any, target:string) {
     const client = new Client( {
         user: settings.username,
         database: 'dutch_energy',
@@ -25,7 +25,7 @@ async function loadFileInDatabase(file: any) {
     await client.connect();
     console.log('Importing.. ' + file);
     try {
-        await client.query(`copy public."Electricity" (net_manager, purchase_area, street, zipcode_from, zipcode_to, city, delivery_perc, num_connections, perc_of_active_connections, type_conn_perc, type_of_connection, annual_consume, annual_consume_lowtarif_perc, smartmeter_perc) FROM '${file}' DELIMITER ',' CSV HEADER QUOTE '\"' `);
+        await client.query(`copy public."${target}" (net_manager, purchase_area, street, zipcode_from, zipcode_to, city, delivery_perc, num_connections, perc_of_active_connections, type_conn_perc, type_of_connection, annual_consume, annual_consume_lowtarif_perc, smartmeter_perc, Buurt2019 ,Wijk2019 ,Gemeente2019 ,Wijknaam2019 ,Gemeentenaam2019, Buurtnaam2019) FROM '${file}' DELIMITER ',' CSV HEADER QUOTE '\"' `);
         console.log('Imported succesfully');
     } catch (err){
         console.log(`Something went wrong importing the file: ` + err);
@@ -35,12 +35,12 @@ async function loadFileInDatabase(file: any) {
 
 export async function loadData(){
     const datapath =  process.env.DATAPATH ? process.env.DATAPATH : '/tmp/data/';
-    const electricity_files: any = await readdirAsync(datapath + 'dutch_energy/Electricity');
+    const electricity_files: any = await readdirAsync(datapath + 'dutch_energy_extended/Electricity');
     for (const file of electricity_files){
-        await loadFileInDatabase(datapath + 'dutch_energy/Electricity/' + file)
+        await loadFileInDatabase(datapath + 'dutch_energy_extended/Electricity/' + file, 'Electricity');
     }
-    const gas_files: any = await readdirAsync(datapath + 'dutch_energy/Gas');
+    const gas_files: any = await readdirAsync(datapath + 'dutch_energy_extended/Gas');
     for (const file of gas_files){
-        await loadFileInDatabase(datapath + 'dutch_energy/Gas/' + file)
+        await loadFileInDatabase(datapath + 'dutch_energy_extended/Gas/' + file, 'Gas');
     }
 }

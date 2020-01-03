@@ -4,6 +4,7 @@ import 'leaflet/dist/leaflet.css';
 import { withStyles } from '@material-ui/core/styles';
 // import wijk_2019_rd from '../assets/wijk_2019_rd.json';
 const wijk_2019_wgs84 = require('../assets/wijk_2019_wgs84.json');
+const buurt_2019_wgs84 = require('../assets/buurt_2019_wgs84.json');
 
 const styles = theme => ({
 
@@ -28,9 +29,9 @@ class Map extends Component {
             maxZoom: 18,
             id: 'mapbox/light-v9'
         }).addTo(map);
-        console.log(wijk_2019_wgs84);
+        console.log(buurt_2019_wgs84);
 
-        L.geoJSON(wijk_2019_wgs84, {
+        L.geoJSON(buurt_2019_wgs84, {
             style: style,
             onEachFeature: this.onEachFeature
         }).addTo(map);
