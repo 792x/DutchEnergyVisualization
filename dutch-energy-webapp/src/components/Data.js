@@ -66,7 +66,6 @@ class Data extends Component {
                                                     id: 'outlined-age-native-simple',
                                                 }}
                                             >
-                                                <option value="" />
                                                 <option value={1}>2019</option>
                                                 <option value={2}>2018</option>
                                                 <option value={3}>2017</option>
