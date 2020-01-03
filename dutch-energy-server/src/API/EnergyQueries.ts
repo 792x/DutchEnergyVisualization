@@ -27,6 +27,7 @@ export async function getNationalElectricityData(scope:string, netmanager:string
     }
 
     //TODO: build response and return
+
 }
 
 export async function getNationalGasData(scope:string, netmanager:string, timeframe:number, data:number){
@@ -87,7 +88,7 @@ async function handleTimeframe(timeframe:number){
     // <option value={12}>Last three years</option>
     // <option value={13}>Last five years</option>
     // <option value={14}>All data</option>
-    
+
     console.log('input timeframe', timeframe);
 
     switch(+timeframe){
