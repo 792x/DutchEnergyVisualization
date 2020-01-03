@@ -21,6 +21,9 @@ export default class Electricity extends Model<Electricity> {
     id!: number;
 
     @Column
+    year!: number;
+
+    @Column
     net_manager!: string;
 
     @Column

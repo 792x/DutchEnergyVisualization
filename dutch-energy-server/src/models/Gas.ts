@@ -10,6 +10,9 @@ export default class Gas extends Model<Gas> {
     id!: number;
 
     @Column
+    year!: number;
+
+    @Column
     net_manager!: string;
 
     @Column

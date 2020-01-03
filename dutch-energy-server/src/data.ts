@@ -25,7 +25,8 @@ async function loadFileInDatabase(file: any, target:string) {
     await client.connect();
     console.log('Importing.. ' + file);
     try {
-        await client.query(`copy public."${target}" (net_manager, purchase_area, street, zipcode_from, zipcode_to, city, delivery_perc, num_connections, perc_of_active_connections, type_conn_perc, type_of_connection, annual_consume, annual_consume_lowtarif_perc, smartmeter_perc, Buurt2019 ,Wijk2019 ,Gemeente2019 ,Wijknaam2019 ,Gemeentenaam2019, Buurtnaam2019) FROM '${file}' DELIMITER ',' CSV HEADER QUOTE '\"' `);
+        await client.query(`copy public."${target}" (year, net_manager, purchase_area, street, zipcode_from, zipcode_to, city, delivery_perc, num_connections, perc_of_active_connections, type_conn_perc, type_of_connection, annual_consume, annual_consume_lowtarif_perc, smartmeter_perc, Buurt2019 ,Wijk2019 ,Gemeente2019 ,Wijknaam2019 ,Gemeentenaam2019, Buurtnaam2019) FROM '${file}' DELIMITER ',' CSV HEADER QUOTE '\"' `);
+        
         console.log('Imported succesfully');
     } catch (err){
         console.log(`Something went wrong importing the file: ` + err);
