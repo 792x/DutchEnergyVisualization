@@ -30,8 +30,8 @@ server.get('/', (req, res) => res.status(200).send('server running yooo'));
 
 
 //Example api endpoint
-server.get('/annualcityconsumption',
-    energyRoutingFunctions.getAnnualCityConsumption
+server.get('/national',
+    energyRoutingFunctions.getNationalData
 );
 
 server.get('/message', (req, res) => {
