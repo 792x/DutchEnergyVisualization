@@ -7,6 +7,7 @@ import ListView from './ListView';
 import Map from '../components/Map'
 import Settings from '../components/Settings';
 import Data from '../components/Data';
+import LoadingSpinner from './LoadingSpinner';
 
 
 const styles = theme => ({
@@ -42,33 +43,44 @@ class Main extends Component {
         mapTimeframeSetting : 1,
         mapDataSetting: 1,
         mapColorSetting: 1,
+        nationalData: null,
+        loadingNationalData: false,
     }
 
 
     fetchNationalData = async (scopeSetting, netManagerSetting, energySourceSetting, timeframeSetting, dataSetting) => {
         //fetch national data based on map settings
-        await fetch(`http://localhost:3001/national?scope=${scopeSetting}&netmanager=${netManagerSetting}&energysource=${energySourceSetting}&timeframe=${timeframeSetting}&data=${dataSetting}`)
-            .then(res => res.json())
-            //We should also check res.status to see if status code matches for error handling
-            .then(json => {
-                // let annualCityConsumption = json.annual_city_consumption;
-                // this.setState({result: annualCityConsumption, last_city: city, city: ''})
-                console.log(json);
-            });
+        const result =await fetch(`http://localhost:3001/national?scope=${scopeSetting}&netmanager=${netManagerSetting}&energysource=${energySourceSetting}&timeframe=${timeframeSetting}&data=${dataSetting}`)
+            .then(async (response) => {
+                if(response.status === 200){
+                    console.log('Succesful response');
+                    let json = await response.json();
+                    return JSON.stringify(json);
+                } else {
+                    console.log(response);
+                }
+
+                
+            })
+        return result;
     };
 
     fetchSpecificData = async (city) => {
         //todo, fetch data for specific buurt, wijk or gemeente
-        await fetch('http://localhost:3001/specific' + city)
-        .then(res => res.json())
-        //We should also check res.status to see if status code matches for error handling
-        .then(json => {
-            let annualCityConsumption = json.annual_city_consumption;
-            this.setState({result: annualCityConsumption, last_city: city, city: ''})
-        });
+        const result = await fetch('http://localhost:3001/specific' + city)
+        .then(async (response) => {
+            if(response.status === 200){
+                console.log('Succesful response');
+                return 0;
+            } else {
+                console.log(response);
+            }
+        })
+        return result;
     };
 
     applyMapSettings = (scopeSetting, netManagerSetting, energySourceSetting, timeframeSetting, dataSetting, colorSetting) => {
+        //TODO: fetch new nationalData + set loading true
         this.setState({
             mapScopeSetting: scopeSetting,
             mapNetManagerSetting: netManagerSetting,
@@ -80,7 +92,10 @@ class Main extends Component {
     }
     
     componentDidMount = async () => {
-        this.fetchNationalData(this.state.mapScopeSetting, this.state.mapNetManagerSetting, this.state.mapEnergySourceSetting, this.state.mapTimeframeSetting, this.state.mapDataSetting);
+        await this.setState({loadingNationalData: true});
+        let nationalDataResult = await this.fetchNationalData(this.state.mapScopeSetting, this.state.mapNetManagerSetting, this.state.mapEnergySourceSetting, this.state.mapTimeframeSetting, this.state.mapDataSetting);
+        let nationalDataParsed = await JSON.parse(nationalDataResult);
+        this.setState({nationalData: nationalDataParsed, loadingNationalData: false});
     }
     
     
@@ -106,7 +121,7 @@ class Main extends Component {
                                 </Grid>
                                 <Grid item style={{ display: 'flex', height: '55vh' }} xs={3}>
                                     <Paper className={classes.paper}>
-                                       <ListView scope={this.state.scope} items={['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'ho', 'fd', 'asdf', 'kdjsf',]} />
+                                       {this.state.loadingNationalData ? <LoadingSpinner /> : <ListView scope={this.state.mapScopeSetting} nationalData={this.state.nationalData} />}
                                     </Paper>
                                 </Grid>
                                 <Grid item style={{ display: 'flex', height: '45vh' }} xs={12}>

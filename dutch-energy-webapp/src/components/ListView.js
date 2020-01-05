@@ -15,6 +15,44 @@ const styles = theme => ({
 });
 
 
+const getListItem = (scope, item) => {
+    switch(scope){
+        case 'buurt':
+            return <ListItemText
+            primary={item.buurtnaam2019}
+            secondary={item.city}
+        />
+        case 'gemeente':
+            return <ListItemText
+            primary={item.gemeentenaam2019}
+            secondary={item.city}
+        />
+        case 'wijk':
+            return <ListItemText
+            primary={item.wijknaam2019}
+            secondary={item.city}
+        />
+        default:
+        return <ListItemText
+            primary={"ERROR"}
+            secondary={"error"}
+        />
+    }
+}
+
+
+const getListTitle = (scope) => {
+    switch(scope){
+        case 'buurt':
+            return "Buurten"
+        case 'gemeente':
+            return "Gemeenten"
+        case 'wijk':
+            return "Wijken"
+        default:
+            return "Error"
+    }
+}
 
 class ListView extends Component {
 
@@ -26,14 +64,13 @@ class ListView extends Component {
 
 
     componentDidMount = () => {
-        this.setState({allItems: this.props.items, shownItems: this.props.items})
+        this.setState({allItems: this.props.nationalData, shownItems: this.props.nationalData})
     }
-
 
     handleSearch = (e) => {
         //TODO: update to use json info instead of example string
-        const searchResult = this.state.allItems.filter(name => name.includes(e.target.value))
-        this.setState({shownItems: searchResult});
+        // const searchResult = this.state.allItems.filter(name => name.includes(e.target.value))
+        // this.setState({shownItems: searchResult});
     }
 
     handleClick = () => {
@@ -43,12 +80,13 @@ class ListView extends Component {
 
     render() {
         const { classes } = this.props;
+        console.log(this.props.scope);
         return (
             <div style={{height: '100%'}}>
                 <Grid container direction="column" justify="flex-start" style={{height: '100%'}}>
                 <Grid item style={{height:'50px'}}>
                         <Grid container direction="row" justify="space-between" style={{ width: '100%'}} >
-                            <Grid item style={{paddingTop: '10px', paddingLeft: '10px'}}><Typography variant="h6">List</Typography>
+                            <Grid item style={{paddingTop: '10px', paddingLeft: '10px'}}><Typography variant="h6">{getListTitle(this.props.scope)}</Typography>
                             </Grid>
                             <Grid item >
                                 <TextField size="small" id="outlined-basic" label="Search" variant="outlined" style={{width: '140px'}} onChange={this.handleSearch}/>
@@ -58,16 +96,14 @@ class ListView extends Component {
                     <Grid item style={{overflow: 'auto', height: '85%'}}>
                         <List className={classes.list}>
                             {
-                                this.state.shownItems.map((n, i) =>
+                                Object.keys(this.state.shownItems).map((n, i) =>
+                                
                                     <div key={i}>
                                         <ListItem key={i} button onClick={() => console.log('click :)')}>
                                             <ListItemAvatar >
                                                 <NeighbourhoodIcon />
                                             </ListItemAvatar>
-                                            <ListItemText
-                                                primary={"Woensel " + n}
-                                                secondary={"Eindhoven, Noord-Brabant"}
-                                            />
+                                            {getListItem(this.props.scope, this.state.shownItems[n])}
                                         </ListItem>
                                         <Divider variant="inset" />
                                     </div>
