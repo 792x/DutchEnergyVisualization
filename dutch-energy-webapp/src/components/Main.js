@@ -123,7 +123,6 @@ class Main extends Component {
 
     render() {
         const { classes } = this.props;
-        console.log('yohoho', this.state.mapScopeSetting)
         return (
             <ThemeProvider theme={theme}>
                 <div className={classes.root}>

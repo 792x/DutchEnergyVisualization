@@ -47,7 +47,6 @@ class Map extends Component {
             maxZoom: 18,
             id: 'mapbox/light-v9'
         }).addTo(this.map);
-        console.log(geojson);
 
         this.customLayer = L.geoJSON(geojson, {
             style: style,
