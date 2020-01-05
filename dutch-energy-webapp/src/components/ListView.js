@@ -76,11 +76,11 @@ class ListView extends Component {
         console.log('searching:' +searchTerm);
         
         if(searchTerm){
-            const searchResult = []
+            const searchResult = {}
             for (const key in currentItems) {
                 if (currentItems.hasOwnProperty(key)) {
                     if (Object.values(currentItems[key]).toString().indexOf(searchTerm) !== -1) {
-                        searchResult.push(currentItems[key])
+                        searchResult[key] = currentItems[key]
                     }
                 }
             }
@@ -96,8 +96,7 @@ class ListView extends Component {
 
 
     handleClick = (identifier) => {
-        console.log('selected new item: ' + identifier);
-        this.props.selectItem(identifier);
+        this.props.selectListItem(identifier);
     }
 
     render() {

@@ -87,6 +87,9 @@ class Map extends Component {
         // layer.on({
         //     click: () => { this.handleClick(feature, layer)}
         // });
+        // console.log(feature, layer);
+
+        
         
         let popupContent  =`<p>Loading...</p>`;
         feature.properties.identifier = this.parseIdentifier(feature.properties.statcode);
@@ -97,15 +100,15 @@ class Map extends Component {
                 switch(this.props.scope){
                     case 'buurt':
                         popupContent  =`<p>Buurt: ${data.buurtnaam2019}</p><p>Wijk: ${data.wijknaam2019}</p><p>Gemeente: ${data.gemeentenaam2019}</p>
-                        <button id="button-explore" class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary type="button">Explore</button>`;
+                        <button id="button-explore-${feature.properties.identifier}" class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary type="button">Explore</button>`;
                         break;
                     case 'wijk':
                         popupContent  =`<p>Wijk: ${data.wijknaam2019}</p><p>Gemeente: ${data.gemeentenaam2019}</p>
-                        <button id="button-explore" class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary type="button">Explore</button>`;
+                        <button id="button-explore-${feature.properties.identifier}" class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary type="button">Explore</button>`;
                         break;
                     case 'gemeente':
                         popupContent  =`<p>Gemeente: ${data.gemeentenaam2019}</p>
-                        <button id="button-explore" class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary type="button">Explore</button>`;
+                        <button id="button-explore-${feature.properties.identifier}" class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary type="button">Explore</button>`;
                         break;
                     default:
                         popupContent  =`<p>No data.</p>`;
@@ -116,27 +119,35 @@ class Map extends Component {
             }
         }
         
-        layer.bindPopup(popupContent).on("popupopen", () => {
+        layer.bindPopup(popupContent).on("popupopen", (e) => {
             if(this.props.nationalData){
-                L.DomEvent.addListener(L.DomUtil.get('button-explore'), 'click', (e) => {
+                L.DomEvent.addListener(L.DomUtil.get(`button-explore-${feature.properties.identifier}`), 'click', (e) => {
                     console.log('clicked explore!')
                     const identifier = feature.properties.identifier;
                     this.props.selectItem(identifier);
-                    layer.closePopup();
                   });
             }
           });
+    }
+
+    openMarkerPopup = (id) => {
+        this.customLayer.eachLayer((feature) => {
+            if(feature.feature.properties.identifier === id){
+                feature.openPopup();
+            }
+        });
     }
 
 
     componentDidMount = async () => {
         this.state.data = this.props.nationalData;
         this.createMap(this.props.scope);
-        
+        // geoJson.getLayer(layerId).openPopup()
     }
 
     componentDidUpdate = async () => {
         this.updateMap(this.props.scope);
+        this.openMarkerPopup(this.props.selectedListItem);
     }
 
     render() {

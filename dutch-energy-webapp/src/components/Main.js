@@ -37,6 +37,7 @@ const theme = createMuiTheme({
 class Main extends Component {
     state = {
         selectedItem: null, //null for full country, code for wijk/gemeente/buurt
+        selectedListItem: null,
         selectedItemType: null, //buurt, wijk, gemeente
         mapScopeSetting: 'gemeente', //buurt, wijk, gemeente
         mapNetManagerSetting: 'all',
@@ -46,6 +47,7 @@ class Main extends Component {
         mapColorSetting: 1,
         nationalData: null,
         loadingNationalData: false,
+        
     }
 
 
@@ -111,8 +113,13 @@ class Main extends Component {
         }
     }
     
+    selectListItem = async (identifier) => {
+        this.setState({selectedListItem: identifier});
+    }
+
     selectItem = async (identifier) => {
-        this.setState({selectedItem: identifier, selectedItemType: this.state.mapScopeSetting});
+        console.log('selected new item: ' + identifier);
+        this.setState({selectedItem: identifier, selectedListItem: identifier, selectedItemType: this.state.mapScopeSetting});
     }
     
     componentDidMount = async () => {
@@ -136,12 +143,12 @@ class Main extends Component {
                                 </Grid>
                                 <Grid item style={{ display: 'flex', height: '55vh' }} xs={6}>
                                     <Paper className={classes.paper}>
-                                        <Map scope={this.state.mapScopeSetting} selectItem={this.selectItem} nationalData={this.state.nationalData}/>
+                                        <Map scope={this.state.mapScopeSetting} selectItem={this.selectItem} selectedListItem={this.state.selectedListItem} nationalData={this.state.nationalData}/>
                                     </Paper>
                                 </Grid>
                                 <Grid item style={{ display: 'flex', height: '55vh' }} xs={3}>
                                     <Paper className={classes.paper}>
-                                       {this.state.loadingNationalData ? <LoadingSpinner /> : <ListView scope={this.state.mapScopeSetting} nationalData={this.state.nationalData} selectItem={this.selectItem}/>}
+                                       {this.state.loadingNationalData ? <LoadingSpinner /> : <ListView scope={this.state.mapScopeSetting} nationalData={this.state.nationalData} selectListItem={this.selectListItem}/>}
                                     </Paper>
                                 </Grid>
                                 <Grid item style={{ display: 'flex', height: '45vh' }} xs={12}>
