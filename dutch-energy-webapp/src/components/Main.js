@@ -36,8 +36,9 @@ const theme = createMuiTheme({
 
 class Main extends Component {
     state = {
-        selectedNeighbourhood: null, //null for full country, BU code for specific neighbourhood
-        mapScopeSetting: 'buurt', //buurt, wijk, gemeente
+        selectedItem: null, //null for full country, code for wijk/gemeente/buurt
+        selectedItemType: null, //buurt, wijk, gemeente
+        mapScopeSetting: 'gemeente', //buurt, wijk, gemeente
         mapNetManagerSetting: 'all',
         mapEnergySourceSetting: 'electricity',
         mapTimeframeSetting : 1,
@@ -59,8 +60,6 @@ class Main extends Component {
                 } else {
                     console.log(response);
                 }
-
-                
             })
         return result;
     };
@@ -71,7 +70,8 @@ class Main extends Component {
         .then(async (response) => {
             if(response.status === 200){
                 console.log('Succesful response');
-                return 0;
+                let json = await response.json();
+                return JSON.stringify(json);
             } else {
                 console.log(response);
             }
@@ -79,23 +79,44 @@ class Main extends Component {
         return result;
     };
 
-    applyMapSettings = (scopeSetting, netManagerSetting, energySourceSetting, timeframeSetting, dataSetting, colorSetting) => {
-        //TODO: fetch new nationalData + set loading true
-        this.setState({
-            mapScopeSetting: scopeSetting,
-            mapNetManagerSetting: netManagerSetting,
-            mapEnergySourceSetting: energySourceSetting,
-            mapTimeframeSetting : timeframeSetting,
-            mapDataSetting: dataSetting,
-            mapColorSetting: colorSetting,
-        })
-    }
-    
-    componentDidMount = async () => {
+    loadNationalData = async () =>{
         await this.setState({loadingNationalData: true});
         let nationalDataResult = await this.fetchNationalData(this.state.mapScopeSetting, this.state.mapNetManagerSetting, this.state.mapEnergySourceSetting, this.state.mapTimeframeSetting, this.state.mapDataSetting);
         let nationalDataParsed = await JSON.parse(nationalDataResult);
         this.setState({nationalData: nationalDataParsed, loadingNationalData: false});
+    }
+
+    applyMapSettings = async (scopeSetting, netManagerSetting, energySourceSetting, timeframeSetting, dataSetting, colorSetting) => {
+        if(this.state.mapScopeSetting === scopeSetting &&
+            this.state.mapNetManagerSetting === netManagerSetting &&
+            this.state.mapEnergySourceSetting === energySourceSetting &&
+            this.state.mapTimeframeSetting  === timeframeSetting &&
+            this.state.mapDataSetting === dataSetting &&
+            this.state.mapColorSetting === colorSetting){
+
+            console.log('no settings changed :)')
+
+        } else {
+            
+            await this.setState({
+                mapScopeSetting: scopeSetting,
+                mapNetManagerSetting: netManagerSetting,
+                mapEnergySourceSetting: energySourceSetting,
+                mapTimeframeSetting : timeframeSetting,
+                mapDataSetting: dataSetting,
+                mapColorSetting: colorSetting,
+            })
+
+            this.loadNationalData();
+        }
+    }
+    
+    selectItem = async (identifier) => {
+        this.setState({selectedItem: identifier, selectedItemType: this.state.mapScopeSetting});
+    }
+    
+    componentDidMount = async () => {
+        await this.loadNationalData();
     }
     
     
@@ -116,17 +137,17 @@ class Main extends Component {
                                 </Grid>
                                 <Grid item style={{ display: 'flex', height: '55vh' }} xs={6}>
                                     <Paper className={classes.paper}>
-                                        <Map scope={this.state.mapScopeSetting}/>
+                                        <Map scope={this.state.mapScopeSetting} selectItem={this.selectItem} nationalData={this.state.nationalData}/>
                                     </Paper>
                                 </Grid>
                                 <Grid item style={{ display: 'flex', height: '55vh' }} xs={3}>
                                     <Paper className={classes.paper}>
-                                       {this.state.loadingNationalData ? <LoadingSpinner /> : <ListView scope={this.state.mapScopeSetting} nationalData={this.state.nationalData} />}
+                                       {this.state.loadingNationalData ? <LoadingSpinner /> : <ListView scope={this.state.mapScopeSetting} nationalData={this.state.nationalData} selectItem={this.selectItem}/>}
                                     </Paper>
                                 </Grid>
                                 <Grid item style={{ display: 'flex', height: '45vh' }} xs={12}>
                                     <Paper className={classes.paper}>
-                                        <Data />
+                                        <Data selectedItem={this.state.selectedItem}/>
                                     </Paper>
                                 </Grid>
                             </Grid>

@@ -36,6 +36,7 @@ function getGeoJson(scope){
 class Map extends Component {
 
     state = {
+        data: {}
     }
 
     createMap =  async (scope) => {
@@ -52,6 +53,8 @@ class Map extends Component {
             style: style,
             onEachFeature: this.onEachFeature
         })
+
+
 
         this.map.addLayer(titleLayer);
         this.map.addLayer(this.customLayer);
@@ -70,35 +73,70 @@ class Map extends Component {
         this.map.addLayer(this.customLayer);
     }
 
+    parseIdentifier = (input) => {
+        //remove non numerics
+        let part1 = input.replace(/\D/g,'');
+        let part2 = part1.replace(/^0+/, '');
+        
+        return part2;
+
+    }
+
     delayHelper = ms => new Promise(res => setTimeout(res, ms));
 
     onEachFeature = (feature, layer) => {
-        layer.on({
-            click: () => { this.handleClick(feature, layer)}
-        });
+        // layer.on({
+        //     click: () => { this.handleClick(feature, layer)}
+        // });
+        
+        let popupContent  =`<p>Loading...</p>`;
+        feature.properties.identifier = this.parseIdentifier(feature.properties.statcode);
 
-        const popupContent = feature.properties.statcode;
-
-        layer.bindPopup(popupContent);
+        if(this.props.nationalData){
+            const data = this.props.nationalData[feature.properties.identifier];
+            if(data) {
+                switch(this.props.scope){
+                    case 'buurt':
+                        popupContent  =`<p>Buurt: ${data.buurtnaam2019}</p><p>Wijk: ${data.wijknaam2019}</p><p>Gemeente: ${data.gemeentenaam2019}</p>
+                        <button id="button-explore" class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary type="button">Explore</button>`;
+                        break;
+                    case 'wijk':
+                        popupContent  =`<p>Wijk: ${data.wijknaam2019}</p><p>Gemeente: ${data.gemeentenaam2019}</p>
+                        <button id="button-explore" class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary type="button">Explore</button>`;
+                        break;
+                    case 'gemeente':
+                        popupContent  =`<p>Gemeente: ${data.gemeentenaam2019}</p>
+                        <button id="button-explore" class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary type="button">Explore</button>`;
+                        break;
+                    default:
+                        popupContent  =`<p>No data.</p>`;
+                        break;
+                }
+            } else {
+                popupContent  =`<p>No data.</p>`
+            }
+        }
+        
+        layer.bindPopup(popupContent).on("popupopen", () => {
+            if(this.props.nationalData){
+                L.DomEvent.addListener(L.DomUtil.get('button-explore'), 'click', (e) => {
+                    console.log('clicked explore!')
+                    const identifier = feature.properties.identifier;
+                    this.props.selectItem(identifier);
+                    layer.closePopup();
+                  });
+            }
+          });
     }
 
-    handleClick = async (feature, layer) => {
-        //TODO
-        //Remove 'leading BU'
-        //Remove leading 0 if exists
-        await this.delayHelper(2000);
-        console.log('yeet')
-        console.log('click wijk: ',feature.properties.statcode)
-    }
 
     componentDidMount = async () => {
-        console.log('mounted', this.props.scope);
+        this.state.data = this.props.nationalData;
         this.createMap(this.props.scope);
         
     }
 
     componentDidUpdate = async () => {
-        console.log('mounted', this.props.scope);
         this.updateMap(this.props.scope);
     }
 

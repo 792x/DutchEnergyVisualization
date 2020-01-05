@@ -54,11 +54,12 @@ const getListTitle = (scope) => {
     }
 }
 
+
 class ListView extends Component {
 
     state = {
-        allItems: [],
-        shownItems: [],
+        allItems: {},
+        shownItems: {},
         searchTerm: ''
     }
 
@@ -68,14 +69,30 @@ class ListView extends Component {
     }
 
     handleSearch = (e) => {
-        //TODO: update to use json info instead of example string
+        // TODO: update to use json info instead of example string
         // const searchResult = this.state.allItems.filter(name => name.includes(e.target.value))
-        // this.setState({shownItems: searchResult});
+        const currentItems = this.state.allItems;
+        console.log('searching:' +e.target.value);
+        
+        if(e.target.value){
+            const searchResult = []
+            for (const key in currentItems) {
+                if (currentItems.hasOwnProperty(key)) {
+                    if (Object.values(currentItems[key]).toString().indexOf(e.target.value) !== -1) {
+                        searchResult.push(currentItems[key])
+                    }
+                }
+            }
+            this.setState({shownItems: searchResult});
+        } else {
+            this.setState({shownItems: this.state.allItems});
+        }
     }
 
-    handleClick = () => {
-        //TODO
 
+    handleClick = (identifier) => {
+        console.log('selected new item: ' + identifier);
+        this.props.selectItem(identifier);
     }
 
     render() {
@@ -97,9 +114,8 @@ class ListView extends Component {
                         <List className={classes.list}>
                             {
                                 Object.keys(this.state.shownItems).map((n, i) =>
-                                
                                     <div key={i}>
-                                        <ListItem key={i} button onClick={() => console.log('click :)')}>
+                                        <ListItem key={i} button onClick={() => this.handleClick(n)}>
                                             <ListItemAvatar >
                                                 <NeighbourhoodIcon />
                                             </ListItemAvatar>

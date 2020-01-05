@@ -22,12 +22,14 @@ export async function getNationalElectricityData(scope:string, netmanager:string
 
     //build our response by aggregating results in teh same scope (i.e. all entries of the same gemeente if scope is gemeente)
 
-    
+    let index = 0
     if(rows){
         if(rows.length > 0){
             for (const row of rows){
+                index++;
+                // Uncomment this line for testing
+                // if(index > 30){ break;}
                 let params:any = {};
-                params.id = row.id;
                 params.city = row.city;
                 params.gemeente2019 = row.gemeente2019;
                 params.gemeentenaam2019 = row.gemeentenaam2019;

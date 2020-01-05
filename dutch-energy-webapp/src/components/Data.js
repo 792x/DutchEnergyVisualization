@@ -51,7 +51,7 @@ class Data extends Component {
                 <Grid container direction="column" justify="flex-start" style={{ height: '100%' }}>
                     <Grid item style={{ height: '48px' }}>
                         <Grid container direction="row" justify="space-between" style={{ width: '100%', height: '48px' }} >
-                            <Grid item style={{ marginTop: '10px', marginLeft: '10px' }}><Typography variant="h6">Data: <strong>Woensel</strong></Typography>
+                            <Grid item style={{ marginTop: '10px', marginLeft: '10px' }}><Typography variant="h6">Data: <strong>{this.props.selectedItem ? this.props.selectedItem : '...'}</strong></Typography>
                             </Grid>
                             <Grid item>
                                 <Grid container direction="row" justify="flex-end">

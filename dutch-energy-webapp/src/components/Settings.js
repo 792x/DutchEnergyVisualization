@@ -31,10 +31,10 @@ class Settings extends Component {
 
     state = {
         loading: false,
-        scopeSetting: 'buurt',
+        scopeSetting: 'gemeente',
         netManagerSetting: 'all',
         energySourceSetting: 'electricity',
-        timeframeSetting : '2019',
+        timeframeSetting : 1,
         dataSetting: 1,
         colorSetting: 1,
     }
@@ -101,9 +101,9 @@ class Settings extends Component {
                                 value={this.state.scopeSetting}
                                 onChange={this.handleScopeSettingChange}
                             >
-                                <option value={'buurt'}>Buurten</option>
-                                <option value={'wijk'}>Wijken</option>
                                 <option value={'gemeente'}>Gemeenten</option>
+                                <option value={'wijk'}>Wijken</option>
+                                <option value={'buurt'}>Buurten</option>
                             </Select>
                         </FormControl>
                     </Grid>
