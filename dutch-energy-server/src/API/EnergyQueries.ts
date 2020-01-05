@@ -3,31 +3,89 @@ import {Op} from "sequelize";
 
 export async function getNationalElectricityData(scope:string, netmanager:string, timeframe:number, data:number){
     //check how we should build the response based on scope
+    //return json with buurtnummer as index
 
-    switch(scope){
-        case 'buurt':
-            //return json with buurtnummer as index
-            const rows = await Electricity.findAll({
-                where: {
-                    net_manager:{
-                        [Op.like]: await handleNetManager(netmanager)
-                    },
-                    year: await handleTimeframe(timeframe)
+    //TODO AGGREGATE for buurt, wijk or gemeente
+    
+    let result:any = {};
+
+    const rows = await Electricity.findAll({
+        where: {
+            net_manager:{
+                [Op.like]: await handleNetManager(netmanager)
+            },
+            year: await handleTimeframe(timeframe)
+        },
+        raw: true //raw because huge dataset (see sequelize model usage docs)
+    })
+    // console.log(rows);
+
+    //build our response by aggregating results in teh same scope (i.e. all entries of the same gemeente if scope is gemeente)
+
+    let index = 0
+    if(rows){
+        if(rows.length > 0){
+            for (const row of rows){
+                index++;
+                // Uncomment this line for testing
+                // if(index > 30){ break;}
+                let params:any = {};
+                params.city = row.city;
+                params.gemeente2019 = row.gemeente2019;
+                params.gemeentenaam2019 = row.gemeentenaam2019;
+
+                if(row.buurt2019 && row.gemeente2019 && row.wijk2019){
+                    switch(scope){
+                        case 'buurt':
+                            params.buurt2019 = row.buurt2019;
+                            params.buurtnaam2019 = row.buurtnaam2019;
+                            params.wijk2019 = row.wijk2019;
+                            params.wijknaam2019 = row.wijknaam2019;
+                            //return json with buurtnummer as index
+                            if(result[row.buurt2019]){
+                                //TODO :already have an entry for this buurtnumber so we merge it
+                                result[row.buurt2019] = params;
+                                
+                            } else {
+                                //first time seeing this buurtnumber
+                                result[row.buurt2019] = params;
+                            }
+                            break;
+                        case 'wijk':
+                            params.wijk2019 = row.wijk2019;
+                            params.wijknaam2019 = row.wijknaam2019;
+                            //return json with wijknummer as index
+                            if(result[row.wijk2019]){
+                                //TODO :already have an entry for this wijknumber so we merge it
+                                result[row.wijk2019] = params;
+                                
+                            } else {
+                                //first time seeing this buurtnumber
+                                result[row.wijk2019] = params;
+                            }
+                            break;
+                        case 'gemeente':
+                            //return json with gemeentenummer as index
+                            if(result[row.gemeente2019]){
+                                //TODO :already have an entry for this gemeentenummer so we merge it
+                                result[row.gemeente2019] = params;
+                                
+                            } else {
+                                //first time seeing this buurtnumber
+                                result[row.gemeente2019] = params;
+                            }
+                            break;
+                    }
                 }
-            })
-            console.log(rows);
-            return true;
-        case 'wijk':
-            //return json with wijknummer as index
-
-            break;
-        case 'gemeente':
-            //return json with gemeentenummer as index
-            break;
+            }
+            console.log(result);
+            return result;
+        } else {
+            return null;
+        }
+    } else {
+        return false;
     }
-
-    //TODO: build response and return
-
 }
 
 export async function getNationalGasData(scope:string, netmanager:string, timeframe:number, data:number){

@@ -16,7 +16,11 @@ export async function getNationalData(req: Request, res: Response): Promise<void
     if(energysource === 'electricity'){
         const result = await energyQueries.getNationalElectricityData(scope, netmanager, timeframe, data)
         if(result){
-            res.status(200).send({message: "success"});
+            res.status(200).send(result);
+        } else if (result === null){
+            res.status(404).send({error: "could not find any results"})
+        } else {
+            res.status(500).send({error: "something went wrong"})
         }
     } else {
 

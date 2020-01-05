@@ -36,6 +36,7 @@ function getGeoJson(scope){
 class Map extends Component {
 
     state = {
+        data: {}
     }
 
     createMap =  async (scope) => {
@@ -46,12 +47,13 @@ class Map extends Component {
             maxZoom: 18,
             id: 'mapbox/light-v9'
         }).addTo(this.map);
-        console.log(geojson);
 
         this.customLayer = L.geoJSON(geojson, {
             style: style,
             onEachFeature: this.onEachFeature
         })
+
+
 
         this.map.addLayer(titleLayer);
         this.map.addLayer(this.customLayer);
@@ -70,36 +72,82 @@ class Map extends Component {
         this.map.addLayer(this.customLayer);
     }
 
+    parseIdentifier = (input) => {
+        //remove non numerics
+        let part1 = input.replace(/\D/g,'');
+        let part2 = part1.replace(/^0+/, '');
+        
+        return part2;
+
+    }
+
     delayHelper = ms => new Promise(res => setTimeout(res, ms));
 
     onEachFeature = (feature, layer) => {
-        layer.on({
-            click: () => { this.handleClick(feature, layer)}
+        // layer.on({
+        //     click: () => { this.handleClick(feature, layer)}
+        // });
+        // console.log(feature, layer);
+
+        
+        
+        let popupContent  =`<p>Loading...</p>`;
+        feature.properties.identifier = this.parseIdentifier(feature.properties.statcode);
+
+        if(this.props.nationalData){
+            const data = this.props.nationalData[feature.properties.identifier];
+            if(data) {
+                switch(this.props.scope){
+                    case 'buurt':
+                        popupContent  =`<p>Buurt: ${data.buurtnaam2019}</p><p>Wijk: ${data.wijknaam2019}</p><p>Gemeente: ${data.gemeentenaam2019}</p>
+                        <button id="button-explore-${feature.properties.identifier}" class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary type="button">Explore</button>`;
+                        break;
+                    case 'wijk':
+                        popupContent  =`<p>Wijk: ${data.wijknaam2019}</p><p>Gemeente: ${data.gemeentenaam2019}</p>
+                        <button id="button-explore-${feature.properties.identifier}" class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary type="button">Explore</button>`;
+                        break;
+                    case 'gemeente':
+                        popupContent  =`<p>Gemeente: ${data.gemeentenaam2019}</p>
+                        <button id="button-explore-${feature.properties.identifier}" class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary type="button">Explore</button>`;
+                        break;
+                    default:
+                        popupContent  =`<p>No data.</p>`;
+                        break;
+                }
+            } else {
+                popupContent  =`<p>No data.</p>`
+            }
+        }
+        
+        layer.bindPopup(popupContent).on("popupopen", (e) => {
+            if(this.props.nationalData){
+                L.DomEvent.addListener(L.DomUtil.get(`button-explore-${feature.properties.identifier}`), 'click', (e) => {
+                    console.log('clicked explore!')
+                    const identifier = feature.properties.identifier;
+                    this.props.selectItem(identifier);
+                  });
+            }
+          });
+    }
+
+    openMarkerPopup = (id) => {
+        this.customLayer.eachLayer((feature) => {
+            if(feature.feature.properties.identifier === id){
+                feature.openPopup();
+            }
         });
-
-        const popupContent = feature.properties.statcode;
-
-        layer.bindPopup(popupContent);
     }
 
-    handleClick = async (feature, layer) => {
-        //TODO
-        //Remove 'leading BU'
-        //Remove leading 0 if exists
-        await this.delayHelper(2000);
-        console.log('yeet')
-        console.log('click wijk: ',feature.properties.statcode)
-    }
 
     componentDidMount = async () => {
-        console.log('mounted', this.props.scope);
+        this.state.data = this.props.nationalData;
         this.createMap(this.props.scope);
-        
+        // geoJson.getLayer(layerId).openPopup()
     }
 
     componentDidUpdate = async () => {
-        console.log('mounted', this.props.scope);
         this.updateMap(this.props.scope);
+        this.openMarkerPopup(this.props.selectedListItem);
     }
 
     render() {

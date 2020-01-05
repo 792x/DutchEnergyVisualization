@@ -7,6 +7,7 @@ import ListView from './ListView';
 import Map from '../components/Map'
 import Settings from '../components/Settings';
 import Data from '../components/Data';
+import LoadingSpinner from './LoadingSpinner';
 
 
 const styles = theme => ({
@@ -35,59 +36,100 @@ const theme = createMuiTheme({
 
 class Main extends Component {
     state = {
-        selectedNeighbourhood: null, //null for full country, BU code for specific neighbourhood
-        mapScopeSetting: 'buurt', //buurt, wijk, gemeente
+        selectedItem: null, //null for full country, code for wijk/gemeente/buurt
+        selectedListItem: null,
+        selectedItemType: null, //buurt, wijk, gemeente
+        mapScopeSetting: 'gemeente', //buurt, wijk, gemeente
         mapNetManagerSetting: 'all',
         mapEnergySourceSetting: 'electricity',
         mapTimeframeSetting : 1,
         mapDataSetting: 1,
         mapColorSetting: 1,
+        nationalData: null,
+        loadingNationalData: false,
+        
     }
 
 
     fetchNationalData = async (scopeSetting, netManagerSetting, energySourceSetting, timeframeSetting, dataSetting) => {
         //fetch national data based on map settings
-        await fetch(`http://localhost:3001/national?scope=${scopeSetting}&netmanager=${netManagerSetting}&energysource=${energySourceSetting}&timeframe=${timeframeSetting}&data=${dataSetting}`)
-            .then(res => res.json())
-            //We should also check res.status to see if status code matches for error handling
-            .then(json => {
-                // let annualCityConsumption = json.annual_city_consumption;
-                // this.setState({result: annualCityConsumption, last_city: city, city: ''})
-                console.log(json);
-            });
+        const result =await fetch(`http://localhost:3001/national?scope=${scopeSetting}&netmanager=${netManagerSetting}&energysource=${energySourceSetting}&timeframe=${timeframeSetting}&data=${dataSetting}`)
+            .then(async (response) => {
+                if(response.status === 200){
+                    console.log('Succesful response');
+                    let json = await response.json();
+                    return JSON.stringify(json);
+                } else {
+                    console.log(response);
+                }
+            })
+        return result;
     };
 
     fetchSpecificData = async (city) => {
         //todo, fetch data for specific buurt, wijk or gemeente
-        await fetch('http://localhost:3001/specific' + city)
-        .then(res => res.json())
-        //We should also check res.status to see if status code matches for error handling
-        .then(json => {
-            let annualCityConsumption = json.annual_city_consumption;
-            this.setState({result: annualCityConsumption, last_city: city, city: ''})
-        });
+        const result = await fetch('http://localhost:3001/specific' + city)
+        .then(async (response) => {
+            if(response.status === 200){
+                console.log('Succesful response');
+                let json = await response.json();
+                return JSON.stringify(json);
+            } else {
+                console.log(response);
+            }
+        })
+        return result;
     };
 
-    applyMapSettings = (scopeSetting, netManagerSetting, energySourceSetting, timeframeSetting, dataSetting, colorSetting) => {
-        this.setState({
-            mapScopeSetting: scopeSetting,
-            mapNetManagerSetting: netManagerSetting,
-            mapEnergySourceSetting: energySourceSetting,
-            mapTimeframeSetting : timeframeSetting,
-            mapDataSetting: dataSetting,
-            mapColorSetting: colorSetting,
-        })
+    loadNationalData = async () =>{
+        await this.setState({loadingNationalData: true});
+        let nationalDataResult = await this.fetchNationalData(this.state.mapScopeSetting, this.state.mapNetManagerSetting, this.state.mapEnergySourceSetting, this.state.mapTimeframeSetting, this.state.mapDataSetting);
+        let nationalDataParsed = await JSON.parse(nationalDataResult);
+        this.setState({nationalData: nationalDataParsed, loadingNationalData: false});
+    }
+
+    applyMapSettings = async (scopeSetting, netManagerSetting, energySourceSetting, timeframeSetting, dataSetting, colorSetting) => {
+        if(this.state.mapScopeSetting === scopeSetting &&
+            this.state.mapNetManagerSetting === netManagerSetting &&
+            this.state.mapEnergySourceSetting === energySourceSetting &&
+            this.state.mapTimeframeSetting  === timeframeSetting &&
+            this.state.mapDataSetting === dataSetting &&
+            this.state.mapColorSetting === colorSetting){
+
+            console.log('no settings changed :)')
+
+        } else {
+            
+            await this.setState({
+                mapScopeSetting: scopeSetting,
+                mapNetManagerSetting: netManagerSetting,
+                mapEnergySourceSetting: energySourceSetting,
+                mapTimeframeSetting : timeframeSetting,
+                mapDataSetting: dataSetting,
+                mapColorSetting: colorSetting,
+            })
+
+            this.loadNationalData();
+        }
+    }
+    
+    selectListItem = async (identifier) => {
+        this.setState({selectedListItem: identifier});
+    }
+
+    selectItem = async (identifier) => {
+        console.log('selected new item: ' + identifier);
+        this.setState({selectedItem: identifier, selectedListItem: identifier, selectedItemType: this.state.mapScopeSetting});
     }
     
     componentDidMount = async () => {
-        this.fetchNationalData(this.state.mapScopeSetting, this.state.mapNetManagerSetting, this.state.mapEnergySourceSetting, this.state.mapTimeframeSetting, this.state.mapDataSetting);
+        await this.loadNationalData();
     }
     
     
 
     render() {
         const { classes } = this.props;
-        console.log('yohoho', this.state.mapScopeSetting)
         return (
             <ThemeProvider theme={theme}>
                 <div className={classes.root}>
@@ -101,17 +143,17 @@ class Main extends Component {
                                 </Grid>
                                 <Grid item style={{ display: 'flex', height: '55vh' }} xs={6}>
                                     <Paper className={classes.paper}>
-                                        <Map scope={this.state.mapScopeSetting}/>
+                                        <Map scope={this.state.mapScopeSetting} selectItem={this.selectItem} selectedListItem={this.state.selectedListItem} nationalData={this.state.nationalData}/>
                                     </Paper>
                                 </Grid>
                                 <Grid item style={{ display: 'flex', height: '55vh' }} xs={3}>
                                     <Paper className={classes.paper}>
-                                       <ListView scope={this.state.scope} items={['one', 'two', 'three', 'four', 'five', 'six', 'seven', 'ho', 'fd', 'asdf', 'kdjsf',]} />
+                                       {this.state.loadingNationalData ? <LoadingSpinner /> : <ListView scope={this.state.mapScopeSetting} nationalData={this.state.nationalData} selectListItem={this.selectListItem}/>}
                                     </Paper>
                                 </Grid>
                                 <Grid item style={{ display: 'flex', height: '45vh' }} xs={12}>
                                     <Paper className={classes.paper}>
-                                        <Data />
+                                        <Data selectedItem={this.state.selectedItem}/>
                                     </Paper>
                                 </Grid>
                             </Grid>
