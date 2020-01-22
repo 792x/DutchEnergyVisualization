@@ -1,5 +1,5 @@
 import {Electricity, Gas} from '../models/Models'
-import {Op} from "sequelize";
+import {Op, fn, col, literal} from "sequelize";
 
 export async function getNationalElectricityData(scope:string, netmanager:string, timeframe:number, data:number){
     //check how we should build the response based on scope
@@ -92,6 +92,42 @@ export async function getNationalGasData(scope:string, netmanager:string, timefr
     //TODO
 }
 
+export async function getSpecificElectricityData(scope:string, id:number){
+    //check how we should build the response based on scope
+    //TODO AGGREGATE for scope {buurt, wijk}
+
+    const rows = await Electricity.findAll({
+        where: {
+            gemeente2019: {
+                [Op.like]: id
+            },
+        },
+        attributes: [
+            'gemeente2019', 
+            'gemeentenaam2019',
+            'year',
+            [fn('sum', col('annual_consume')), 'annual_consume'],
+            [fn('sum', col('num_connections')), 'num_connections'],
+            [fn('avg', col('annual_consume_lowtarif_perc')), 'annual_consume_lowtarif_perc'],
+            [fn('avg', col('delivery_perc')), 'delivery_perc'],
+            [fn('avg', col('perc_of_active_connections')), 'perc_of_active_connections'],
+        ],
+        group: ['gemeente2019', 'gemeentenaam2019', 'year'],
+        raw: true,
+        order: literal('year ASC')
+    });
+
+    if(rows){
+        if(rows.length > 0){
+            console.log(rows);
+            return rows;
+        } else {
+            return null;
+        }
+    } else {
+        return false;
+    }
+}
 
 
 function handleData(data:number){

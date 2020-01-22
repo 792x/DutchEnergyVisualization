@@ -41,23 +41,28 @@ export async function getNationalData(req: Request, res: Response): Promise<void
 }
 
 export async function getSpecificData(req: Request, res: Response): Promise<void> {
-    console.log('getNationalData called');
+    console.log('getSpecificData called');
     //Get parameters from request, can also work with req.body.city if it was a post/put request
     const scope: string = req.query.scope;
     const id: number = req.query.id; //wijk, buurt of gemeente nummer
-    const netmanager: string = req.query.netmanager;
-    const energysource: string = req.query.energysource;
-    const timeframe: number = req.query.timeframe;
-    const data: number = req.query.data;
+    // const netmanager: string = req.query.netmanager;
+    // const energysource: string = req.query.energysource;
+    // const timeframe: number = req.query.timeframe;
+    // const data: number = req.query.data;
 
-    console.log(scope, id, netmanager, energysource, timeframe, data);
+    // console.log(scope, id, netmanager, energysource, timeframe, data);
+    console.log(scope, id);
 
-    //TODO:
-    if(energysource === 'electricity'){
-
+    const result = await energyQueries.getSpecificElectricityData(scope, id);
+    if(result){
+        res.status(200).send(result);
+    } else if (result === null){
+        res.status(404).send({error: "could not find any results"})
     } else {
-
+        res.status(500).send({error: "something went wrong"})
     }
+
+    //TODO gas data
 
     /**
      * stuur alle nuttige data terug aangezien het klein is voor maar 1 wijk/buurt/gemeente, eventueel ook timeframe negeren en gewoon alle jaren meesturen en client side handelen
