@@ -40,6 +40,9 @@ const BarChart = (props) => {
         const max = Math.max.apply(Math, data.map(function(d) { return d.annual_consume; }));
         const svg = select('#svg-1');
         const svgContainer = select('#container');
+
+        svg.selectAll("*")
+        .remove();
         
         const margin = props.settings.margin;
         const width = props.settings.width - 2 * margin;
@@ -51,14 +54,14 @@ const BarChart = (props) => {
         const xScale = scaleBand()
         .range([0, width])
         .domain(data.map((d) => d.year))
-        .padding(0.4)
+        .padding(0.4);
         
         const yScale = scaleLinear()
         .range([height, 0])
         .domain([0, Math.floor(max) + 2]);
 
         const makeYLines = () => axisLeft()
-        .scale(yScale)
+        .scale(yScale);
 
         chart.append('g')
         .attr('transform', `translate(0, ${height})`)
@@ -72,51 +75,48 @@ const BarChart = (props) => {
         .call(makeYLines()
             .tickSize(-width, 0, 0)
             .tickFormat('')
-        )
+        );
 
         const barGroups = chart.selectAll()
         .data(data)
         .enter()
-        .append('g')
+        .append('g');
 
-        barGroups
-        .append('rect')
+        barGroups.append('rect')
         .attr('class', 'bar')
         .attr('x', (g) => xScale(g.year))
         .attr('y', (g) => yScale(g.annual_consume))
         .attr('height', (g) => height - yScale(g.annual_consume))
-        .attr('width', xScale.bandwidth())
+        .attr('width', xScale.bandwidth());
 
-        barGroups 
-        .append('text')
+        barGroups.append('text')
         .attr('class', 'value')
         .attr('x', (a) => xScale(a.year) + xScale.bandwidth() / 2)
         .attr('y', (a) => yScale(a.annual_consume) + 30)
         .attr('text-anchor', 'middle')
-        .text((a) => `${a.annual_consume}`)
+        .text((a) => `${a.annual_consume}`);
         
-        svg
-        .append('text')
+        svg.append('text')
         .attr('class', 'label')
         .attr('x', -(height / 2) - margin)
         .attr('y', margin / 2.4)
         .attr('transform', 'rotate(-90)')
         .attr('text-anchor', 'middle')
-        .text('Electricity (*10^6)')
+        .text('Electricity (*10^6)');
 
         svg.append('text')
         .attr('class', 'label')
         .attr('x', width / 2 + margin)
         .attr('y', height + margin * 1.7)
         .attr('text-anchor', 'middle')
-        .text('Year')
+        .text('Year');
 
         svg.append('text')
         .attr('class', 'title')
         .attr('x', width / 2 + margin)
         .attr('y', 40)
         .attr('text-anchor', 'middle')
-        .text('Annual consumption of Electricity')
+        .text('Annual consumption of Electricity');
     }
 
     return (
@@ -140,6 +140,9 @@ const LineChart = (props) => {
         const max = Math.max.apply(Math, data.map(function(d) { return d.annual_consume; }));
         const svg = selectAll('#svg-2');
         const svgContainer = select('#container');
+
+        svg.selectAll("*")
+        .remove();
         
         const margin = props.settings.margin;
         const width = props.settings.width - 2 * margin;
@@ -151,14 +154,14 @@ const LineChart = (props) => {
         const xScale = scaleBand()
         .range([0, width])
         .domain(data.map((d) => d.year))
-        .padding(0.4)
+        .padding(0.4);
         
         const yScale = scaleLinear()
         .range([height, 0])
         .domain([0, Math.floor(max) + 2]);
 
         const makeYLines = () => axisLeft()
-        .scale(yScale)
+        .scale(yScale);
 
         chart.append('g')
         .attr('transform', `translate(0, ${height})`)
@@ -172,7 +175,7 @@ const LineChart = (props) => {
         .call(makeYLines()
             .tickSize(-width, 0, 0)
             .tickFormat('')
-        )
+        );
 
         chart.append("path")
         .datum(data)
@@ -182,30 +185,29 @@ const LineChart = (props) => {
         .attr("d", line()
             .x(function(d) { return xScale(d.year) })
             .y(function(d) { return yScale(d.annual_consume) })
-        )
+        );
         
-        svg
-        .append('text')
+        svg.append('text')
         .attr('class', 'label')
         .attr('x', -(height / 2) - margin)
         .attr('y', margin / 2.4)
         .attr('transform', 'rotate(-90)')
         .attr('text-anchor', 'middle')
-        .text('Electricity (*10^6)')
+        .text('Electricity (*10^6)');
 
         svg.append('text')
         .attr('class', 'label')
         .attr('x', width / 2 + margin)
         .attr('y', height + margin * 1.7)
         .attr('text-anchor', 'middle')
-        .text('Year')
+        .text('Year');
 
         svg.append('text')
         .attr('class', 'title')
         .attr('x', width / 2 + margin)
         .attr('y', 40)
         .attr('text-anchor', 'middle')
-        .text('Annual consumption of Electricity')
+        .text('Annual consumption of Electricity');
     }
 
     return (
@@ -213,6 +215,50 @@ const LineChart = (props) => {
             <svg className="svg-d3" id="svg-2" style={{ height: '100%', width: '100%' }} />
         </div>
     )
+}
+
+const SelectedItem = (props) => {
+    let selected = {};
+    if (props.specificData) {
+        switch (props.scope) {
+            case 'gemeente':
+                selected.gemeente = props.specificData[0].gemeentenaam2019;
+                break;
+
+            case 'wijk':
+                selected.gemeente = props.specificData[0].gemeentenaam2019;
+                selected.wijk = props.specificData[0].wijknaam2019;
+                break;
+
+            case 'buurt':
+                selected.gemeente = props.specificData[0].gemeentenaam2019;
+                selected.wijk = props.specificData[0].wijknaam2019;
+                selected.buurt = props.specificData[0].buurtnaam2019;
+                break;
+        }
+    } else {
+        selected.gemeente = '...';
+    }
+
+    if (selected.buurt) {
+        return (
+            <Typography variant="h6">
+                Gemeente: <strong>{selected.gemeente}</strong>, Wijk: <strong>{selected.wijk}</strong>, Buurt: <strong>{selected.buurt}</strong>
+            </Typography>
+        )
+    } else if (selected.wijk) {
+        return (
+            <Typography variant="h6">
+                Gemeente: <strong>{selected.gemeente}</strong>, Wijk: <strong>{selected.wijk}</strong>
+            </Typography>
+        )
+    } else {
+        return (
+            <Typography variant="h6">
+                Gemeente: <strong>{selected.gemeente}</strong>
+            </Typography>
+        )
+    }
 }
 
 
@@ -243,8 +289,7 @@ class Data extends Component {
 
     render() {
         const { classes } = this.props;
-
-        const selectedName = this.props.specificData ? this.props.specificData[0].gemeentenaam2019 : '...';
+        
         const graphSettings = {
             width: 600,
             height: 400,
@@ -256,7 +301,8 @@ class Data extends Component {
                 <Grid container direction="column" justify="flex-start" style={{ height: '100%' }}>
                     <Grid item style={{ height: '48px' }}>
                         <Grid container direction="row" justify="space-between" style={{ width: '100%', height: '48px' }} >
-                            <Grid item style={{ marginTop: '10px', marginLeft: '10px' }}><Typography variant="h6">{capitalize(this.props.scope)}: <strong>{selectedName}</strong></Typography>
+                            <Grid item style={{ marginTop: '10px', marginLeft: '10px' }}>
+                                <SelectedItem scope={this.props.scope} specificData={this.props.specificData}></SelectedItem>
                             </Grid>
                             <Grid item>
                                 <Grid container direction="row" justify="flex-end">
@@ -279,7 +325,7 @@ class Data extends Component {
                                         <FormControl >
                                             <InputLabel htmlFor="outlined-age-native-simple">
                                                 Timeframe
-                                    </InputLabel>
+                                            </InputLabel>
                                             <Select
                                                 native
                                                 value={this.state.timeframeSetting}
@@ -306,7 +352,7 @@ class Data extends Component {
                                         <FormControl >
                                             <InputLabel htmlFor="outlined-age-native-simple">
                                                 Chart Type
-                                    </InputLabel>
+                                            </InputLabel>
                                             <Select
                                                 native
                                                 value={this.state.chartTypeSetting}

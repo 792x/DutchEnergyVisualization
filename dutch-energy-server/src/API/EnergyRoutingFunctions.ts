@@ -37,18 +37,15 @@ export async function getNationalData(req: Request, res: Response): Promise<void
      */
 
 
-    res.status(200).send();
+    // res.status(200).send();
 }
 
 export async function getSpecificData(req: Request, res: Response): Promise<void> {
     console.log('getSpecificData called');
     //Get parameters from request, can also work with req.body.city if it was a post/put request
     const scope: string = req.query.scope;
-    const id: number = req.query.id; //wijk, buurt of gemeente nummer
+    const id: number = req.query.id; // wijk, buurt of gemeente id
     // const netmanager: string = req.query.netmanager;
-    // const energysource: string = req.query.energysource;
-    // const timeframe: number = req.query.timeframe;
-    // const data: number = req.query.data;
 
     // console.log(scope, id, netmanager, energysource, timeframe, data);
     console.log(scope, id);
@@ -64,11 +61,6 @@ export async function getSpecificData(req: Request, res: Response): Promise<void
 
     //TODO gas data
 
-    /**
-     * stuur alle nuttige data terug aangezien het klein is voor maar 1 wijk/buurt/gemeente, eventueel ook timeframe negeren en gewoon alle jaren meesturen en client side handelen
-     * 
-     */
 
-
-    res.status(200).send();
+    // res.status(200).send();
 }
