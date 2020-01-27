@@ -1,11 +1,7 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { Grid, Typography, FormLabel, FormControl, Select, InputLabel, StylesProvider } from '@material-ui/core';
-import { select, selectAll } from 'd3-selection';
-import { axisBottom, axisLeft } from 'd3-axis';
-import { scaleBand, scaleLinear } from 'd3-scale';
-import { line } from 'd3-shape';
-import { transition } from 'd3-transition';
+import { BarChart, BarChart2, LineChart, PieChart } from '../components/Charts'
 
 
 const styles = theme => ({
@@ -26,203 +22,12 @@ const capitalize = (s) => {
     return s.charAt(0).toUpperCase() + s.slice(1);
 }
 
-const BarChart = (props) => {
-    let data = props.data;
-    // let data = [{"gemeente2019":"228","gemeentenaam2019":"Ede","year":2010,"annual_consume":12810631,"num_connections":213256.59000000003,"annual_consume_lowtarif_perc":28.148273280299502,"delivery_perc":23.44969583528311,"perc_of_active_connections":95.70577912962096},{"gemeente2019":"228","gemeentenaam2019":"Ede","year":2011,"annual_consume":12895120,"num_connections":214063.18,"annual_consume_lowtarif_perc":37.289342963653326,"delivery_perc":23.729263746505126,"perc_of_active_connections":94.98120223671953},{"gemeente2019":"228","gemeentenaam2019":"Ede","year":2012,"annual_consume":13043705,"num_connections":217198.76999999996,"annual_consume_lowtarif_perc":36.71281321707205,"delivery_perc":23.960991280403857,"perc_of_active_connections":94.4426801284994},{"gemeente2019":"228","gemeentenaam2019":"Ede","year":2013,"annual_consume":12985893,"num_connections":218299.08,"annual_consume_lowtarif_perc":38.241359090909114,"delivery_perc":24.23090909090909,"perc_of_active_connections":94.34410000000005},{"gemeente2019":"228","gemeentenaam2019":"Ede","year":2014,"annual_consume":13089935,"num_connections":214704.85000000015,"annual_consume_lowtarif_perc":41.40243572395131,"delivery_perc":24.377988272440234,"perc_of_active_connections":92.52147045557066},{"gemeente2019":"228","gemeentenaam2019":"Ede","year":2015,"annual_consume":12742139,"num_connections":214750.5500000001,"annual_consume_lowtarif_perc":42.371878354203936,"delivery_perc":24.544722719141323,"perc_of_active_connections":92.29016100178893},{"gemeente2019":"228","gemeentenaam2019":"Ede","year":2016,"annual_consume":12657636,"num_connections":212930.74000000005,"annual_consume_lowtarif_perc":47.42520870337478,"delivery_perc":24.763765541740675,"perc_of_active_connections":92.23470248667857},{"gemeente2019":"228","gemeentenaam2019":"Ede","year":2017,"annual_consume":12455475,"num_connections":211364.1100000001,"annual_consume_lowtarif_perc":49.94710584101893,"delivery_perc":24.869565217391305,"perc_of_active_connections":92.09200263504616},{"gemeente2019":"228","gemeentenaam2019":"Ede","year":2018,"annual_consume":12322749,"num_connections":209890.86000000007,"annual_consume_lowtarif_perc":52.24220965637232,"delivery_perc":25.09264897781644,"perc_of_active_connections":91.71953458025234},{"gemeente2019":"228","gemeentenaam2019":"Ede","year":2019,"annual_consume":12647690,"num_connections":211544.09,"annual_consume_lowtarif_perc":28.44419735599622,"delivery_perc":23.272426817752596,"perc_of_active_connections":96.15531633616624}];
-    if (data !== null) {
-        data = data.map((d) => {
-            var d2 = {};
-            d2.year = d.year;
-            d2.annual_consume = (d.annual_consume / 1000000).toFixed(2);
-            return d2;
-        });
-
-        const max = Math.max.apply(Math, data.map(function(d) { return d.annual_consume; }));
-        const svg = select('#svg-1');
-        const svgContainer = select('#container');
-
-        svg.selectAll("*")
-        .remove();
-        
-        const margin = props.settings.margin;
-        const width = props.settings.width - 2 * margin;
-        const height = props.settings.height - 2 * margin;
-
-        const chart = svg.append('g')
-        .attr('transform', `translate(${margin}, ${margin})`);
-
-        const xScale = scaleBand()
-        .range([0, width])
-        .domain(data.map((d) => d.year))
-        .padding(0.4);
-        
-        const yScale = scaleLinear()
-        .range([height, 0])
-        .domain([0, Math.floor(max) + 2]);
-
-        const makeYLines = () => axisLeft()
-        .scale(yScale);
-
-        chart.append('g')
-        .attr('transform', `translate(0, ${height})`)
-        .call(axisBottom(xScale));
-
-        chart.append('g')
-        .call(axisLeft(yScale));
-
-        chart.append('g')
-        .attr('class', 'grid')
-        .call(makeYLines()
-            .tickSize(-width, 0, 0)
-            .tickFormat('')
-        );
-
-        const barGroups = chart.selectAll()
-        .data(data)
-        .enter()
-        .append('g');
-
-        barGroups.append('rect')
-        .attr('class', 'bar')
-        .attr('x', (g) => xScale(g.year))
-        .attr('y', (g) => yScale(g.annual_consume))
-        .attr('height', (g) => height - yScale(g.annual_consume))
-        .attr('width', xScale.bandwidth());
-
-        barGroups.append('text')
-        .attr('class', 'value')
-        .attr('x', (a) => xScale(a.year) + xScale.bandwidth() / 2)
-        .attr('y', (a) => yScale(a.annual_consume) + 30)
-        .attr('text-anchor', 'middle')
-        .text((a) => `${a.annual_consume}`);
-        
-        svg.append('text')
-        .attr('class', 'label')
-        .attr('x', -(height / 2) - margin)
-        .attr('y', margin / 2.4)
-        .attr('transform', 'rotate(-90)')
-        .attr('text-anchor', 'middle')
-        .text('Electricity (*10^6)');
-
-        svg.append('text')
-        .attr('class', 'label')
-        .attr('x', width / 2 + margin)
-        .attr('y', height + margin * 1.7)
-        .attr('text-anchor', 'middle')
-        .text('Year');
-
-        svg.append('text')
-        .attr('class', 'title')
-        .attr('x', width / 2 + margin)
-        .attr('y', 40)
-        .attr('text-anchor', 'middle')
-        .text('Annual consumption of Electricity');
-    }
-
-    return (
-        <div id="svg-container" style={{ height: '400px', width: '600px', backgroundColor: '#2F4A6D' }}>
-            <svg className="svg-d3" id="svg-1" style={{ height: '100%', width: '100%' }} />
-        </div>
-    )
-}
-
-const LineChart = (props) => {
-    let data = props.data;
-    // let data = [{"gemeente2019":"228","gemeentenaam2019":"Ede","year":2010,"annual_consume":12810631,"num_connections":213256.59000000003,"annual_consume_lowtarif_perc":28.148273280299502,"delivery_perc":23.44969583528311,"perc_of_active_connections":95.70577912962096},{"gemeente2019":"228","gemeentenaam2019":"Ede","year":2011,"annual_consume":12895120,"num_connections":214063.18,"annual_consume_lowtarif_perc":37.289342963653326,"delivery_perc":23.729263746505126,"perc_of_active_connections":94.98120223671953},{"gemeente2019":"228","gemeentenaam2019":"Ede","year":2012,"annual_consume":13043705,"num_connections":217198.76999999996,"annual_consume_lowtarif_perc":36.71281321707205,"delivery_perc":23.960991280403857,"perc_of_active_connections":94.4426801284994},{"gemeente2019":"228","gemeentenaam2019":"Ede","year":2013,"annual_consume":12985893,"num_connections":218299.08,"annual_consume_lowtarif_perc":38.241359090909114,"delivery_perc":24.23090909090909,"perc_of_active_connections":94.34410000000005},{"gemeente2019":"228","gemeentenaam2019":"Ede","year":2014,"annual_consume":13089935,"num_connections":214704.85000000015,"annual_consume_lowtarif_perc":41.40243572395131,"delivery_perc":24.377988272440234,"perc_of_active_connections":92.52147045557066},{"gemeente2019":"228","gemeentenaam2019":"Ede","year":2015,"annual_consume":12742139,"num_connections":214750.5500000001,"annual_consume_lowtarif_perc":42.371878354203936,"delivery_perc":24.544722719141323,"perc_of_active_connections":92.29016100178893},{"gemeente2019":"228","gemeentenaam2019":"Ede","year":2016,"annual_consume":12657636,"num_connections":212930.74000000005,"annual_consume_lowtarif_perc":47.42520870337478,"delivery_perc":24.763765541740675,"perc_of_active_connections":92.23470248667857},{"gemeente2019":"228","gemeentenaam2019":"Ede","year":2017,"annual_consume":12455475,"num_connections":211364.1100000001,"annual_consume_lowtarif_perc":49.94710584101893,"delivery_perc":24.869565217391305,"perc_of_active_connections":92.09200263504616},{"gemeente2019":"228","gemeentenaam2019":"Ede","year":2018,"annual_consume":12322749,"num_connections":209890.86000000007,"annual_consume_lowtarif_perc":52.24220965637232,"delivery_perc":25.09264897781644,"perc_of_active_connections":91.71953458025234},{"gemeente2019":"228","gemeentenaam2019":"Ede","year":2019,"annual_consume":12647690,"num_connections":211544.09,"annual_consume_lowtarif_perc":28.44419735599622,"delivery_perc":23.272426817752596,"perc_of_active_connections":96.15531633616624}];
-    if (data !== null) {
-        data = data.map((d) => {
-            var d2 = {};
-            d2.year = d.year;
-            d2.annual_consume = (d.annual_consume / 1000000).toFixed(2);
-            return d2;
-        });
-
-        const max = Math.max.apply(Math, data.map(function(d) { return d.annual_consume; }));
-        const svg = selectAll('#svg-2');
-        const svgContainer = select('#container');
-
-        svg.selectAll("*")
-        .remove();
-        
-        const margin = props.settings.margin;
-        const width = props.settings.width - 2 * margin;
-        const height = props.settings.height - 2 * margin;
-
-        const chart = svg.append('g')
-        .attr('transform', `translate(${margin}, ${margin})`);
-
-        const xScale = scaleBand()
-        .range([0, width])
-        .domain(data.map((d) => d.year))
-        .padding(0.4);
-        
-        const yScale = scaleLinear()
-        .range([height, 0])
-        .domain([0, Math.floor(max) + 2]);
-
-        const makeYLines = () => axisLeft()
-        .scale(yScale);
-
-        chart.append('g')
-        .attr('transform', `translate(0, ${height})`)
-        .call(axisBottom(xScale));
-
-        chart.append('g')
-        .call(axisLeft(yScale));
-
-        chart.append('g')
-        .attr('class', 'grid')
-        .call(makeYLines()
-            .tickSize(-width, 0, 0)
-            .tickFormat('')
-        );
-
-        chart.append("path")
-        .datum(data)
-        .attr("fill", "none")
-        .attr("stroke", "steelblue")
-        .attr("stroke-width", 1.5)
-        .attr("d", line()
-            .x(function(d) { return xScale(d.year) })
-            .y(function(d) { return yScale(d.annual_consume) })
-        );
-        
-        svg.append('text')
-        .attr('class', 'label')
-        .attr('x', -(height / 2) - margin)
-        .attr('y', margin / 2.4)
-        .attr('transform', 'rotate(-90)')
-        .attr('text-anchor', 'middle')
-        .text('Electricity (*10^6)');
-
-        svg.append('text')
-        .attr('class', 'label')
-        .attr('x', width / 2 + margin)
-        .attr('y', height + margin * 1.7)
-        .attr('text-anchor', 'middle')
-        .text('Year');
-
-        svg.append('text')
-        .attr('class', 'title')
-        .attr('x', width / 2 + margin)
-        .attr('y', 40)
-        .attr('text-anchor', 'middle')
-        .text('Annual consumption of Electricity');
-    }
-
-    return (
-        <div id="svg-container" style={{ height: '400px', width: '600px', backgroundColor: '#2F4A6D' }}>
-            <svg className="svg-d3" id="svg-2" style={{ height: '100%', width: '100%' }} />
-        </div>
-    )
-}
-
 const SelectedItem = (props) => {
     let selected = {};
     if (props.specificData) {
         switch (props.scope) {
             case 'gemeente':
-                selected.gemeente = props.specificData[0].gemeentenaam2019;
+                selected.gemeente = props.specificData["electricity"][0].gemeentenaam2019;
                 break;
 
             case 'wijk':
@@ -268,11 +73,11 @@ class Data extends Component {
         loading: false,
         energySourceSetting: 'electricity',
         chartTypeSetting: 1,
-        timeframeSetting: '2019',
+        timeframeSetting: 1,
     }
 
     handleTimeFrameSettingChange = (e) => {
-        this.setState({ timeframeSetting: e.target.value });
+        this.setState({ timeframeSetting: parseInt(e.target.value) });
         console.log(e.target.value);
     }
 
@@ -286,12 +91,47 @@ class Data extends Component {
         console.log(e.target.value);
     }
 
+    handleTimeframe = (timeframe) => {
+        switch(timeframe){
+            case 1:
+                return [2019];
+            case 2:
+                return [2018];
+            case 3:
+                return [2017];
+            case 4:
+                return [2016];
+            case 5:
+                return [2015];
+            case 6:
+                return [2014];
+            case 7:
+                return [2013];
+            case 8:
+                return [2012];
+            case 9:
+                return [2011];
+            case 10:
+                return [2010];
+            case 11:
+                return [2019, 2018];
+            case 12:
+                return [2019, 2018, 2017];
+            case 13:
+                return [2019, 2018, 2017, 2016, 2015];
+            case 14:
+                return [2019, 2018, 2017, 2016, 2015, 2014, 2013, 2012, 2011, 2010];
+            default:
+                return [0];
+        }
+    }
+
 
     render() {
         const { classes } = this.props;
         
         const graphSettings = {
-            width: 600,
+            width: 450,
             height: 400,
             margin: 60,
         };
@@ -369,17 +209,43 @@ class Data extends Component {
                             </Grid>
                         </Grid>
                     </Grid>
-                    <Grid container direction="row" justify="space-between" style={{ width: '100%', height: '48px', marginTop: '20px' }} >
-                        <Grid item style={{ marginLeft: '10px' }}>
-                            <BarChart data={this.props.specificData} settings={graphSettings}></BarChart>
-                        </Grid>
+                    <Grid item style={{ height: '400px' }}>
+                        <Grid container direction="row" justify="space-between" style={{ width: '100%', marginTop: '10px' }} >
+                            {/* <Grid item style={{ width: '32%' }}>
+                                <BarChart data={this.props.specificData} settings={graphSettings}></BarChart>
+                            </Grid> */}
 
-                        <Grid item style={{ marginLeft: '10px' }}>
-                            <LineChart data={this.props.specificData} settings={graphSettings}></LineChart>
-                        </Grid>
+                            <Grid item style={{ width: '32%' }}>
+                                <BarChart2
+                                    id='barchart1'
+                                    data={this.props.specificData}
+                                    settings={graphSettings}
+                                    years={this.handleTimeframe(this.state.timeframeSetting)}
+                                    source={this.state.energySourceSetting}
+                                ></BarChart2>
+                            </Grid>
 
-                        <Grid item style={{ marginLeft: '10px' }}>
-                            <LineChart data={this.props.specificData} settings={graphSettings}></LineChart>
+                            <Grid item style={{ width: '32%' }}>
+                                <PieChart
+                                    id='piechart1'
+                                    data={this.props.specificData}
+                                    settings={graphSettings}
+                                    years={this.handleTimeframe(this.state.timeframeSetting)}
+                                    source={this.state.energySourceSetting}
+                                ></PieChart>
+                            </Grid>
+
+                            {/* <Grid item style={{ width: '32%' }}>
+                                <LineChart data={this.props.specificData} settings={graphSettings}></LineChart>
+                            </Grid> */}
+
+                            <Grid item style={{ width: '32%' }}>
+                                <LineChart
+                                    id='linechart1'
+                                    data={this.props.specificData}
+                                    settings={graphSettings}
+                                ></LineChart>
+                            </Grid>
                         </Grid>
                     </Grid>
                 </Grid>

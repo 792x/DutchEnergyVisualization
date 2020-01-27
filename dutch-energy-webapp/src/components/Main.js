@@ -158,7 +158,7 @@ class Main extends Component {
                                        {this.state.loadingNationalData ? <LoadingSpinner /> : <ListView scope={this.state.mapScopeSetting} nationalData={this.state.nationalData} selectListItem={this.selectListItem}/>}
                                     </Paper>
                                 </Grid>
-                                <Grid item style={{ display: 'flex', height: '45vh' }} xs={12}>
+                                <Grid item style={{ display: 'flex' }} xs={12}>
                                     <Paper className={classes.paper}>
                                         <Data scope={this.state.mapScopeSetting} specificData={this.state.specificData} selectedItem={this.state.selectedItem} />
                                     </Paper>

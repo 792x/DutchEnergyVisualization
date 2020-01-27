@@ -93,19 +93,102 @@ export async function getNationalGasData(scope:string, netmanager:string, timefr
     //TODO
 }
 
-export async function getSpecificElectricityData(scope:string, id:number){
-    let rows:any;
+export async function getNationalSummaryData(id:number){
+    // let rows:any;
+    // rows = await Electricity.findAll({
+    //     where: {
+    //         gemeente2019: {
+    //             [Op.like]: id
+    //         },
+    //     },
+    //     attributes: [
+    //         'gemeente2019', 
+    //         'gemeentenaam2019',
+    //         'year',
+    //         [fn('sum', col('annual_consume')), 'annual_consume'],
+    //         [fn('sum', col('num_connections')), 'num_connections'],
+    //         [fn('avg', col('annual_consume_lowtarif_perc')), 'annual_consume_lowtarif_perc'],
+    //         [fn('avg', col('delivery_perc')), 'delivery_perc'],
+    //         [fn('avg', col('perc_of_active_connections')), 'perc_of_active_connections'],
+    //     ],
+    //     group: ['gemeente2019', 'gemeentenaam2019', 'year'],
+    //     raw: true,
+    //     order: literal('year ASC')
+    // });
+
+    // if(rows){
+    //     if(rows.length > 0){
+    //         console.log(rows);
+    //         return rows;
+    //     } else {
+    //         return null;
+    //     }
+    // } else {
+        return false;
+    // }
+}
+
+
+export async function getSpecificData(scope:string, id:number){
+    let elec:any;
+    let gas:any;
+    let children:any;
+
     switch (scope) {
         case "gemeente":
-            rows = await Electricity.findAll({
+            // elec = await Electricity.findAll({
+            //     where: {
+            //         gemeente2019: {
+            //             [Op.like]: id
+            //         },
+            //     },
+            //     attributes: [
+            //         'gemeente2019',
+            //         'gemeentenaam2019',
+            //         'year',
+            //         [fn('sum', col('annual_consume')), 'annual_consume'],
+            //         [fn('sum', col('num_connections')), 'num_connections'],
+            //         [fn('avg', col('annual_consume_lowtarif_perc')), 'annual_consume_lowtarif_perc'],
+            //         [fn('avg', col('delivery_perc')), 'delivery_perc'],
+            //         [fn('avg', col('perc_of_active_connections')), 'perc_of_active_connections'],
+            //     ],
+            //     group: ['gemeente2019', 'gemeentenaam2019', 'year'],
+            //     raw: true,
+            //     order: literal('year ASC')
+            // });
+
+            // gas = await Gas.findAll({
+            //     where: {
+            //         gemeente2019: {
+            //             [Op.like]: id
+            //         },
+            //     },
+            //     attributes: [
+            //         'gemeente2019',
+            //         'gemeentenaam2019',
+            //         'year',
+            //         [fn('sum', col('annual_consume')), 'annual_consume'],
+            //         [fn('sum', col('num_connections')), 'num_connections'],
+            //         [fn('avg', col('annual_consume_lowtarif_perc')), 'annual_consume_lowtarif_perc'],
+            //         [fn('avg', col('delivery_perc')), 'delivery_perc'],
+            //         [fn('avg', col('perc_of_active_connections')), 'perc_of_active_connections'],
+            //     ],
+            //     group: ['gemeente2019', 'gemeentenaam2019', 'year'],
+            //     raw: true,
+            //     order: literal('year ASC')
+            // });
+
+            elec = await Electricity.findAll({
                 where: {
                     gemeente2019: {
                         [Op.like]: id
                     },
                 },
                 attributes: [
-                    'gemeente2019', 
+                    'gemeente2019',
                     'gemeentenaam2019',
+                    'wijk2019',
+                    'wijknaam2019',
                     'year',
                     [fn('sum', col('annual_consume')), 'annual_consume'],
                     [fn('sum', col('num_connections')), 'num_connections'],
@@ -113,23 +196,69 @@ export async function getSpecificElectricityData(scope:string, id:number){
                     [fn('avg', col('delivery_perc')), 'delivery_perc'],
                     [fn('avg', col('perc_of_active_connections')), 'perc_of_active_connections'],
                 ],
-                group: ['gemeente2019', 'gemeentenaam2019', 'year'],
+                group: ['gemeente2019', 'gemeentenaam2019', 'wijk2019', 'wijknaam2019', 'year'],
                 raw: true,
-                order: literal('year ASC')
+                order: literal('wijk2019 ASC')
+            });
+
+            gas = await Gas.findAll({
+                where: {
+                    gemeente2019: {
+                        [Op.like]: id
+                    },
+                },
+                attributes: [
+                    'gemeente2019',
+                    'gemeentenaam2019',
+                    'wijk2019',
+                    'wijknaam2019',
+                    'year',
+                    [fn('sum', col('annual_consume')), 'annual_consume'],
+                    [fn('sum', col('num_connections')), 'num_connections'],
+                    [fn('avg', col('annual_consume_lowtarif_perc')), 'annual_consume_lowtarif_perc'],
+                    [fn('avg', col('delivery_perc')), 'delivery_perc'],
+                    [fn('avg', col('perc_of_active_connections')), 'perc_of_active_connections'],
+                ],
+                group: ['gemeente2019', 'gemeentenaam2019', 'wijk2019', 'wijknaam2019', 'year'],
+                raw: true,
+                order: literal('wijk2019 ASC')
             });
             break;
 
         case "wijk":
-            rows = await Electricity.findAll({
+            elec = await Electricity.findAll({
                 where: {
                     wijk2019: {
                         [Op.like]: id
                     },
                 },
                 attributes: [
-                    'gemeente2019', 
+                    'gemeente2019',
                     'gemeentenaam2019',
-                    'wijk2019', 
+                    'wijk2019',
+                    'wijknaam2019',
+                    'year',
+                    [fn('sum', col('annual_consume')), 'annual_consume'],
+                    [fn('sum', col('num_connections')), 'num_connections'],
+                    [fn('avg', col('annual_consume_lowtarif_perc')), 'annual_consume_lowtarif_perc'],
+                    [fn('avg', col('delivery_perc')), 'delivery_perc'],
+                    [fn('avg', col('perc_of_active_connections')), 'perc_of_active_connections'],
+                ],
+                group: ['gemeente2019', 'gemeentenaam2019', 'wijk2019', 'wijknaam2019', 'year'],
+                raw: true,
+                order: literal('year ASC')
+            });
+
+            gas = await Gas.findAll({
+                where: {
+                    wijk2019: {
+                        [Op.like]: id
+                    },
+                },
+                attributes: [
+                    'gemeente2019',
+                    'gemeentenaam2019',
+                    'wijk2019',
                     'wijknaam2019',
                     'year',
                     [fn('sum', col('annual_consume')), 'annual_consume'],
@@ -145,18 +274,43 @@ export async function getSpecificElectricityData(scope:string, id:number){
             break;
 
         case "buurt":
-            rows = await Electricity.findAll({
+            elec = await Electricity.findAll({
                 where: {
                     buurt2019: {
                         [Op.like]: id
                     },
                 },
                 attributes: [
-                    'gemeente2019', 
+                    'gemeente2019',
                     'gemeentenaam2019',
-                    'wijk2019', 
+                    'wijk2019',
                     'wijknaam2019',
-                    'buurt2019', 
+                    'buurt2019',
+                    'buurtnaam2019',
+                    'year',
+                    [fn('sum', col('annual_consume')), 'annual_consume'],
+                    [fn('sum', col('num_connections')), 'num_connections'],
+                    [fn('avg', col('annual_consume_lowtarif_perc')), 'annual_consume_lowtarif_perc'],
+                    [fn('avg', col('delivery_perc')), 'delivery_perc'],
+                    [fn('avg', col('perc_of_active_connections')), 'perc_of_active_connections'],
+                ],
+                group: ['gemeente2019', 'gemeentenaam2019', 'wijk2019', 'wijknaam2019', 'buurt2019', 'buurtnaam2019', 'year'],
+                raw: true,
+                order: literal('year ASC')
+            });
+
+            gas = await Gas.findAll({
+                where: {
+                    buurt2019: {
+                        [Op.like]: id
+                    },
+                },
+                attributes: [
+                    'gemeente2019',
+                    'gemeentenaam2019',
+                    'wijk2019',
+                    'wijknaam2019',
+                    'buurt2019',
                     'buurtnaam2019',
                     'year',
                     [fn('sum', col('annual_consume')), 'annual_consume'],
@@ -172,109 +326,21 @@ export async function getSpecificElectricityData(scope:string, id:number){
             break;
     }
 
-    if(rows){
-        if(rows.length > 0){
-            console.log(rows);
-            return rows;
-        } else {
-            return null;
-        }
+    const result = {
+        // "electricity": elec,
+        // "gas": gas,
+        // "children": children,
+        "electricity": elec,
+        "gas": gas,
+    };
+
+    if(result){
+        console.log(result);
+        return result;
     } else {
-        return false;
+        return null;
     }
 }
-
-export async function getSpecificGasData(scope:string, id:number){
-    let rows:any;
-    switch (scope) {
-        case "gemeente":
-            rows = await Gas.findAll({
-                where: {
-                    gemeente2019: {
-                        [Op.like]: id
-                    },
-                },
-                attributes: [
-                    'gemeente2019', 
-                    'gemeentenaam2019',
-                    'year',
-                    [fn('sum', col('annual_consume')), 'annual_consume'],
-                    [fn('sum', col('num_connections')), 'num_connections'],
-                    [fn('avg', col('annual_consume_lowtarif_perc')), 'annual_consume_lowtarif_perc'],
-                    [fn('avg', col('delivery_perc')), 'delivery_perc'],
-                    [fn('avg', col('perc_of_active_connections')), 'perc_of_active_connections'],
-                ],
-                group: ['gemeente2019', 'gemeentenaam2019', 'year'],
-                raw: true,
-                order: literal('year ASC')
-            });
-            break;
-
-        case "wijk":
-            rows = await Gas.findAll({
-                where: {
-                    wijk2019: {
-                        [Op.like]: id
-                    },
-                },
-                attributes: [
-                    'gemeente2019', 
-                    'gemeentenaam2019',
-                    'wijk2019', 
-                    'wijknaam2019',
-                    'year',
-                    [fn('sum', col('annual_consume')), 'annual_consume'],
-                    [fn('sum', col('num_connections')), 'num_connections'],
-                    [fn('avg', col('annual_consume_lowtarif_perc')), 'annual_consume_lowtarif_perc'],
-                    [fn('avg', col('delivery_perc')), 'delivery_perc'],
-                    [fn('avg', col('perc_of_active_connections')), 'perc_of_active_connections'],
-                ],
-                group: ['gemeente2019', 'gemeentenaam2019', 'wijk2019', 'wijknaam2019', 'year'],
-                raw: true,
-                order: literal('year ASC')
-            });
-            break;
-
-        case "buurt":
-            rows = await Gas.findAll({
-                where: {
-                    buurt2019: {
-                        [Op.like]: id
-                    },
-                },
-                attributes: [
-                    'gemeente2019', 
-                    'gemeentenaam2019',
-                    'wijk2019', 
-                    'wijknaam2019',
-                    'buurt2019', 
-                    'buurtnaam2019',
-                    'year',
-                    [fn('sum', col('annual_consume')), 'annual_consume'],
-                    [fn('sum', col('num_connections')), 'num_connections'],
-                    [fn('avg', col('annual_consume_lowtarif_perc')), 'annual_consume_lowtarif_perc'],
-                    [fn('avg', col('delivery_perc')), 'delivery_perc'],
-                    [fn('avg', col('perc_of_active_connections')), 'perc_of_active_connections'],
-                ],
-                group: ['gemeente2019', 'gemeentenaam2019', 'wijk2019', 'wijknaam2019', 'buurt2019', 'buurtnaam2019', 'year'],
-                raw: true,
-                order: literal('year ASC')
-            });
-            break;
-    }
-
-    if(rows){
-        if(rows.length > 0){
-            console.log(rows);
-            return rows;
-        } else {
-            return null;
-        }
-    } else {
-        return false;
-    }
-}
-
 
 
 function handleData(data:number){
