@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { Grid, Typography, FormLabel, FormControl, Select, InputLabel, StylesProvider } from '@material-ui/core';
-import { BarChart, BarChart2, LineChart, PieChart } from '../components/Charts'
+import { BarChart, LineChart, PieChart } from '../components/Charts'
 
 
 const styles = theme => ({
@@ -211,18 +211,14 @@ class Data extends Component {
                     </Grid>
                     <Grid item style={{ height: '400px' }}>
                         <Grid container direction="row" justify="space-between" style={{ width: '100%', marginTop: '10px' }} >
-                            {/* <Grid item style={{ width: '32%' }}>
-                                <BarChart data={this.props.specificData} settings={graphSettings}></BarChart>
-                            </Grid> */}
-
                             <Grid item style={{ width: '32%' }}>
-                                <BarChart2
+                                <BarChart
                                     id='barchart1'
                                     data={this.props.specificData}
                                     settings={graphSettings}
                                     years={this.handleTimeframe(this.state.timeframeSetting)}
                                     source={this.state.energySourceSetting}
-                                ></BarChart2>
+                                ></BarChart>
                             </Grid>
 
                             <Grid item style={{ width: '32%' }}>
@@ -235,15 +231,13 @@ class Data extends Component {
                                 ></PieChart>
                             </Grid>
 
-                            {/* <Grid item style={{ width: '32%' }}>
-                                <LineChart data={this.props.specificData} settings={graphSettings}></LineChart>
-                            </Grid> */}
-
                             <Grid item style={{ width: '32%' }}>
                                 <LineChart
                                     id='linechart1'
                                     data={this.props.specificData}
                                     settings={graphSettings}
+                                    years={this.handleTimeframe(this.state.timeframeSetting)}
+                                    source={this.state.energySourceSetting}
                                 ></LineChart>
                             </Grid>
                         </Grid>
