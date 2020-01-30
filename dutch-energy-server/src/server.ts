@@ -32,6 +32,10 @@ server.get('/national',
     energyRoutingFunctions.getNationalData
 );
 
+server.get('/nationalSummary',
+    energyRoutingFunctions.getNationalDataSummary
+);
+
 server.get('/specific',
     energyRoutingFunctions.getSpecificData
 );

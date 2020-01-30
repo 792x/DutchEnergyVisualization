@@ -37,33 +37,50 @@ export async function getNationalData(req: Request, res: Response): Promise<void
      */
 
 
-    res.status(200).send();
+    // res.status(200).send();
 }
 
+export async function getNationalDataSummary(req: Request, res: Response): Promise<void> {
+    console.log('getNationalDataSummary called');
+
+    // const scope: string = req.query.scope;
+    // const netmanager: string = req.query.netmanager;
+    // const energysource: string = req.query.energysource;
+    // const timeframe: number = req.query.timeframe;
+    // const data: number = req.query.data;
+    const id: number = req.query.id; // wijk, buurt of gemeente id
+
+    const result = await energyQueries.getNationalSummaryData(id)
+    if(result){
+        res.status(200).send(result);
+    } else if (result === null){
+        res.status(404).send({error: "could not find any results"})
+    } else {
+        res.status(500).send({error: "something went wrong"})
+    }
+}
+
+
 export async function getSpecificData(req: Request, res: Response): Promise<void> {
-    console.log('getNationalData called');
+    console.log('getSpecificData called');
     //Get parameters from request, can also work with req.body.city if it was a post/put request
     const scope: string = req.query.scope;
-    const id: number = req.query.id; //wijk, buurt of gemeente nummer
-    const netmanager: string = req.query.netmanager;
-    const energysource: string = req.query.energysource;
-    const timeframe: number = req.query.timeframe;
-    const data: number = req.query.data;
+    const id: number = req.query.id; // wijk, buurt of gemeente id
 
-    console.log(scope, id, netmanager, energysource, timeframe, data);
+    // console.log(scope, id, netmanager, energysource, timeframe, data);
+    console.log(scope, id);
 
-    //TODO:
-    if(energysource === 'electricity'){
-
+    const result = await energyQueries.getSpecificData(scope, id);
+    if(result){
+        res.status(200).send(result);
+    } else if (result === null){
+        res.status(404).send({error: "could not find any results"})
     } else {
-
+        res.status(500).send({error: "something went wrong"})
     }
 
-    /**
-     * stuur alle nuttige data terug aangezien het klein is voor maar 1 wijk/buurt/gemeente, eventueel ook timeframe negeren en gewoon alle jaren meesturen en client side handelen
-     * 
-     */
+    //TODO gas data
 
 
-    res.status(200).send();
+    // res.status(200).send();
 }

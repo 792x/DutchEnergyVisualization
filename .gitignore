@@ -35,3 +35,7 @@ docs/
 *.udb
 *.env
 .firebase
+
+dutch-energy-server/src/database.ts
+dutch-energy-server/package-lock.json
+dutch-energy-webapp/package-lock.json
