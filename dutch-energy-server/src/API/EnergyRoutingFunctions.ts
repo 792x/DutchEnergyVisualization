@@ -48,9 +48,9 @@ export async function getNationalDataSummary(req: Request, res: Response): Promi
     // const energysource: string = req.query.energysource;
     // const timeframe: number = req.query.timeframe;
     // const data: number = req.query.data;
-    const id: number = req.query.id; // wijk, buurt of gemeente id
+    // const id: number = req.query.id; // wijk, buurt of gemeente id
 
-    const result = await energyQueries.getNationalSummaryData(id)
+    const result = await energyQueries.getNationalSummaryData()
     if(result){
         res.status(200).send(result);
     } else if (result === null){
