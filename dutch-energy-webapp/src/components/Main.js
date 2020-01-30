@@ -13,11 +13,11 @@ import LoadingSpinner from './LoadingSpinner';
 const styles = theme => ({
     root: {
         height: '100%',
+        width: '100%'
     },
     paper: {
         padding: '16px',
         width: '100%',
-        margin: '10px',
         textAlign: 'center',
         color: theme.palette.text.secondary,
     },
@@ -140,30 +140,30 @@ class Main extends Component {
         return (
             <ThemeProvider theme={theme}>
                 <div className={classes.root}>
-                    <Grid container style={{ height: '100%' }} direction="column" justify="space-between">
-                        <Grid item style={{ display: 'flex' }} xs={12}>
+                    <Grid container style={{ height: '100%' }} direction="row" justify="space-between">
+                        <Grid item style={{ display: 'flex', height: '55%' }} xs={12}>
                             <Grid container direciton="column" justify="space-between">
-                                <Grid item style={{ display: 'flex' }} xs={3}>
+                                <Grid item style={{ display: 'flex', height: '100%', padding: '10px' }} xs={3}>
                                     <Paper className={classes.paper}>
-                                        <Settings applyMapSettings={this.applyMapSettings}/>
+                                        <Settings applyMapSettings={this.applyMapSettings} />
                                     </Paper>
                                 </Grid>
-                                <Grid item style={{ display: 'flex', height: '55vh' }} xs={6}>
+                                <Grid item style={{ display: 'flex', height: '100%', padding: '10px' }} xs={6}>
                                     <Paper className={classes.paper}>
-                                        <Map scope={this.state.mapScopeSetting} selectItem={this.selectItem} selectedListItem={this.state.selectedListItem} nationalData={this.state.nationalData}/>
+                                        <Map scope={this.state.mapScopeSetting} selectItem={this.selectItem} selectedListItem={this.state.selectedListItem} nationalData={this.state.nationalData} />
                                     </Paper>
                                 </Grid>
-                                <Grid item style={{ display: 'flex', height: '55vh' }} xs={3}>
+                                <Grid item style={{ display: 'flex', height: '100%', padding: '10px' }} xs={3}>
                                     <Paper className={classes.paper}>
-                                       {this.state.loadingNationalData ? <LoadingSpinner /> : <ListView scope={this.state.mapScopeSetting} nationalData={this.state.nationalData ? Object.keys(this.state.nationalData).map((k) => this.state.nationalData[k]) : []} selectListItem={this.selectListItem}/>}
-                                    </Paper>
-                                </Grid>
-                                <Grid item style={{ display: 'flex', height: '55vh' }} xs={12}>
-                                    <Paper className={classes.paper}>
-                                        <Data scope={this.state.mapScopeSetting} specificData={this.state.specificData} selectedItem={this.state.selectedItem} />
+                                        {this.state.loadingNationalData ? <LoadingSpinner /> : <ListView scope={this.state.mapScopeSetting} nationalData={this.state.nationalData ? Object.keys(this.state.nationalData).map((k) => this.state.nationalData[k]) : []} selectListItem={this.selectListItem} />}
                                     </Paper>
                                 </Grid>
                             </Grid>
+                        </Grid>
+                        <Grid item style={{ display: 'flex', height: '45%', padding: '10px' }} xs={12}>
+                            <Paper className={classes.paper}>
+                                <Data scope={this.state.mapScopeSetting} specificData={this.state.specificData} selectedItem={this.state.selectedItem} />
+                            </Paper>
                         </Grid>
                     </Grid>
                 </div>

@@ -131,15 +131,15 @@ class Data extends Component {
         const { classes } = this.props;
         
         const graphSettings = {
-            width: 450,
-            height: 400,
+            width: 350,
+            height: 320,
             margin: 60,
         };
 
         return (
             <div className={classes.root}>
-                <Grid container direction="column" justify="flex-start" style={{ height: '100%' }}>
-                    <Grid item style={{ height: '48px' }}>
+                <Grid container direction="row" justify="flex-start" style={{ height: '100%' }}>
+                    <Grid item style={{ height: '48px', width: '100%' }}>
                         <Grid container direction="row" justify="space-between" style={{ width: '100%', height: '48px' }} >
                             <Grid item style={{ marginTop: '10px', marginLeft: '10px' }}>
                                 <SelectedItem scope={this.props.scope} specificData={this.props.specificData}></SelectedItem>
@@ -209,9 +209,9 @@ class Data extends Component {
                             </Grid>
                         </Grid>
                     </Grid>
-                    <Grid item style={{ height: '400px' }}>
-                        <Grid container direction="row" justify="space-between" style={{ width: '100%', marginTop: '10px' }} >
-                            <Grid item style={{ width: '32%' }}>
+                    <Grid item style={{ display: 'flex', height: 'calc(100% - 48px)', width: '100%', paddingTop: '10px' }}>
+                        <Grid container direction="row" justify="space-between" style={{display: 'flex'}}>
+                            <Grid item style={{ width: '32%', height: '100%',}}>
                                 <BarChart
                                     id='barchart1'
                                     data={this.props.specificData}
@@ -221,7 +221,7 @@ class Data extends Component {
                                 ></BarChart>
                             </Grid>
 
-                            <Grid item style={{ width: '32%' }}>
+                            <Grid item style={{ width: '32%',  height: '100%'}}>
                                 <PieChart
                                     id='piechart1'
                                     data={this.props.specificData}
@@ -231,7 +231,7 @@ class Data extends Component {
                                 ></PieChart>
                             </Grid>
 
-                            <Grid item style={{ width: '32%' }}>
+                            <Grid item style={{ width: '32%',  height: '100%' }}>
                                 <LineChart
                                     id='linechart1'
                                     data={this.props.specificData}
