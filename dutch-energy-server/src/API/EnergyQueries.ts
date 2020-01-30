@@ -94,50 +94,48 @@ export async function getNationalGasData(scope:string, netmanager:string, timefr
 }
 
 export async function getNationalSummaryData(){
-    let rows:any;
-    rows = await Electricity.findAll({
+    let elec:any;
+    elec = await Electricity.findAll({
         attributes: [
             'gemeente2019',
             'gemeentenaam2019',
             'year',
             [fn('sum', col('annual_consume')), 'annual_consume'],
-            // [fn('sum', col('num_connections')), 'num_connections'],
-            // [fn('avg', col('annual_consume_lowtarif_perc')), 'annual_consume_lowtarif_perc'],
-            // [fn('avg', col('delivery_perc')), 'delivery_perc'],
-            // [fn('avg', col('perc_of_active_connections')), 'perc_of_active_connections'],
+            [fn('sum', col('num_connections')), 'num_connections'],
+            [fn('avg', col('annual_consume_lowtarif_perc')), 'annual_consume_lowtarif_perc'],
+            [fn('avg', col('delivery_perc')), 'delivery_perc'],
+            [fn('avg', col('perc_of_active_connections')), 'perc_of_active_connections'],
+            [fn('avg', col('smartmeter_perc')), 'smartmeter_perc'],
         ],
         group: ['gemeente2019', 'gemeentenaam2019', 'year'],
         raw: true,
     });
+    console.log(elec);
 
     // Filter years (multiple years possible)
-    rows = rows.filter((d:any) => {
+    elec = elec.filter((d:any) => {
         return [2019].includes(d.year);
     });
 
-    // Aggregate attributes
-    let data:any = [];
-    rows.reduce((res:any, val:any) => {
-        if (!res[val.gemeente2019]) {
-            res[val.gemeente2019] = {
-                gemeente2019: val.gemeente2019,
-                annual_consume: 0,
-            };
-            data.push(res[val.gemeente2019]);
-        }
-        res[val.gemeente2019].annual_consume += val.annual_consume;
-        return res;
-    }, {});
-
-    // Get max value
-    const max:number = Math.max.apply(Math, rows.map(function(d:any) { return d.annual_consume; }));
+    // Get max values
+    const annual_consume_max:number = Math.max.apply(Math, elec.map(function(d:any) { return d.annual_consume; }));
+    const num_connections_max:number = Math.max.apply(Math, elec.map(function(d:any) { return d.num_connections; }));
+    const annual_consume_lowtarif_perc_max:number = Math.max.apply(Math, elec.map(function(d:any) { return d.annual_consume_lowtarif_perc; }));
+    const delivery_perc_max:number = Math.max.apply(Math, elec.map(function(d:any) { return d.delivery_perc; }));
+    const smartmeter_perc_max:number = Math.max.apply(Math, elec.map(function(d:any) { return d.smartmeter_perc; }));
+    const perc_of_active_connections_max:number = Math.max.apply(Math, elec.map(function(d:any) { return d.perc_of_active_connections; }));
 
     // Map values to range (0, 255)
     let values:any = [];
-    data.reduce((res:any, val:any) => {
+    elec.reduce((res:any, val:any) => {
         res[val.gemeente2019] = {
             gemeente2019: val.gemeente2019,
-            color: Math.floor(val.annual_consume * 255 / max),
+            annual_consume_lowtarif_perc: annual_consume_lowtarif_perc_max,
+            annual_consume_color: Math.floor(val.annual_consume * 255 / annual_consume_max),
+            num_connections_color: Math.floor(val.num_connections * 255 / num_connections_max),
+            delivery_perc_color: Math.floor(val.delivery_perc * 255 / delivery_perc_max),
+            perc_of_active_connections_color: Math.floor(val.perc_of_active_connections * 255 / perc_of_active_connections_max),
+            smartmeter_perc_color:Math.floor(val.smartmeter_perc * 255 / smartmeter_perc_max),
         };
         values.push(res[val.gemeente2019]);
         return res;
@@ -145,7 +143,7 @@ export async function getNationalSummaryData(){
 
     if(values){
         if(values.length > 0){
-            console.log(values);
+            // console.log(values);
             return values;
         } else {
             return null;
@@ -458,12 +456,17 @@ export async function getSpecificData(scope:string, id:number){
     };
 
     if(result){
-        console.log(result);
+        // console.log(result);
         return result;
     } else {
         return null;
     }
 }
+
+function getAverage(array:any) {
+    const sum = array.reduce((a:number, b:number) => a + b, 0);
+    return sum / array.length;
+  }
 
 
 function handleData(data:number){

@@ -32,7 +32,7 @@ server.get('/national',
     energyRoutingFunctions.getNationalData
 );
 
-server.get('/nationalSummary',
+server.get('/nationalsummary',
     energyRoutingFunctions.getNationalDataSummary
 );
 
