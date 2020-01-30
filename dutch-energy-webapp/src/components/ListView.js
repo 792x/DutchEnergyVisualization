@@ -18,9 +18,9 @@ const styles = theme => ({
     },
 });
 
-const cutString = (string) => {
-    if(string.length > 25) {
-        return string.substring(0, 25).concat('...');
+const cutString = (string, length) => {
+    if(string.length > length) {
+        return string.substring(0, length).concat('...');
     } else {
         return string;
     }
@@ -31,18 +31,18 @@ const getListItem = (scope, item) => {
     switch(scope){
         case 'buurt':
             return <ListItemText
-            primary={cutString(item.buurtnaam2019)}
-            secondary={item.city}
+            primary={cutString(item.buurtnaam2019, 20)}
+            secondary={cutString(item.city, 18)}
         />
         case 'gemeente':
             return <ListItemText
-            primary={cutString(item.gemeentenaam2019)}
-            secondary={item.city}
+            primary={cutString(item.gemeentenaam2019, 20)}
+            secondary={cutString(item.city, 18)}
         />
         case 'wijk':
             return <ListItemText
-            primary={cutString(item.wijknaam2019)}
-            secondary={item.city}
+            primary={cutString(item.wijknaam2019, 20)}
+            secondary={cutString(item.city, 18)}
         />
         default:
         return <ListItemText
