@@ -1,6 +1,7 @@
-import React, { Component } from 'react'
+import React, { Component, forwardRef } from 'react'
 import { Grid, Typography, IconButton, List, ListItem, ListItemAvatar, ListItemText, Divider, TextField } from '@material-ui/core';
-
+import { FixedSizeList as FList } from "react-window";
+import AutoSizer from "react-virtualized-auto-sizer";
 import { withStyles } from '@material-ui/core/styles';
 import 'boxicons';
 
@@ -56,19 +57,36 @@ const getListTitle = (scope) => {
     }
 }
 
-
 class ListView extends Component {
 
     state = {
-        allItems: {},
-        shownItems: {},
+        allItems: [],
+        shownItems: [],
         searchTerm: ''
     }
 
 
-    componentDidMount = () => {
+    componentDidMount = async () => {
+        let result = this.props.nationalData;
+        console.log(result);
+
         this.setState({allItems: this.props.nationalData, shownItems: this.props.nationalData})
     }
+
+
+    getItemIdentifier = (scope, index) => {
+        switch(scope){
+            case 'buurt':
+                return this.state.shownItems[index].buurt2019;
+            case 'gemeente':
+                return this.state.shownItems[index].gemeente2019;
+            case 'wijk':
+                return this.state.shownItems[index].wijk2019;
+            default:
+                return "Error"
+        }
+    };
+
 
     handleSearch = () => {
         const currentItems = this.state.allItems;
@@ -95,9 +113,23 @@ class ListView extends Component {
     }
 
 
-    handleClick = (identifier) => {
+    handleClick = (index) => {
+        const identifier = this.getItemIdentifier(this.props.scope, index);
+
         this.props.selectListItem(identifier);
     }
+
+    getRow = ({ index, style }) => {
+        return <div style={style} >
+            <ListItem key={index}  button onClick={() => this.handleClick(index)}>
+                <ListItemAvatar >
+                    <NeighbourhoodIcon />
+                </ListItemAvatar>
+                {getListItem(this.props.scope, this.state.shownItems[index])}
+            </ListItem>
+            <Divider variant="inset" />
+        </div>
+      };
 
     render() {
         const { classes } = this.props;
@@ -116,22 +148,20 @@ class ListView extends Component {
                             </Grid>
                         </Grid>
                     </Grid>
-                    <Grid item style={{overflow: 'auto', height: '85%'}}>
-                        <List className={classes.list}>
-                            {
-                                Object.keys(this.state.shownItems).map((n, i) =>
-                                    <div key={i}>
-                                        <ListItem key={i} button onClick={() => this.handleClick(n)}>
-                                            <ListItemAvatar >
-                                                <NeighbourhoodIcon />
-                                            </ListItemAvatar>
-                                            {getListItem(this.props.scope, this.state.shownItems[n])}
-                                        </ListItem>
-                                        <Divider variant="inset" />
-                                    </div>
-                                )
-                            }
-                        </List>
+                    <Grid item style={{ height: '85%'}}>
+                        <AutoSizer>
+                            {({ height, width }) => (
+                            <FList
+                                className="List"
+                                height={height}
+                                itemCount={1000}
+                                itemSize={73}
+                                width={width}
+                            >
+                                {this.getRow}
+                            </FList>
+                            )}
+                    </AutoSizer>
                     </Grid>
                 </Grid>
             </div>

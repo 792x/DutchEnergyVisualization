@@ -155,7 +155,7 @@ class Main extends Component {
                                 </Grid>
                                 <Grid item style={{ display: 'flex', height: '55vh' }} xs={3}>
                                     <Paper className={classes.paper}>
-                                       {this.state.loadingNationalData ? <LoadingSpinner /> : <ListView scope={this.state.mapScopeSetting} nationalData={this.state.nationalData} selectListItem={this.selectListItem}/>}
+                                       {this.state.loadingNationalData ? <LoadingSpinner /> : <ListView scope={this.state.mapScopeSetting} nationalData={this.state.nationalData ? Object.keys(this.state.nationalData).map((k) => this.state.nationalData[k]) : []} selectListItem={this.selectListItem}/>}
                                     </Paper>
                                 </Grid>
                                 <Grid item style={{ display: 'flex' }} xs={12}>

@@ -12,11 +12,7 @@ const styles = theme => ({
 
 });
 
-const style = {
-    "color": "#ff7800",
-    "weight": 1,
-    "opacity": 1
-};
+
 
 function getGeoJson(scope){ 
     switch(scope){
@@ -49,7 +45,7 @@ class Map extends Component {
         }).addTo(this.map);
 
         this.customLayer = L.geoJSON(geojson, {
-            style: style,
+            style: this.styleEachFeature,
             onEachFeature: this.onEachFeature
         })
 
@@ -65,7 +61,7 @@ class Map extends Component {
         this.map.removeLayer(this.customLayer);
 
         this.customLayer = L.geoJSON(geojson, {
-            style: style,
+            style: this.styleEachFeature,
             onEachFeature: this.onEachFeature
         })
 
@@ -82,6 +78,31 @@ class Map extends Component {
     }
 
     delayHelper = ms => new Promise(res => setTimeout(res, ms));
+
+    styleEachFeature = (feature, layer) => {
+        // return {color: "#ff0000"};
+        let style  = {
+            "color": "#B8B8B8",
+            "weight": 1,
+            "opacity": 1
+        };
+        feature.properties.identifier = this.parseIdentifier(feature.properties.statcode);
+
+        if(this.props.nationalData){
+            const data = this.props.nationalData[feature.properties.identifier];
+            if(data) {
+                //TODO: replace with data.relativeValue
+                if(data.gemeentenaam2019 === 'Hollands Kroon'){
+                    style = {
+                            "color": "#ff7800",
+                            "weight": 1,
+                            "opacity": 1
+                        };
+                    }
+                }
+            }
+        return style;
+    }
 
     onEachFeature = (feature, layer) => {
         // layer.on({
