@@ -72,7 +72,7 @@ class Data extends Component {
     state = {
         loading: false,
         energySourceSetting: 'electricity',
-        chartTypeSetting: 1,
+        dataSetting: 1,
         timeframeSetting: 1,
     }
 
@@ -81,8 +81,8 @@ class Data extends Component {
         console.log(e.target.value);
     }
 
-    handleChartTypeSettingChange = (e) => {
-        this.setState({ chartTypeSetting: e.target.value });
+    handleDataSettingChange = (e) => {
+        this.setState({ dataSetting: e.target.value });
         console.log(e.target.value);
     }
 
@@ -191,17 +191,20 @@ class Data extends Component {
                                     <Grid item>
                                         <FormControl >
                                             <InputLabel htmlFor="outlined-age-native-simple">
-                                                Chart Type
+                                                Data
                                             </InputLabel>
                                             <Select
                                                 native
-                                                value={this.state.chartTypeSetting}
-                                                onChange={this.handleChartTypeSettingChange}
+                                                value={this.state.dataSetting}
+                                                onChange={this.handleDataSettingChange}
                                             >
-                                                <option value={1}>Trends</option>
-                                                <option value={2}>Bar charts</option>
-                                                <option value={3}>Pie charts</option>
-                                                <option value={4}>Distributions</option>
+                                                <option value={1}>Total consumption</option>
+                                                <option value={2}>Consumption per connection</option>
+                                                <option value={3}>Total production</option>
+                                                <option value={4}>Production per connection</option>
+                                                <option value={5}>Number of connections</option>
+                                                <option value={6}>Number of smart meters</option>
+                                                <option value={7}>Market share</option>
                                             </Select>
                                         </FormControl>
                                     </Grid>
@@ -211,9 +214,11 @@ class Data extends Component {
                     </Grid>
                     <Grid item style={{ height: '400px' }}>
                         <Grid container direction="row" justify="space-between" style={{ width: '100%', marginTop: '10px' }} >
+                            
+                            {/* Example */}
                             <Grid item style={{ width: '32%' }}>
                                 <BarChart
-                                    id='barchart1'
+                                    id='barchart0'
                                     data={this.props.specificData}
                                     settings={graphSettings}
                                     years={this.handleTimeframe(this.state.timeframeSetting)}
@@ -223,7 +228,7 @@ class Data extends Component {
 
                             <Grid item style={{ width: '32%' }}>
                                 <PieChart
-                                    id='piechart1'
+                                    id='piechart0'
                                     data={this.props.specificData}
                                     settings={graphSettings}
                                     years={this.handleTimeframe(this.state.timeframeSetting)}
@@ -233,13 +238,84 @@ class Data extends Component {
 
                             <Grid item style={{ width: '32%' }}>
                                 <LineChart
-                                    id='linechart1'
+                                    id='linechart0'
                                     data={this.props.specificData}
                                     settings={graphSettings}
                                     years={this.handleTimeframe(this.state.timeframeSetting)}
                                     source={this.state.energySourceSetting}
                                 ></LineChart>
                             </Grid>
+
+                            {/* Total consumption */}
+                            {/* <Grid item style={{ width: '32%' }}>
+                                <LineChart
+                                    id='linechart1'
+                                    data={this.props.specificData}
+                                    dataType={this.state.dataSetting}
+                                    settings={graphSettings}
+                                    years={this.handleTimeframe(this.state.timeframeSetting)}
+                                    source={this.state.energySourceSetting}
+                                ></LineChart>
+                            </Grid>
+
+                            <Grid item style={{ width: '32%' }}>
+                                <BarChart
+                                    id='barchart1'
+                                    data={this.props.specificData}
+                                    dataType={this.state.dataSetting}
+                                    settings={graphSettings}
+                                    years={this.handleTimeframe(this.state.timeframeSetting)}
+                                    source={this.state.energySourceSetting}
+                                    type='top'
+                                ></BarChart>
+                            </Grid>
+
+                            <Grid item style={{ width: '32%' }}>
+                                <BarChart
+                                    id='barchart2'
+                                    data={this.props.specificData}
+                                    dataType={this.state.dataSetting}
+                                    settings={graphSettings}
+                                    years={this.handleTimeframe(this.state.timeframeSetting)}
+                                    source={this.state.energySourceSetting}
+                                    type='bottom'
+                                ></BarChart>
+                            </Grid> */}
+
+                            {/* Market share */}
+                            {/* <Grid item style={{ width: '32%' }}>
+                                <PieChart
+                                    id='piechart1'
+                                    data={this.props.specificData}
+                                    settings={graphSettings}
+                                    years={this.handleTimeframe(this.state.timeframeSetting)}
+                                    source={this.state.energySourceSetting}
+                                    type='cons'
+                                ></PieChart>
+                            </Grid>
+
+                            <Grid item style={{ width: '32%' }}>
+                                <PieChart
+                                    id='piechart2'
+                                    data={this.props.specificData}
+                                    settings={graphSettings}
+                                    years={this.handleTimeframe(this.state.timeframeSetting)}
+                                    source={this.state.energySourceSetting}
+                                    type='cons_avg'
+                                ></PieChart>
+                            </Grid>
+
+                            <Grid item style={{ width: '32%' }}>
+                                <PieChart
+                                    id='piechart3'
+                                    data={this.props.specificData}
+                                    settings={graphSettings}
+                                    years={this.handleTimeframe(this.state.timeframeSetting)}
+                                    source={this.state.energySourceSetting}
+                                    type='prod'
+                                ></PieChart>
+                            </Grid> */}
+
                         </Grid>
                     </Grid>
                 </Grid>

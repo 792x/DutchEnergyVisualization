@@ -41,21 +41,25 @@ export const BarChart = (props) => {
         let children2 = [];
         children.reduce((res, val) => {
             if (!res[val.wijknaam2019]) {
-                res[val.wijknaam2019] = { wijknaam2019: val.wijknaam2019, annual_consume: 0 };
+                res[val.wijknaam2019] = { wijknaam2019: val.wijknaam2019, y: 0 };
                 children2.push(res[val.wijknaam2019]);
             }
-            res[val.wijknaam2019].annual_consume += val.annual_consume;
+            res[val.wijknaam2019].y += val.annual_consume;
             return res;
         }, {});
 
-        // Sort on attribute and select first 5 elements
-        children2.sort((a, b) => { return b.annual_consume - a.annual_consume });
-        data = children2.slice(0, 5);
+        // Sort on attribute and select first/last 5 elements
+        children2.sort((a, b) => { return b.y - a.y });
+        if (props.type === 'top') {
+            data = children2.slice(0, 5);
+        } else if (props.type === 'bottom') {
+            data = children2.slice(children2.length - 5);
+        }
     
         data = data.map((d) => {
             var d2 = {};
             d2.x = d.wijknaam2019;
-            d2.y = (d.annual_consume / 1000000).toFixed(2);
+            d2.y = (d.y / 1000000).toFixed(2);
             return d2;
         });
         console.log('BarChart', data);
@@ -142,7 +146,7 @@ export const BarChart = (props) => {
         .attr('x', width / 2 + margin)
         .attr('y', 40)
         .attr('text-anchor', 'middle')
-        .text('Top 5 consumption');
+        .text(capitalize(props.type) + ' 5 consumption');
     }
 
     return (
