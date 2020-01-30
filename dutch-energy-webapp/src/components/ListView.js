@@ -3,6 +3,7 @@ import { Grid, Typography, IconButton, List, ListItem, ListItemAvatar, ListItemT
 import { FixedSizeList as FList } from "react-window";
 import AutoSizer from "react-virtualized-auto-sizer";
 import { withStyles } from '@material-ui/core/styles';
+import * as Fuse from 'fuse.js';
 import 'boxicons';
 
 
@@ -17,22 +18,30 @@ const styles = theme => ({
     },
 });
 
+const cutString = (string) => {
+    if(string.length > 25) {
+        return string.substring(0, 25).concat('...');
+    } else {
+        return string;
+    }
+}
+
 
 const getListItem = (scope, item) => {
     switch(scope){
         case 'buurt':
             return <ListItemText
-            primary={item.buurtnaam2019}
+            primary={cutString(item.buurtnaam2019)}
             secondary={item.city}
         />
         case 'gemeente':
             return <ListItemText
-            primary={item.gemeentenaam2019}
+            primary={cutString(item.gemeentenaam2019)}
             secondary={item.city}
         />
         case 'wijk':
             return <ListItemText
-            primary={item.wijknaam2019}
+            primary={cutString(item.wijknaam2019)}
             secondary={item.city}
         />
         default:
@@ -57,6 +66,21 @@ const getListTitle = (scope) => {
     }
 }
 
+const fuseOptions = {
+    shouldSort: true,
+    threshold: 0.1,
+    location: 0,
+    distance: 1000,
+    maxPatternLength: 32,
+    minMatchCharLength: 1,
+    keys: [
+      "city",
+      "gemeentenaam2019",
+      "buurtnaam2019",
+      "wijknaam2019",
+    ]
+  };
+
 class ListView extends Component {
 
     state = {
@@ -69,6 +93,7 @@ class ListView extends Component {
     componentDidMount = async () => {
         let result = this.props.nationalData;
         console.log(result);
+        
 
         this.setState({allItems: this.props.nationalData, shownItems: this.props.nationalData})
     }
@@ -88,21 +113,17 @@ class ListView extends Component {
     };
 
 
-    handleSearch = () => {
+    handleSearch = (e) => {
         const currentItems = this.state.allItems;
-        const searchTerm = this.state.searchTerm;
+        // const searchTerm = this.state.searchTerm;
+        const searchTerm = e.target.value;
         console.log('searching:' +searchTerm);
         
         if(searchTerm){
-            const searchResult = {}
-            for (const key in currentItems) {
-                if (currentItems.hasOwnProperty(key)) {
-                    if (Object.values(currentItems[key]).toString().indexOf(searchTerm) !== -1) {
-                        searchResult[key] = currentItems[key]
-                    }
-                }
-            }
-            this.setState({shownItems: searchResult});
+            const fuse = new Fuse(currentItems, fuseOptions); // "list" is the item array
+            const result = fuse.search(searchTerm);
+            console.log(result);
+            this.setState({shownItems: result});
         } else {
             this.setState({shownItems: this.state.allItems});
         }
@@ -141,10 +162,10 @@ class ListView extends Component {
                             <Grid item style={{paddingTop: '10px', paddingLeft: '10px'}}><Typography variant="h6">{getListTitle(this.props.scope)}</Typography>
                             </Grid>
                             <Grid item >
-                                <TextField size="small" id="outlined-basic" label="Search" variant="outlined" style={{width: '140px'}} onChange={this.handleSearchTermChange}/>
-                                <IconButton color="primary" aria-label="search" style={{marginTop:'-5px'}} onClick={this.handleSearch}>
+                                <TextField size="small" id="outlined-basic" label="Search" variant="outlined" style={{width: '140px'}} onChange={this.handleSearch}/>
+                                {/* <IconButton color="primary" aria-label="search" style={{marginTop:'-5px'}} onClick={this.handleSearch}>
                                     <SearchIcon />
-                                </IconButton>
+                                </IconButton> */}
                             </Grid>
                         </Grid>
                     </Grid>
@@ -154,7 +175,7 @@ class ListView extends Component {
                             <FList
                                 className="List"
                                 height={height}
-                                itemCount={1000}
+                                itemCount={this.state.shownItems.length}
                                 itemSize={73}
                                 width={width}
                             >
