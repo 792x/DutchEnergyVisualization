@@ -41,25 +41,39 @@ export class BarChart extends Component {
             // Aggregate attributes
             let children2 = [];
             children.reduce((res, val) => {
-                if (!res[val.wijknaam2019]) {
-                    res[val.wijknaam2019] = { wijknaam2019: val.wijknaam2019, y: 0 };
-                    children2.push(res[val.wijknaam2019]);
+                let x;
+                switch(this.props.scope) {
+                    case 'gemeente':
+                        x = val.wijknaam2019;
+                        break;
+                    case 'wijk':
+                        x = val.buurtnaam2019;
+                        break;
+                    case 'buurt':
+                        x = val.street;
+                        break;
                 }
+
+                if (!res[x]) {
+                    res[x] = { x: x, y: 0 };
+                    children2.push(res[x]);
+                }
+
                 switch(this.props.dataType) {
                     case 1:
-                        res[val.wijknaam2019].y += val.annual_consume;
+                        res[x].y += val.annual_consume;
                         break;
                     case 2:
-                        res[val.wijknaam2019].y += val.annual_consume / val.num_connections; // * val.perc_of_active_connections;
+                        res[x].y += val.annual_consume / val.num_connections; // * val.perc_of_active_connections;
                         break;
                     case 3:
-                        res[val.wijknaam2019].y += val.annual_consume * val.delivery_perc / 100;
+                        res[x].y += val.annual_consume * val.delivery_perc / 100;
                         break;
                     case 4:
-                        res[val.wijknaam2019].y += val.annual_consume * val.delivery_perc / 100 / val.num_connections; // * val.perc_of_active_connections;
+                        res[x].y += val.annual_consume * val.delivery_perc / 100 / val.num_connections; // * val.perc_of_active_connections;
                         break;
                     case 5:
-                        res[val.wijknaam2019].y += val.num_connections;
+                        res[x].y += val.num_connections;
                         break;
                 }
                 return res;
@@ -75,7 +89,7 @@ export class BarChart extends Component {
         
             data = data.map((d) => {
                 var d2 = {};
-                d2.x = d.wijknaam2019;
+                d2.x = d.x;
                 switch(this.props.dataType) {
                     case 1:
                         d2.y = (d.y / 1000000).toFixed(2);
@@ -167,12 +181,24 @@ export class BarChart extends Component {
             .attr('text-anchor', 'middle')
             .text(capitalize(this.props.source) + ' (*10^6)');
 
+            let scopeText;
+            switch(this.props.scope) {
+                case 'gemeente':
+                    scopeText = 'Wijk';
+                    break;
+                case 'wijk':
+                    scopeText = 'Buurt';
+                    break;
+                case 'buurt':
+                    scopeText = 'Street';
+                    break;
+            }
             svg.append('text')
             .attr('class', 'label')
             .attr('x', width / 2 + margin)
             .attr('y', height + margin * 1.7)
             .attr('text-anchor', 'middle')
-            .text('Wijk');
+            .text(scopeText);
 
             svg.append('text')
             .attr('class', 'title')

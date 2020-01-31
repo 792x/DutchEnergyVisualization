@@ -31,14 +31,14 @@ const SelectedItem = (props) => {
                 break;
 
             case 'wijk':
-                selected.gemeente = props.specificData[0].gemeentenaam2019;
-                selected.wijk = props.specificData[0].wijknaam2019;
+                selected.gemeente = props.specificData["electricity"][0].gemeentenaam2019;
+                selected.wijk = props.specificData["electricity"][0].wijknaam2019;
                 break;
 
             case 'buurt':
-                selected.gemeente = props.specificData[0].gemeentenaam2019;
-                selected.wijk = props.specificData[0].wijknaam2019;
-                selected.buurt = props.specificData[0].buurtnaam2019;
+                selected.gemeente = props.specificData["electricity"][0].gemeentenaam2019;
+                selected.wijk = props.specificData["electricity"][0].wijknaam2019;
+                selected.buurt = props.specificData["electricity"][0].buurtnaam2019;
                 break;
         }
     } else {
@@ -264,6 +264,7 @@ class Data extends Component {
                                                     settings={graphSettings}
                                                     years={this.handleTimeframe(this.state.timeframeSetting)}
                                                     source={this.state.energySourceSetting}
+                                                    scope={this.props.scope}
                                                 ></LineChart>
                                             </Grid>
 
@@ -275,6 +276,7 @@ class Data extends Component {
                                                     settings={graphSettings}
                                                     years={this.handleTimeframe(this.state.timeframeSetting)}
                                                     source={this.state.energySourceSetting}
+                                                    scope={this.props.scope}
                                                     type='top'
                                                 ></BarChart>
                                             </Grid>
@@ -287,6 +289,7 @@ class Data extends Component {
                                                     settings={graphSettings}
                                                     years={this.handleTimeframe(this.state.timeframeSetting)}
                                                     source={this.state.energySourceSetting}
+                                                    scope={this.props.scope}
                                                     type='bottom'
                                                 ></BarChart>
                                             </Grid>
@@ -304,6 +307,7 @@ class Data extends Component {
                                                     settings={graphSettings}
                                                     years={this.handleTimeframe(this.state.timeframeSetting)}
                                                     source={this.state.energySourceSetting}
+                                                    scope={this.props.scope}
                                                     type='cons'
                                                 ></PieChart>
                                             </Grid>
@@ -315,6 +319,7 @@ class Data extends Component {
                                                     settings={graphSettings}
                                                     years={this.handleTimeframe(this.state.timeframeSetting)}
                                                     source={this.state.energySourceSetting}
+                                                    scope={this.props.scope}
                                                     type='cons_avg'
                                                 ></PieChart>
                                             </Grid>
@@ -326,6 +331,7 @@ class Data extends Component {
                                                     settings={graphSettings}
                                                     years={this.handleTimeframe(this.state.timeframeSetting)}
                                                     source={this.state.energySourceSetting}
+                                                    scope={this.props.scope}
                                                     type='prod'
                                                 ></PieChart>
                                             </Grid>
