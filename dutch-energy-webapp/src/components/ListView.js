@@ -32,17 +32,17 @@ const getListItem = (scope, item) => {
         case 'buurt':
             return <ListItemText
             primary={cutString(item.buurtnaam2019, 20)}
-            secondary={cutString(item.city, 18)}
+            secondary={cutString(item.gemeentenaam2019, 18)}
         />
         case 'gemeente':
             return <ListItemText
             primary={cutString(item.gemeentenaam2019, 20)}
-            secondary={cutString(item.city, 18)}
+            secondary={"Nederland"}
         />
         case 'wijk':
             return <ListItemText
             primary={cutString(item.wijknaam2019, 20)}
-            secondary={cutString(item.city, 18)}
+            secondary={cutString(item.gemeentenaam2019, 18)}
         />
         default:
         return <ListItemText
