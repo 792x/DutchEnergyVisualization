@@ -251,7 +251,7 @@ class Map extends Component {
                         perc = data.annual_consume_color;
                         break;
                     case '2':
-                        perc = data.annual_consume_lowtarif_perc_color;
+                        perc = data.annual_consume_lowtarif_color;
                         break;
                     case '3':
                         perc = data.smartmeter_perc_color;

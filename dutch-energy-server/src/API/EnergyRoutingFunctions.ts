@@ -44,13 +44,13 @@ export async function getNationalDataSummary(req: Request, res: Response): Promi
     console.log('getNationalDataSummary called');
 
     const scope: string = req.query.scope;
-    const netmanager: string = req.query.netmanager;
+    // const netmanager: string = req.query.netmanager;
     // const energysource: string = req.query.energysource;
     // const timeframe: number = req.query.timeframe;
     // const data: number = req.query.data;
     // const id: number = req.query.id; // wijk, buurt of gemeente id
 
-    const result = await energyQueries.getNationalSummaryData(scope, netmanager);
+    const result = await energyQueries.getNationalSummaryData(scope);
     if(result){
         res.status(200).send(result);
     } else if (result === null){
