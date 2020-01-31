@@ -146,11 +146,37 @@ class Map extends Component {
         feature.properties.identifier = this.parseIdentifier(feature.properties.statcode);
 
         if(this.props.nationalData){
+
+
+
             const data = this.props.nationalData[feature.properties.identifier];
             if(data) {
                 console.log(data);
-                const perc = data.annual_consume_color;
-                //TODO: change depending on setting
+                let perc;
+                console.log('here', this.props.mapDataSetting);
+                switch(this.props.mapDataSetting){
+                    case '1':
+                        perc = data.annual_consume_color;
+                        break;
+                    case '2':
+                        perc = data.annual_consume_lowtarif_perc_color;
+                        break;
+                    case '3':
+                        perc = data.smartmeter_perc_color;
+                        break;
+                    case '4':
+                        perc = data.num_connections_color;
+                        break;
+                    case '5':
+                        perc = data.perc_of_active_connections_color;
+                        break;
+                    case '6':
+                        perc = data.delivery_perc_color;
+                        break;
+                    default:
+                        console.log('error in switch this.props.mapDataSetting');
+                }
+
                 style = {
                         "color": this.getColor(perc, 60, 0),
                         "weight": 1,

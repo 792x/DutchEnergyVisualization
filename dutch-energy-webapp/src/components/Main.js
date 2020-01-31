@@ -42,9 +42,9 @@ class Main extends Component {
         mapScopeSetting: 'gemeente', //buurt, wijk, gemeente
         mapNetManagerSetting: 'all',
         mapEnergySourceSetting: 'electricity',
-        mapTimeframeSetting : 1,
-        mapDataSetting: 1,
-        mapColorSetting: 1,
+        mapTimeframeSetting : '1',
+        mapDataSetting: '1',
+        mapColorSetting: '1',
         nationalData: null,
         loadingNationalData: false,
         specificData: null,
@@ -95,26 +95,19 @@ class Main extends Component {
     }
 
     applyMapSettings = async (scopeSetting, netManagerSetting, energySourceSetting, timeframeSetting, dataSetting, colorSetting) => {
-        if(this.state.mapScopeSetting === scopeSetting &&
-            this.state.mapNetManagerSetting === netManagerSetting &&
-            this.state.mapEnergySourceSetting === energySourceSetting &&
-            this.state.mapTimeframeSetting  === timeframeSetting &&
-            this.state.mapDataSetting === dataSetting &&
-            this.state.mapColorSetting === colorSetting){
 
-            console.log('no settings changed :)')
+        let prevMapScopeSetting = this.state.mapScopeSetting;
 
-        } else {
-            
-            await this.setState({
-                mapScopeSetting: scopeSetting,
-                mapNetManagerSetting: netManagerSetting,
-                mapEnergySourceSetting: energySourceSetting,
-                mapTimeframeSetting : timeframeSetting,
-                mapDataSetting: dataSetting,
-                mapColorSetting: colorSetting,
-            })
+        await this.setState({
+            mapScopeSetting: scopeSetting,
+            mapNetManagerSetting: netManagerSetting,
+            mapEnergySourceSetting: energySourceSetting,
+            mapTimeframeSetting : timeframeSetting,
+            mapDataSetting: dataSetting,
+            mapColorSetting: colorSetting,
+        })
 
+        if(prevMapScopeSetting !== scopeSetting){
             this.loadNationalData();
         }
     }
@@ -150,7 +143,7 @@ class Main extends Component {
                                 </Grid>
                                 <Grid item style={{ display: 'flex', height: '100%', padding: '20px 10px 10px 10px' }} xs={6}>
                                     <Paper className={classes.paper}>
-                                        <Map scope={this.state.mapScopeSetting} selectItem={this.selectItem} selectedListItem={this.state.selectedListItem} nationalData={this.state.nationalData} />
+                                        <Map scope={this.state.mapScopeSetting} selectItem={this.selectItem} selectedListItem={this.state.selectedListItem} nationalData={this.state.nationalData} mapDataSetting={this.state.mapDataSetting}/>
                                     </Paper>
                                 </Grid>
                                 <Grid item style={{ display: 'flex', height: '100%', padding: '20px 20px 10px 10px' }} xs={3}>

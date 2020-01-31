@@ -167,7 +167,7 @@ export async function getNationalSummaryData(scope: string){
                     num_connections_color: normalizeData(val.num_connections, num_connections_min, num_connections_max),
                     delivery_perc_color: normalizeData(val.delivery_perc, delivery_perc_min, delivery_perc_max),
                     perc_of_active_connections_color: normalizeData(val.perc_of_active_connections, perc_of_active_connections_min, perc_of_active_connections_max),
-                    smartmeter_perc_color: normalizeData(val.smartmeter_perc, smartmeter_perc_max, smartmeter_perc_max),
+                    smartmeter_perc_color: normalizeData(val.smartmeter_perc, smartmeter_perc_min, smartmeter_perc_max),
                 };
                 values[val.buurt2019] = res[val.buurt2019];
                 return res;
@@ -203,7 +203,6 @@ export async function getNationalSummaryData(scope: string){
                 group: ['gemeente2019', 'gemeentenaam2019', 'wijk2019', 'wijknaam2019', 'city', 'year'],
                 raw: true,
             });
-            console.log(elec);
         
             // Filter years (multiple years possible)
             elec = elec.filter((d:any) => {
@@ -237,7 +236,7 @@ export async function getNationalSummaryData(scope: string){
                     num_connections_color: normalizeData(val.num_connections, num_connections_min, num_connections_max),
                     delivery_perc_color: normalizeData(val.delivery_perc, delivery_perc_min, delivery_perc_max),
                     perc_of_active_connections_color: normalizeData(val.perc_of_active_connections, perc_of_active_connections_min, perc_of_active_connections_max),
-                    smartmeter_perc_color: normalizeData(val.smartmeter_perc, smartmeter_perc_max, smartmeter_perc_max),
+                    smartmeter_perc_color: normalizeData(val.smartmeter_perc, smartmeter_perc_min, smartmeter_perc_max),
                 };
                 values[val.wijk2019] = res[val.wijk2019];
                 return res;
@@ -245,7 +244,7 @@ export async function getNationalSummaryData(scope: string){
         
             if(values){
                 if(Object.keys(values).length > 0){
-                    // console.log(values);
+                    console.log(values);
                     return values;
                 } else {
                     return null;
@@ -307,7 +306,7 @@ export async function getNationalSummaryData(scope: string){
                     num_connections_color: normalizeData(val.num_connections, num_connections_min, num_connections_max),
                     delivery_perc_color: normalizeData(val.delivery_perc, delivery_perc_min, delivery_perc_max),
                     perc_of_active_connections_color: normalizeData(val.perc_of_active_connections, perc_of_active_connections_min, perc_of_active_connections_max),
-                    smartmeter_perc_color: normalizeData(val.smartmeter_perc, smartmeter_perc_max, smartmeter_perc_max),
+                    smartmeter_perc_color: normalizeData(val.smartmeter_perc, smartmeter_perc_min, smartmeter_perc_max),
                 };
                 values[val.gemeente2019] = res[val.gemeente2019];
                 return res;
