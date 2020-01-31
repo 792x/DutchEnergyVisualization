@@ -12,11 +12,7 @@ const styles = theme => ({
 
 });
 
-const style = {
-    "color": "#ff7800",
-    "weight": 1,
-    "opacity": 1
-};
+
 
 function getGeoJson(scope){ 
     switch(scope){
@@ -31,13 +27,25 @@ function getGeoJson(scope){
     }
 }
 
+function getColorz(d) {
+    return d > 1000 ? '#800026' :
+           d > 500  ? '#BD0026' :
+           d > 200  ? '#E31A1C' :
+           d > 100  ? '#FC4E2A' :
+           d > 50   ? '#FD8D3C' :
+           d > 20   ? '#FEB24C' :
+           d > 10   ? '#FED976' :
+                      '#FFEDA0';
+}
 
 
 class Map extends Component {
 
     state = {
-        data: {}
+        data: {},
     }
+
+
 
     createMap =  async (scope) => {
         this.map = L.map('map').setView([52.3667, 4.8945], 7);
@@ -49,11 +57,30 @@ class Map extends Component {
         }).addTo(this.map);
 
         this.customLayer = L.geoJSON(geojson, {
-            style: style,
+            style: this.styleEachFeature,
             onEachFeature: this.onEachFeature
         })
 
 
+        var legend = L.control({position: 'bottomright'});
+
+        legend.onAdd = function (map) {
+        
+            var div = L.DomUtil.create('div', 'info legend'),
+                grades = [0, 10, 20, 50, 100, 200, 500, 1000],
+                labels = [];
+        
+            // loop through our density intervals and generate a label with a colored square for each interval
+            for (var i = 0; i < grades.length; i++) {
+                div.innerHTML +=
+                    '<i style="background:' + getColorz(grades[i] + 1) + '"></i> ' +
+                    grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
+            }
+        
+            return div;
+        };
+        
+        legend.addTo(this.map);
 
         this.map.addLayer(titleLayer);
         this.map.addLayer(this.customLayer);
@@ -65,11 +92,13 @@ class Map extends Component {
         this.map.removeLayer(this.customLayer);
 
         this.customLayer = L.geoJSON(geojson, {
-            style: style,
+            style: this.styleEachFeature,
             onEachFeature: this.onEachFeature
         })
 
         this.map.addLayer(this.customLayer);
+
+        
     }
 
     parseIdentifier = (input) => {
@@ -82,6 +111,82 @@ class Map extends Component {
     }
 
     delayHelper = ms => new Promise(res => setTimeout(res, ms));
+
+    getColor = (percent, start, end) => {
+            var a = percent / 100,
+                b = (end - start) * a,
+                c = b + start;
+          
+            // Return a CSS HSL string
+            return 'hsl('+c+', 100%, 50%)';
+          
+          //Change the start and end values to reflect the hue map
+          //Refernece : http://www.ncl.ucar.edu/Applications/Images/colormap_6_3_lg.png
+          
+          /*
+          Quick ref:
+              0 – red
+              60 – yellow
+              120 – green
+              180 – turquoise
+              240 – blue
+              300 – pink
+              360 – red
+          */    
+    }
+
+    styleEachFeature = (feature, layer) => {
+        // return {color: "#ff0000"};
+        let style  = {
+            "color": "#B8B8B8",
+            "weight": 1,
+            "opacity": 1,
+            "fillOpacity": 0.75
+        };
+        feature.properties.identifier = this.parseIdentifier(feature.properties.statcode);
+
+        if(this.props.nationalData){
+
+
+
+            const data = this.props.nationalData[feature.properties.identifier];
+            if(data) {
+                console.log(data);
+                let perc;
+                console.log('here', this.props.mapDataSetting);
+                switch(this.props.mapDataSetting){
+                    case '1':
+                        perc = data.annual_consume_color;
+                        break;
+                    case '2':
+                        perc = data.annual_consume_lowtarif_perc_color;
+                        break;
+                    case '3':
+                        perc = data.smartmeter_perc_color;
+                        break;
+                    case '4':
+                        perc = data.num_connections_color;
+                        break;
+                    case '5':
+                        perc = data.perc_of_active_connections_color;
+                        break;
+                    case '6':
+                        perc = data.delivery_perc_color;
+                        break;
+                    default:
+                        console.log('error in switch this.props.mapDataSetting');
+                }
+
+                style = {
+                        "color": this.getColor(perc, 60, 0),
+                        "weight": 1,
+                        "opacity": 0.75,
+                        "fillOpacity": 0.75
+                    };
+            }
+        }
+        return style;
+    }
 
     onEachFeature = (feature, layer) => {
         // layer.on({
@@ -119,8 +224,9 @@ class Map extends Component {
             }
         }
         
+        //TODO fix no data popup crash
         layer.bindPopup(popupContent).on("popupopen", (e) => {
-            if(this.props.nationalData){
+            if(this.props.nationalData && feature.properties.identifier){
                 L.DomEvent.addListener(L.DomUtil.get(`button-explore-${feature.properties.identifier}`), 'click', (e) => {
                     console.log('clicked explore!')
                     const identifier = feature.properties.identifier;

@@ -86,7 +86,7 @@ class Settings extends Component {
     render() {
         const { classes } = this.props;
         return (
-            <div className={classes.root}>
+            <div >
                 <Grid container direction="column" justify="flex-start">
                     <Grid item xs={12}>
                         <Typography align="left" variant="h6">Map Settings</Typography>

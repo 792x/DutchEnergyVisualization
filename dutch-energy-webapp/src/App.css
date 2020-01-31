@@ -1,10 +1,10 @@
 .App {
-  background-color: #F7FAFC;
+  background-color: #FAFAFA;
   height: 100vh;
 }
 
 .svg-container {
-  height: 400px;
+  height: 100%;
   width: 100%;
   /* background-color: grey; */
 }
@@ -57,4 +57,16 @@
 .svg-d3 text.label {
   font-size: 15px;
   font-weight: 400;
+}
+
+.legend {
+  line-height: 18px;
+  color: #555;
+}
+.legend i {
+  width: 18px;
+  height: 18px;
+  float: left;
+  margin-right: 8px;
+  opacity: 0.7;
 }

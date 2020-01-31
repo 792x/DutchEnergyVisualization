@@ -131,15 +131,15 @@ class Data extends Component {
         const { classes } = this.props;
         
         const graphSettings = {
-            width: 450,
-            height: 400,
+            width: 350,
+            height: 320,
             margin: 60,
         };
 
         return (
             <div className={classes.root}>
-                <Grid container direction="column" justify="flex-start" style={{ height: '100%' }}>
-                    <Grid item style={{ height: '48px' }}>
+                <Grid container direction="row" justify="flex-start" style={{ height: '100%' }}>
+                    <Grid item style={{ height: '48px', width: '100%' }}>
                         <Grid container direction="row" justify="space-between" style={{ width: '100%', height: '48px' }} >
                             <Grid item style={{ marginTop: '10px', marginLeft: '10px' }}>
                                 <SelectedItem scope={this.props.scope} specificData={this.props.specificData}></SelectedItem>
