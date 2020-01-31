@@ -24,386 +24,422 @@ const data_test = {"electricity":[{"gemeente2019":"228","gemeentenaam2019":"Ede"
 "wijknaam2019":"Wekerom","year":2014,"annual_consume":119190,"num_connections":3800,"annual_consume_lowtarif_perc":0,"delivery_perc":22.973684210526315,"perc_of_active_connections":96.82605263157896},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22880","wijknaam2019":"Wekerom","year":2015,"annual_consume":238594,"num_connections":7500,"annual_consume_lowtarif_perc":0,"delivery_perc":22.36,"perc_of_active_connections":97.58493333333332},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22880","wijknaam2019":"Wekerom","year":2016,"annual_consume":112561,"num_connections":4000,"annual_consume_lowtarif_perc":0,"delivery_perc":23.175,"perc_of_active_connections":96.58275},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22880","wijknaam2019":"Wekerom","year":2017,"annual_consume":120969,"num_connections":4300,"annual_consume_lowtarif_perc":0,"delivery_perc":22.953488372093023,"perc_of_active_connections":96.18325581395347},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22880","wijknaam2019":"Wekerom","year":2018,"annual_consume":118708,"num_connections":4300,"annual_consume_lowtarif_perc":0,"delivery_perc":23.325581395348838,"perc_of_active_connections":93.21139534883719},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22880","wijknaam2019":"Wekerom","year":2019,"annual_consume":118595,"num_connections":4400,"annual_consume_lowtarif_perc":0,"delivery_perc":23.227272727272727,"perc_of_active_connections":96.23659090909092},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22890","wijknaam2019":"Otterlo","year":2010,"annual_consume":188147,"num_connections":4500,"annual_consume_lowtarif_perc":0,"delivery_perc":21.644444444444446,"perc_of_active_connections":98.53466666666665},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22890","wijknaam2019":"Otterlo","year":2011,"annual_consume":183213,"num_connections":4500,"annual_consume_lowtarif_perc":0,"delivery_perc":21.844444444444445,"perc_of_active_connections":98.53466666666665},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22890","wijknaam2019":"Otterlo","year":2012,"annual_consume":183879,"num_connections":4500,"annual_consume_lowtarif_perc":0,"delivery_perc":22.044444444444444,"perc_of_active_connections":98.35822222222224},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22890","wijknaam2019":"Otterlo","year":2013,"annual_consume":176458,"num_connections":4500,"annual_consume_lowtarif_perc":0,"delivery_perc":22.066666666666666,"perc_of_active_connections":98.2928888888889},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22890","wijknaam2019":"Otterlo","year":2014,"annual_consume":171025,"num_connections":4500,"annual_consume_lowtarif_perc":0,"delivery_perc":22.244444444444444,"perc_of_active_connections":97.76844444444444},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22890","wijknaam2019":"Otterlo","year":2015,"annual_consume":359506,"num_connections":9000,"annual_consume_lowtarif_perc":0,"delivery_perc":21.966666666666665,"perc_of_active_connections":97.85888888888888},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22890","wijknaam2019":"Otterlo","year":2016,"annual_consume":166855,"num_connections":4500,"annual_consume_lowtarif_perc":0,"delivery_perc":22.333333333333332,"perc_of_active_connections":96.92577777777777},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22890","wijknaam2019":"Otterlo","year":2017,"annual_consume":175743,"num_connections":4700,"annual_consume_lowtarif_perc":0,"delivery_perc":22.21276595744681,"perc_of_active_connections":96.24063829787232},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22890","wijknaam2019":"Otterlo","year":2018,"annual_consume":176503,"num_connections":4700,"annual_consume_lowtarif_perc":0,"delivery_perc":22.4468085106383,"perc_of_active_connections":96.0163829787234},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22890","wijknaam2019":"Otterlo","year":2019,"annual_consume":170719,"num_connections":4700,"annual_consume_lowtarif_perc":0,"delivery_perc":22.51063829787234,"perc_of_active_connections":95.20659574468083}],"electricity_manager":[{"net_manager":"Liander N.V.","gemeente2019":"228","gemeentenaam2019":"Ede","year":2010,"annual_consume":12709966,"num_connections":212256.59,"annual_consume_lowtarif_perc":28.15123178185239,"delivery_perc":23.42031029619182,"perc_of_active_connections":95.73246356370475},{"net_manager":"Liander N.V.","gemeente2019":"228","gemeentenaam2019":"Ede","year":2011,"annual_consume":12788932,"num_connections":213063.18,"annual_consume_lowtarif_perc":37.29589419475655,"delivery_perc":23.700842696629213,"perc_of_active_connections":95.00422752808998},{"net_manager":"Liander N.V.","gemeente2019":"228","gemeentenaam2019":"Ede","year":2012,"annual_consume":12927963,"num_connections":216098.77,"annual_consume_lowtarif_perc":36.72179428044281,"delivery_perc":23.926660516605168,"perc_of_active_connections":94.47870848708493},{"net_manager":"Liander N.V.","gemeente2019":"228","gemeentenaam2019":"Ede","year":2013,"annual_consume":12874736,"num_connections":217213.96000000002,"annual_consume_lowtarif_perc":38.242836911831894,"delivery_perc":24.194152581087256,"perc_of_active_connections":94.3902055733212},{"net_manager":"Liander N.V.","gemeente2019":"228","gemeentenaam2019":"Ede","year":2014,"annual_consume":12985125,"num_connections":213649.3900000001,"annual_consume_lowtarif_perc":41.40977787851316,"delivery_perc":24.35131459655485,"perc_of_active_connections":92.56286038077975},{"net_manager":"Liander N.V.","gemeente2019":"228","gemeentenaam2019":"Ede","year":2015,"annual_consume":12641393,"num_connections":213709.7900000001,"annual_consume_lowtarif_perc":42.38593258426967,"delivery_perc":24.519101123595505,"perc_of_active_connections":92.33178426966298},{"net_manager":"Liander N.V.","gemeente2019":"228","gemeentenaam2019":"Ede","year":2016,"annual_consume":12550147,"num_connections":211899.95000000013,"annual_consume_lowtarif_perc":47.45334225792054,"delivery_perc":24.73850959393128,"perc_of_active_connections":92.27740740740745},{"net_manager":"Liander N.V.","gemeente2019":"228","gemeentenaam2019":"Ede","year":2017,"annual_consume":12342830,"num_connections":210244.76000000004,"annual_consume_lowtarif_perc":49.96639293598233,"delivery_perc":24.8476821192053,"perc_of_active_connections":92.13759381898458},{"net_manager":"Liander N.V.","gemeente2019":"228","gemeentenaam2019":"Ede","year":2018,"annual_consume":12207933,"num_connections":208791.56,"annual_consume_lowtarif_perc":52.26584171403584,"delivery_perc":25.078268473983385,"perc_of_active_connections":91.7665150852646},{"net_manager":"Liander N.V.","gemeente2019":"228","gemeentenaam2019":"Ede","year":2019,"annual_consume":12547692,"num_connections":210544.09000000003,"annual_consume_lowtarif_perc":28.44055977229603,"delivery_perc":23.246679316888045,"perc_of_active_connections":96.17319734345352},{"net_manager":"Liander N.V. (NW)","gemeente2019":"228","gemeentenaam2019":"Ede","year":2010,"annual_consume":100665,"num_connections":1000,"annual_consume_lowtarif_perc":27.519,"delivery_perc":29.7,"perc_of_active_connections":90.03},{"net_manager":"Liander N.V. (NW)","gemeente2019":"228","gemeentenaam2019":"Ede","year":2011,"annual_consume":106188,"num_connections":1000,"annual_consume_lowtarif_perc":35.89,"delivery_perc":29.8,"perc_of_active_connections":90.063},{"net_manager":"Liander N.V. (NW)","gemeente2019":"228","gemeentenaam2019":"Ede","year":2012,"annual_consume":115742,"num_connections":1100,"annual_consume_lowtarif_perc":34.942727272727275,"delivery_perc":30.727272727272727,"perc_of_active_connections":87.34181818181818},{"net_manager":"Liander N.V. (NW)","gemeente2019":"228","gemeentenaam2019":"Ede","year":2013,"annual_consume":111157,"num_connections":1085.12,"annual_consume_lowtarif_perc":37.947272727272725,"delivery_perc":31.545454545454547,"perc_of_active_connections":85.16909090909093},{"net_manager":"Liander N.V. (NW)","gemeente2019":"228","gemeentenaam2019":"Ede","year":2014,"annual_consume":104810,"num_connections":1055.46,"annual_consume_lowtarif_perc":39.92999999999999,"delivery_perc":29.727272727272727,"perc_of_active_connections":84.22090909090909},{"net_manager":"Liander N.V. (NW)","gemeente2019":"228","gemeentenaam2019":"Ede","year":2015,"annual_consume":100746,"num_connections":1040.76,"annual_consume_lowtarif_perc":39.52909090909091,"delivery_perc":29.727272727272727,"perc_of_active_connections":83.87090909090908},{"net_manager":"Liander N.V. (NW)","gemeente2019":"228","gemeentenaam2019":"Ede","year":2016,"annual_consume":107489,"num_connections":1030.79,"annual_consume_lowtarif_perc":41.693636363636365,"delivery_perc":29.90909090909091,"perc_of_active_connections":83.53454545454545},{"net_manager":"Liander N.V. (NW)","gemeente2019":"228","gemeentenaam2019":"Ede","year":2017,"annual_consume":112645,"num_connections":1119.3500000000001,"annual_consume_lowtarif_perc":46.30666666666667,"delivery_perc":29,"perc_of_active_connections":83.48666666666666},{"net_manager":"Liander N.V. (NW)","gemeente2019":"228","gemeentenaam2019":"Ede","year":2018,"annual_consume":114816,"num_connections":1099.3,"annual_consume_lowtarif_perc":47.73833333333332,"delivery_perc":27.833333333333332,"perc_of_active_connections":82.76583333333333},{"net_manager":"Liander N.V. (NW)","gemeente2019":"228","gemeentenaam2019":"Ede","year":2019,"annual_consume":99998,"num_connections":1000,"annual_consume_lowtarif_perc":29.211000000000002,"delivery_perc":28.7,"perc_of_active_connections":92.386}],"gas_manager":[{"net_manager":"GAS Liander","gemeente2019":"228","gemeentenaam2019":"Ede","year":2010,"annual_consume":4651534,"num_connections":189300,"annual_consume_lowtarif_perc":0,"delivery_perc":22.47649234020074,"perc_of_active_connections":98.63643951399895},{"net_manager":"GAS Liander","gemeente2019":"228","gemeentenaam2019":"Ede","year":2011,"annual_consume":4571793,
 "num_connections":190000,"annual_consume_lowtarif_perc":0,"delivery_perc":22.64315789473684,"perc_of_active_connections":97.86558421052632},{"net_manager":"GAS Liander","gemeente2019":"228","gemeentenaam2019":"Ede","year":2012,"annual_consume":4537942,"num_connections":192300,"annual_consume_lowtarif_perc":0,"delivery_perc":22.741029641185648,"perc_of_active_connections":97.77809152366095},{"net_manager":"GAS Liander","gemeente2019":"228","gemeentenaam2019":"Ede","year":2013,"annual_consume":4411068,"num_connections":193600,"annual_consume_lowtarif_perc":0,"delivery_perc":22.789772727272727,"perc_of_active_connections":97.72964359504135},{"net_manager":"GAS Liander","gemeente2019":"228","gemeentenaam2019":"Ede","year":2014,"annual_consume":4333678,"num_connections":194700,"annual_consume_lowtarif_perc":0,"delivery_perc":22.924499229583976,"perc_of_active_connections":97.31499229583976},{"net_manager":"GAS Liander","gemeente2019":"228","gemeentenaam2019":"Ede","year":2015,"annual_consume":8922180,"num_connections":384900,"annual_consume_lowtarif_perc":0,"delivery_perc":22.678098207326578,"perc_of_active_connections":98.08892179786965},{"net_manager":"GAS Liander","gemeente2019":"228","gemeentenaam2019":"Ede","year":2016,"annual_consume":4182631,"num_connections":198400,"annual_consume_lowtarif_perc":0,"delivery_perc":23.14717741935484,"perc_of_active_connections":97.1104284274194},{"net_manager":"GAS Liander","gemeente2019":"228","gemeentenaam2019":"Ede","year":2017,"annual_consume":4192644,"num_connections":200100,"annual_consume_lowtarif_perc":0,"delivery_perc":23.192903548225885,"perc_of_active_connections":97.07509745127435},{"net_manager":"GAS Liander","gemeente2019":"228","gemeentenaam2019":"Ede","year":2018,"annual_consume":4234390,"num_connections":201900,"annual_consume_lowtarif_perc":0,"delivery_perc":23.2704309063893,"perc_of_active_connections":96.75851906884597},{"net_manager":"Liander NB","gemeente2019":"228","gemeentenaam2019":"Ede","year":2019,"annual_consume":4199441,"num_connections":203500,"annual_consume_lowtarif_perc":0,"delivery_perc":23.39115479115479,"perc_of_active_connections":96.5411842751843}]};
 
-export const BarChart = (props) => {
-    // let data = props.data;
-    let data = data_test;
+export class BarChart extends Component {
+    makeChart() {
+        // let data = this.props.data;
+        let data = data_test;
 
-    if (data !== null) {
-        // Select energy source
-        let children = data[props.source];
-        
-        // Filter years
-        children = children.filter((child) => {
-            return props.years.includes(child.year);
-        });
-
-        // Aggregate attributes
-        let children2 = [];
-        children.reduce((res, val) => {
-            if (!res[val.wijknaam2019]) {
-                res[val.wijknaam2019] = { wijknaam2019: val.wijknaam2019, y: 0 };
-                children2.push(res[val.wijknaam2019]);
-            }
-            res[val.wijknaam2019].y += val.annual_consume;
-            return res;
-        }, {});
-
-        // Sort on attribute and select first/last 5 elements
-        children2.sort((a, b) => { return b.y - a.y });
-        if (props.type === 'top') {
-            data = children2.slice(0, 5);
-        } else if (props.type === 'bottom') {
-            data = children2.slice(children2.length - 5);
-        }
-    
-        data = data.map((d) => {
-            var d2 = {};
-            d2.x = d.wijknaam2019;
-            d2.y = (d.y / 1000000).toFixed(2);
-            return d2;
-        });
-        console.log('BarChart', data);
-
-        const max = Math.max.apply(Math, data.map(function(d) { return d.y; }));
-        const svg = select('#'+props.id);
-
-        svg.selectAll("*")
-        .remove();
-        
-        const margin = props.settings.margin;
-        let width = props.settings.width - 2 * margin;
-        const height = props.settings.height - 2 * margin;
-
-        if (document.getElementById(props.id)) {
-            width = document.getElementById(props.id).clientWidth - 1.3 * margin;
-        }
-
-        const chart = svg.append('g')
-        .attr('transform', `translate(${margin}, ${margin})`);
-
-        const xScale = scaleBand()
-        .range([0, width])
-        .domain(data.map((d) => d.x))
-        .padding(0.4);
-        
-        const yScale = scaleLinear()
-        .range([height, 0])
-        .domain([0, Math.floor(max) + 1]);
-
-        const makeYLines = () => axisLeft()
-        .scale(yScale);
-
-        chart.append('g')
-        .attr('transform', `translate(0, ${height})`)
-        .call(axisBottom(xScale));
-
-        chart.append('g')
-        .call(axisLeft(yScale));
-
-        chart.append('g')
-        .attr('class', 'grid')
-        .call(makeYLines()
-            .tickSize(-width, 0, 0)
-            .tickFormat('')
-        );
-
-        const barGroups = chart.selectAll()
-        .data(data)
-        .enter()
-        .append('g');
-
-        barGroups.append('rect')
-        .attr('class', 'bar')
-        .attr('x', (g) => xScale(g.x))
-        .attr('y', (g) => yScale(g.y))
-        .attr('height', (g) => height - yScale(g.y))
-        .attr('width', xScale.bandwidth());
-
-        barGroups.append('text')
-        .attr('class', 'value')
-        .attr('x', (a) => xScale(a.x) + xScale.bandwidth() / 2)
-        .attr('y', (a) => yScale(a.y) + 30)
-        .attr('text-anchor', 'middle')
-        .text((a) => `${a.y}`);
-        
-        svg.append('text')
-        .attr('class', 'label')
-        .attr('x', -(height / 2) - margin)
-        .attr('y', margin / 2.4)
-        .attr('transform', 'rotate(-90)')
-        .attr('text-anchor', 'middle')
-        .text(capitalize(props.source) + ' (*10^6)');
-
-        svg.append('text')
-        .attr('class', 'label')
-        .attr('x', width / 2 + margin)
-        .attr('y', height + margin * 1.7)
-        .attr('text-anchor', 'middle')
-        .text('Wijk');
-
-        svg.append('text')
-        .attr('class', 'title')
-        .attr('x', width / 2 + margin)
-        .attr('y', 40)
-        .attr('text-anchor', 'middle')
-        .text(capitalize(props.type) + ' 5 consumption');
-    }
-
-    return (
-        <div className="svg-container">
-            <svg className="svg-d3" id={props.id} />
-        </div>
-    )
-}
-
-export const LineChart = (props) => {
-    // let data = props.data;
-    let data = data_test;
-
-    if (data !== null) {
-        // Select energy source
-        let children = data[props.source];
-        
-        // Filter years
-        if (props.years.length > 1) {
+        if (data !== null) {
+            // Select energy source
+            let children = data[this.props.source];
+            
+            // Filter years
             children = children.filter((child) => {
-                return props.years.includes(child.year);
+                return this.props.years.includes(child.year);
             });
-        }
 
-        // Aggregate attributes
-        let children2 = [];
-        children.reduce((res, val) => {
-            if (!res[val.year]) {
-                res[val.year] = { year: val.year, annual_consume: 0 };
-                children2.push(res[val.year]);
+            // Aggregate attributes
+            let children2 = [];
+            children.reduce((res, val) => {
+                if (!res[val.wijknaam2019]) {
+                    res[val.wijknaam2019] = { wijknaam2019: val.wijknaam2019, y: 0 };
+                    children2.push(res[val.wijknaam2019]);
+                }
+                res[val.wijknaam2019].y += val.annual_consume;
+                return res;
+            }, {});
+
+            // Sort on attribute and select first/last 5 elements
+            children2.sort((a, b) => { return b.y - a.y });
+            if (this.props.type === 'top') {
+                data = children2.slice(0, 5);
+            } else if (this.props.type === 'bottom') {
+                data = children2.slice(children2.length - 5);
             }
-            res[val.year].annual_consume += val.annual_consume;
-            return res;
-        }, {});
-
-        // Sort on attribute
-        children2.sort((a, b) => { return a.year - b.year });
-        data = children2;
-    
-        data = data.map((d) => {
-            var d2 = {};
-            d2.x = d.year;
-            d2.y = (d.annual_consume / 1000000).toFixed(2);
-            return d2;
-        });
-        console.log('LineChart', data);
-
-        const max = Math.max.apply(Math, data.map(function(d) { return d.y; }));
-        const svg = selectAll('#'+props.id);
-
-        svg.selectAll("*")
-        .remove();
         
-        const margin = props.settings.margin;
-        let width = props.settings.width - 2 * margin;
-        const height = props.settings.height - 2 * margin;
+            data = data.map((d) => {
+                var d2 = {};
+                d2.x = d.wijknaam2019;
+                d2.y = (d.y / 1000000).toFixed(2);
+                return d2;
+            });
+            console.log('BarChart', data);
 
-        if (document.getElementById(props.id)) {
-            width = document.getElementById(props.id).clientWidth - 1.3 * margin;
+            const max = Math.max.apply(Math, data.map(function(d) { return d.y; }));
+            const svg = select('#'+this.props.id);
+
+            svg.selectAll("*")
+            .remove();
+            
+            const margin = this.props.settings.margin;
+            let width = this.props.settings.width - 2 * margin;
+            const height = this.props.settings.height - 2 * margin;
+
+            if (document.getElementById(this.props.id)) {
+                width = document.getElementById(this.props.id).clientWidth - 1.3 * margin;
+            }
+
+            const chart = svg.append('g')
+            .attr('transform', `translate(${margin}, ${margin})`);
+
+            const xScale = scaleBand()
+            .range([0, width])
+            .domain(data.map((d) => d.x))
+            .padding(0.4);
+            
+            const yScale = scaleLinear()
+            .range([height, 0])
+            .domain([0, Math.floor(max) + 1]);
+
+            const makeYLines = () => axisLeft()
+            .scale(yScale);
+
+            chart.append('g')
+            .attr('transform', `translate(0, ${height})`)
+            .call(axisBottom(xScale));
+
+            chart.append('g')
+            .call(axisLeft(yScale));
+
+            chart.append('g')
+            .attr('class', 'grid')
+            .call(makeYLines()
+                .tickSize(-width, 0, 0)
+                .tickFormat('')
+            );
+
+            const barGroups = chart.selectAll()
+            .data(data)
+            .enter()
+            .append('g');
+
+            barGroups.append('rect')
+            .attr('class', 'bar')
+            .attr('x', (g) => xScale(g.x))
+            .attr('y', (g) => yScale(g.y))
+            .attr('height', (g) => height - yScale(g.y))
+            .attr('width', xScale.bandwidth());
+
+            barGroups.append('text')
+            .attr('class', 'value')
+            .attr('x', (a) => xScale(a.x) + xScale.bandwidth() / 2)
+            .attr('y', (a) => yScale(a.y) + 30)
+            .attr('text-anchor', 'middle')
+            .text((a) => `${a.y}`);
+            
+            svg.append('text')
+            .attr('class', 'label')
+            .attr('x', -(height / 2) - margin)
+            .attr('y', margin / 2.4)
+            .attr('transform', 'rotate(-90)')
+            .attr('text-anchor', 'middle')
+            .text(capitalize(this.props.source) + ' (*10^6)');
+
+            svg.append('text')
+            .attr('class', 'label')
+            .attr('x', width / 2 + margin)
+            .attr('y', height + margin * 1.7)
+            .attr('text-anchor', 'middle')
+            .text('Wijk');
+
+            svg.append('text')
+            .attr('class', 'title')
+            .attr('x', width / 2 + margin)
+            .attr('y', 40)
+            .attr('text-anchor', 'middle')
+            .text(capitalize(this.props.type) + ' 5 consumption');
         }
-
-        const chart = svg.append('g')
-        .attr('transform', `translate(${margin}, ${margin})`);
-
-        const xScale = scaleBand()
-        .range([0, width])
-        .domain(data.map((d) => d.x))
-        .padding(0.8);
-        
-        const yScale = scaleLinear()
-        .range([height, 0])
-        .domain([0, Math.floor(max) + 1]);
-
-        const makeYLines = () => axisLeft()
-        .scale(yScale);
-
-        chart.append('g')
-        .attr('transform', `translate(0, ${height})`)
-        .call(axisBottom(xScale));
-
-        chart.append('g')
-        .call(axisLeft(yScale));
-
-        chart.append('g')
-        .attr('class', 'grid')
-        .call(makeYLines()
-            .tickSize(-width, 0, 0)
-            .tickFormat('')
-        );
-
-        chart.append("path")
-        .datum(data)
-        .attr("fill", "none")
-        .attr("stroke", "#FF6200")
-        .attr("stroke-width", 1.5)
-        .attr("d", line()
-            .x(function(d) { return xScale(d.x) })
-            .y(function(d) { return yScale(d.y) })
-        );
-        
-        svg.append('text')
-        .attr('class', 'label')
-        .attr('x', -(height / 2) - margin)
-        .attr('y', margin / 2.4)
-        .attr('transform', 'rotate(-90)')
-        .attr('text-anchor', 'middle')
-        .text(capitalize(props.source) + ' (*10^6)');
-
-        svg.append('text')
-        .attr('class', 'label')
-        .attr('x', width / 2 + margin)
-        .attr('y', height + margin * 1.7)
-        .attr('text-anchor', 'middle')
-        .text('Year');
-
-        svg.append('text')
-        .attr('class', 'title')
-        .attr('x', width / 2 + margin)
-        .attr('y', 40)
-        .attr('text-anchor', 'middle')
-        .text('Annual consumption');
     }
 
-    return (
-        <div className="svg-container">
-            <svg className="svg-d3" id={props.id} />
-        </div>
-    )
+    componentDidMount() {
+        this.makeChart();
+    }
+
+    componentDidUpdate() {
+        this.makeChart();
+    }
+
+    render() {
+        return (
+            <div className="svg-container">
+                <svg className="svg-d3" id={this.props.id} />
+            </div>
+        )
+    }
 }
 
-export const PieChart = (props) => {
-    // let data = props.data;
-    let data = data_test;
+export class LineChart extends Component {
+    makeChart() {
+        // let data = this.props.data;
+        let data = data_test;
 
-    if (data !== null) {
-        // Select energy source
-        let children = data[props.source + "_manager"];
-        
-        // Filter years
-        children = children.filter((child) => {
-            return props.years.includes(child.year);
-        });
-
-        const handleManager = (netmanager) => {
-            const substring = netmanager.substring(0, 4);
-            if (substring === '8716') {
-                return 'Stedin';
-            } else if (substring === 'Enex') {
-                return 'Enexis';
-            } else {
-                return 'Liander';
+        if (data !== null) {
+            // Select energy source
+            let children = data[this.props.source];
+            
+            // Filter years
+            if (this.props.years.length > 1) {
+                children = children.filter((child) => {
+                    return this.props.years.includes(child.year);
+                });
             }
-        }
 
-        // Aggregate attributes
-        let children2 = [];
-        children.reduce((res, val) => {
-            let manager = handleManager(val.net_manager);
-            if (!res[manager]) {
-                res[manager] = { net_manager: manager, y: 0 };
-                children2.push(res[manager]);
+            // Aggregate attributes
+            let children2 = [];
+            children.reduce((res, val) => {
+                if (!res[val.year]) {
+                    res[val.year] = { year: val.year, annual_consume: 0 };
+                    children2.push(res[val.year]);
+                }
+                res[val.year].annual_consume += val.annual_consume;
+                return res;
+            }, {});
+
+            // Sort on attribute
+            children2.sort((a, b) => { return a.year - b.year });
+            data = children2;
+        
+            data = data.map((d) => {
+                var d2 = {};
+                d2.x = d.year;
+                d2.y = (d.annual_consume / 1000000).toFixed(2);
+                return d2;
+            });
+            console.log('LineChart', data);
+
+            const max = Math.max.apply(Math, data.map(function(d) { return d.y; }));
+            const svg = selectAll('#'+this.props.id);
+
+            svg.selectAll("*")
+            .remove();
+            
+            const margin = this.props.settings.margin;
+            let width = this.props.settings.width - 2 * margin;
+            const height = this.props.settings.height - 2 * margin;
+
+            if (document.getElementById(this.props.id)) {
+                width = document.getElementById(this.props.id).clientWidth - 1.3 * margin;
             }
-            res[manager].y += val.annual_consume;
-            return res;
-        }, {});
-        // console.log('arr', children2);
 
-        // Convert array to object
-        let children3 = {};
-        children3 = children2.reduce((obj, item) => {
-            return {
-            ...obj,
-            [item['net_manager']]: (item.y / 1000000).toFixed(2),
-            };
-        }, children3);
-        // console.log("obj", children3);
+            const chart = svg.append('g')
+            .attr('transform', `translate(${margin}, ${margin})`);
 
-        data = children3;
-        console.log(data);
+            const xScale = scaleBand()
+            .range([0, width])
+            .domain(data.map((d) => d.x))
+            .padding(0.8);
+            
+            const yScale = scaleLinear()
+            .range([height, 0])
+            .domain([0, Math.floor(max) + 1]);
 
-        const svg = select('#'+props.id);
-        svg.selectAll("*")
-        .remove();
-        
-        const margin = props.settings.margin;
-        const height = props.settings.height;
-        let width = props.settings.width;
+            const makeYLines = () => axisLeft()
+            .scale(yScale);
 
-        if (document.getElementById(props.id)) {
-            width = document.getElementById(props.id).clientWidth;
+            chart.append('g')
+            .attr('transform', `translate(0, ${height})`)
+            .call(axisBottom(xScale));
+
+            chart.append('g')
+            .call(axisLeft(yScale));
+
+            chart.append('g')
+            .attr('class', 'grid')
+            .call(makeYLines()
+                .tickSize(-width, 0, 0)
+                .tickFormat('')
+            );
+
+            chart.append("path")
+            .datum(data)
+            .attr("fill", "none")
+            .attr("stroke", "#FF6200")
+            .attr("stroke-width", 1.5)
+            .attr("d", line()
+                .x(function(d) { return xScale(d.x) })
+                .y(function(d) { return yScale(d.y) })
+            );
+            
+            svg.append('text')
+            .attr('class', 'label')
+            .attr('x', -(height / 2) - margin)
+            .attr('y', margin / 2.4)
+            .attr('transform', 'rotate(-90)')
+            .attr('text-anchor', 'middle')
+            .text(capitalize(this.props.source) + ' (*10^6)');
+
+            svg.append('text')
+            .attr('class', 'label')
+            .attr('x', width / 2 + margin)
+            .attr('y', height + margin * 1.7)
+            .attr('text-anchor', 'middle')
+            .text('Year');
+
+            svg.append('text')
+            .attr('class', 'title')
+            .attr('x', width / 2 + margin)
+            .attr('y', 40)
+            .attr('text-anchor', 'middle')
+            .text('Annual consumption');
         }
-
-        const radius = Math.min(width, height) / 2 - margin;
-
-        const chart = svg.append('g')
-        .attr('transform', `translate(${width / 2}, ${height / 2})`);
-
-        const color = scaleOrdinal()
-        .domain(data)
-        .range(["#ff6200", "#ff2f00", "#ffae00"])
-
-        const piechart = pie().value(function(d) { return d.value; })
-        const data_ready = piechart(entries(data))
-
-        const arcGenerator = arc()
-        .innerRadius(0)
-        .outerRadius(radius)
-
-        chart
-        .selectAll('chart')
-        .data(data_ready)
-        .enter()
-        .append('path')
-        .attr('d', arcGenerator)
-        .attr('fill', function(d) { return(color(d.data.key)) })
-        .attr("stroke", "white")
-        .style("stroke-width", "2px")
-        .style("opacity", 0.9);
-
-        const text = chart
-        .selectAll('chart')
-        .data(data_ready)
-        .enter()
-        .append('text')
-        .attr("transform", function(d) { return "translate(" + arcGenerator.centroid(d) + ")"; })
-        .style("text-anchor", "middle");
-        
-        text
-        .append('tspan')
-        .text(function(d) { return d.data.key })
-        .attr('x', 0)
-        .attr('dy', 0);
-
-        text
-        .append('tspan')
-        .text(function(d) { return d.data.value })
-        .attr('x', 0)
-        .attr('dy', 15);
-
-        svg.append('text')
-        .attr('class', 'label')
-        .attr('x', width / 2)
-        .attr('y', height - margin / 2)
-        .attr('text-anchor', 'middle')
-        .text(capitalize(props.source) + ' (*10^6)');
-
-        svg.append('text')
-        .attr('class', 'title')
-        .attr('x', width / 2)
-        .attr('y', 40)
-        .attr('text-anchor', 'middle')
-        .text('Provider market share');
     }
 
-    return (
-        <div className="svg-container">
-            <svg className="svg-d3" id={props.id} />
-        </div>
-    )
+    componentDidMount() {
+        this.makeChart();
+    }
+
+    componentDidUpdate() {
+        this.makeChart();
+    }
+
+    render() {
+        return (
+            <div className="svg-container">
+                <svg className="svg-d3" id={this.props.id} />
+            </div>
+        )
+    }
+}
+
+export class PieChart extends Component {
+    makeChart() {
+        // let data = this.props.data;
+        let data = data_test;
+
+        if (data !== null) {
+            // Select energy source
+            let children = data[this.props.source + "_manager"];
+            
+            // Filter years
+            children = children.filter((child) => {
+                return this.props.years.includes(child.year);
+            });
+
+            const handleManager = (netmanager) => {
+                const substring = netmanager.substring(0, 4);
+                if (substring === '8716') {
+                    return 'Stedin';
+                } else if (substring === 'Enex') {
+                    return 'Enexis';
+                } else {
+                    return 'Liander';
+                }
+            }
+
+            // Aggregate attributes
+            let children2 = [];
+            children.reduce((res, val) => {
+                let manager = handleManager(val.net_manager);
+                if (!res[manager]) {
+                    res[manager] = { net_manager: manager, y: 0 };
+                    children2.push(res[manager]);
+                }
+                res[manager].y += val.annual_consume;
+                return res;
+            }, {});
+            // console.log('arr', children2);
+
+            // Convert array to object
+            let children3 = {};
+            children3 = children2.reduce((obj, item) => {
+                return {
+                ...obj,
+                [item['net_manager']]: (item.y / 1000000).toFixed(2),
+                };
+            }, children3);
+            // console.log("obj", children3);
+
+            data = children3;
+            console.log(data);
+
+            const svg = select('#'+this.props.id);
+            svg.selectAll("*")
+            .remove();
+            
+            const margin = this.props.settings.margin;
+            const height = this.props.settings.height;
+            let width = this.props.settings.width;
+
+            if (document.getElementById(this.props.id)) {
+                width = document.getElementById(this.props.id).clientWidth;
+            }
+
+            const radius = Math.min(width, height) / 2 - margin;
+
+            const chart = svg.append('g')
+            .attr('transform', `translate(${width / 2}, ${height / 2})`);
+
+            const color = scaleOrdinal()
+            .domain(data)
+            .range(["#ff6200", "#ff2f00", "#ffae00"])
+
+            const piechart = pie().value(function(d) { return d.value; })
+            const data_ready = piechart(entries(data))
+
+            const arcGenerator = arc()
+            .innerRadius(0)
+            .outerRadius(radius)
+
+            chart
+            .selectAll('chart')
+            .data(data_ready)
+            .enter()
+            .append('path')
+            .attr('d', arcGenerator)
+            .attr('fill', function(d) { return(color(d.data.key)) })
+            .attr("stroke", "white")
+            .style("stroke-width", "2px")
+            .style("opacity", 0.9);
+
+            const text = chart
+            .selectAll('chart')
+            .data(data_ready)
+            .enter()
+            .append('text')
+            .attr("transform", function(d) { return "translate(" + arcGenerator.centroid(d) + ")"; })
+            .style("text-anchor", "middle");
+            
+            text
+            .append('tspan')
+            .text(function(d) { return d.data.key })
+            .attr('x', 0)
+            .attr('dy', 0);
+
+            text
+            .append('tspan')
+            .text(function(d) { return d.data.value })
+            .attr('x', 0)
+            .attr('dy', 15);
+
+            svg.append('text')
+            .attr('class', 'label')
+            .attr('x', width / 2)
+            .attr('y', height - margin / 2)
+            .attr('text-anchor', 'middle')
+            .text(capitalize(this.props.source) + ' (*10^6)');
+
+            svg.append('text')
+            .attr('class', 'title')
+            .attr('x', width / 2)
+            .attr('y', 40)
+            .attr('text-anchor', 'middle')
+            .text('Provider market share');
+        }
+    }
+
+    componentDidMount() {
+        this.makeChart();
+    }
+
+    componentDidUpdate() {
+        this.makeChart();
+    }
+
+    render() {
+        return (
+            <div className="svg-container">
+                <svg className="svg-d3" id={this.props.id} />
+            </div>
+        )
+    }
 }

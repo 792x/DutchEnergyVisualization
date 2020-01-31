@@ -82,7 +82,7 @@ class Data extends Component {
     }
 
     handleDataSettingChange = (e) => {
-        this.setState({ dataSetting: e.target.value });
+        this.setState({ dataSetting: parseInt(e.target.value) });
         console.log(e.target.value);
     }
 
@@ -213,110 +213,125 @@ class Data extends Component {
                         </Grid>
                     </Grid>
                     <Grid item style={{ height: '400px' }}>
-                        <Grid container direction="row" justify="space-between" style={{ width: '100%', marginTop: '10px' }} >
                             
-                            {/* Example */}
-                            <Grid item style={{ width: '32%' }}>
-                                <BarChart
-                                    id='barchart0'
-                                    data={this.props.specificData}
-                                    settings={graphSettings}
-                                    years={this.handleTimeframe(this.state.timeframeSetting)}
-                                    source={this.state.energySourceSetting}
-                                ></BarChart>
-                            </Grid>
-
-                            <Grid item style={{ width: '32%' }}>
-                                <PieChart
-                                    id='piechart0'
-                                    data={this.props.specificData}
-                                    settings={graphSettings}
-                                    years={this.handleTimeframe(this.state.timeframeSetting)}
-                                    source={this.state.energySourceSetting}
-                                ></PieChart>
-                            </Grid>
-
-                            <Grid item style={{ width: '32%' }}>
-                                <LineChart
-                                    id='linechart0'
-                                    data={this.props.specificData}
-                                    settings={graphSettings}
-                                    years={this.handleTimeframe(this.state.timeframeSetting)}
-                                    source={this.state.energySourceSetting}
-                                ></LineChart>
-                            </Grid>
-
-                            {/* Total consumption */}
-                            {/* <Grid item style={{ width: '32%' }}>
-                                <LineChart
-                                    id='linechart1'
-                                    data={this.props.specificData}
-                                    dataType={this.state.dataSetting}
-                                    settings={graphSettings}
-                                    years={this.handleTimeframe(this.state.timeframeSetting)}
-                                    source={this.state.energySourceSetting}
-                                ></LineChart>
-                            </Grid>
-
-                            <Grid item style={{ width: '32%' }}>
-                                <BarChart
-                                    id='barchart1'
-                                    data={this.props.specificData}
-                                    dataType={this.state.dataSetting}
-                                    settings={graphSettings}
-                                    years={this.handleTimeframe(this.state.timeframeSetting)}
-                                    source={this.state.energySourceSetting}
-                                    type='top'
-                                ></BarChart>
-                            </Grid>
-
-                            <Grid item style={{ width: '32%' }}>
-                                <BarChart
-                                    id='barchart2'
-                                    data={this.props.specificData}
-                                    dataType={this.state.dataSetting}
-                                    settings={graphSettings}
-                                    years={this.handleTimeframe(this.state.timeframeSetting)}
-                                    source={this.state.energySourceSetting}
-                                    type='bottom'
-                                ></BarChart>
-                            </Grid> */}
-
-                            {/* Market share */}
-                            {/* <Grid item style={{ width: '32%' }}>
-                                <PieChart
-                                    id='piechart1'
-                                    data={this.props.specificData}
-                                    settings={graphSettings}
-                                    years={this.handleTimeframe(this.state.timeframeSetting)}
-                                    source={this.state.energySourceSetting}
-                                    type='cons'
-                                ></PieChart>
-                            </Grid>
-
-                            <Grid item style={{ width: '32%' }}>
-                                <PieChart
-                                    id='piechart2'
-                                    data={this.props.specificData}
-                                    settings={graphSettings}
-                                    years={this.handleTimeframe(this.state.timeframeSetting)}
-                                    source={this.state.energySourceSetting}
-                                    type='cons_avg'
-                                ></PieChart>
-                            </Grid>
-
-                            <Grid item style={{ width: '32%' }}>
-                                <PieChart
-                                    id='piechart3'
-                                    data={this.props.specificData}
-                                    settings={graphSettings}
-                                    years={this.handleTimeframe(this.state.timeframeSetting)}
-                                    source={this.state.energySourceSetting}
-                                    type='prod'
-                                ></PieChart>
-                            </Grid> */}
-
+                        {/* Example */}
+                        {/* <Grid item style={{ width: '32%' }}>
+                            <BarChart
+                                id='barchart0'
+                                data={this.props.specificData}
+                                settings={graphSettings}
+                                years={this.handleTimeframe(this.state.timeframeSetting)}
+                                source={this.state.energySourceSetting}
+                            ></BarChart>
                         </Grid>
+
+                        <Grid item style={{ width: '32%' }}>
+                            <PieChart
+                                id='piechart0'
+                                data={this.props.specificData}
+                                settings={graphSettings}
+                                years={this.handleTimeframe(this.state.timeframeSetting)}
+                                source={this.state.energySourceSetting}
+                            ></PieChart>
+                        </Grid>
+
+                        <Grid item style={{ width: '32%' }}>
+                            <LineChart
+                                id='linechart0'
+                                data={this.props.specificData}
+                                settings={graphSettings}
+                                years={this.handleTimeframe(this.state.timeframeSetting)}
+                                source={this.state.energySourceSetting}
+                            ></LineChart>
+                        </Grid> */}
+
+                        {(() => {
+                            switch (this.state.dataSetting) {
+                                case 1:
+                                    return (
+                                        /* Total consumption */
+                                        <Grid container direction="row" justify="space-between" style={{ width: '100%', marginTop: '10px' }} >
+                                            <Grid item style={{ width: '32%' }}>
+                                                <LineChart
+                                                    id='linechart1'
+                                                    data={this.props.specificData}
+                                                    dataType={this.state.dataSetting}
+                                                    settings={graphSettings}
+                                                    years={this.handleTimeframe(this.state.timeframeSetting)}
+                                                    source={this.state.energySourceSetting}
+                                                ></LineChart>
+                                            </Grid>
+
+                                            <Grid item style={{ width: '32%' }}>
+                                                <BarChart
+                                                    id='barchart1'
+                                                    data={this.props.specificData}
+                                                    dataType={this.state.dataSetting}
+                                                    settings={graphSettings}
+                                                    years={this.handleTimeframe(this.state.timeframeSetting)}
+                                                    source={this.state.energySourceSetting}
+                                                    type='top'
+                                                ></BarChart>
+                                            </Grid>
+
+                                            <Grid item style={{ width: '32%' }}>
+                                                <BarChart
+                                                    id='barchart2'
+                                                    data={this.props.specificData}
+                                                    dataType={this.state.dataSetting}
+                                                    settings={graphSettings}
+                                                    years={this.handleTimeframe(this.state.timeframeSetting)}
+                                                    source={this.state.energySourceSetting}
+                                                    type='bottom'
+                                                ></BarChart>
+                                            </Grid>
+                                        </Grid>
+                                    );
+                                    
+
+                                case 7:
+                                    return (
+                                        /* Market share */
+                                        <Grid container direction="row" justify="space-between" style={{ width: '100%', marginTop: '10px' }} >
+                                            <Grid item style={{ width: '32%' }}>
+                                                <PieChart
+                                                    id='piechart1'
+                                                    data={this.props.specificData}
+                                                    settings={graphSettings}
+                                                    years={this.handleTimeframe(this.state.timeframeSetting)}
+                                                    source={this.state.energySourceSetting}
+                                                    type='cons'
+                                                ></PieChart>
+                                            </Grid>
+
+                                            <Grid item style={{ width: '32%' }}>
+                                                <PieChart
+                                                    id='piechart2'
+                                                    data={this.props.specificData}
+                                                    settings={graphSettings}
+                                                    years={this.handleTimeframe(this.state.timeframeSetting)}
+                                                    source={this.state.energySourceSetting}
+                                                    type='cons_avg'
+                                                ></PieChart>
+                                            </Grid>
+
+                                            <Grid item style={{ width: '32%' }}>
+                                                <PieChart
+                                                    id='piechart3'
+                                                    data={this.props.specificData}
+                                                    settings={graphSettings}
+                                                    years={this.handleTimeframe(this.state.timeframeSetting)}
+                                                    source={this.state.energySourceSetting}
+                                                    type='prod'
+                                                ></PieChart>
+                                            </Grid>
+                                        </Grid>
+                                    )
+
+                                default:
+                                    return null;
+                            }
+                        })()}
                     </Grid>
                 </Grid>
             </div>
