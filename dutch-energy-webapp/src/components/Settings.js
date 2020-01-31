@@ -34,9 +34,9 @@ class Settings extends Component {
         scopeSetting: 'gemeente',
         netManagerSetting: 'all',
         energySourceSetting: 'electricity',
-        timeframeSetting : 1,
-        dataSetting: 1,
-        colorSetting: 1,
+        timeframeSetting : '1',
+        dataSetting: '1',
+        colorSetting: '1',
     }
     
     delayHelper = ms => new Promise(res => setTimeout(res, ms));
@@ -50,6 +50,26 @@ class Settings extends Component {
             this.state.dataSetting, 
             this.state.colorSetting
         )
+    }
+
+    handleAnimateClick = async (e) => {
+        await this.props.applyMapSettings(
+            this.state.scopeSetting, 
+            this.state.netManagerSetting, 
+            this.state.energySourceSetting, 
+            this.state.timeframeSetting, 
+            this.state.dataSetting, 
+            this.state.colorSetting
+        );
+        await this.props.startAnimation();
+        await this.props.applyMapSettings(
+            this.state.scopeSetting, 
+            this.state.netManagerSetting, 
+            this.state.energySourceSetting, 
+            this.state.timeframeSetting, 
+            this.state.dataSetting, 
+            this.state.colorSetting
+        );
     }
 
     handleScopeSettingChange = (e) => {
@@ -118,9 +138,9 @@ class Settings extends Component {
                                 onChange={this.handlenetManagerSettingChange}
                             >
                                 <option value={'all'}>All</option>
-                                <option value={'Enexis'}>Enexis</option>
-                                <option value={'Liander'}>Liander</option>
-                                <option value={'Stedin'}>Stedin</option>
+                                <option value={'enexis'}>Enexis</option>
+                                <option value={'liander'}>Liander</option>
+                                <option value={'8716'}>Stedin</option>
                             </Select>
                         </FormControl>
                     </Grid>
@@ -183,30 +203,55 @@ class Settings extends Component {
                                 <option value={4}>Number of connections</option>
                                 <option value={5}>Percentage of active connections</option>
                                 <option value={6}>Delivery percentage</option>
+                                <option value={7}>Provider market share</option>
                             </Select>
                         </FormControl>
                     </Grid>
                     <Grid item xs={12} style={{paddingTop: '10px' }}>
                         <FormControl className={classes.formControl} fullWidth>
                             <InputLabel htmlFor="outlined-age-native-simple">
-                            Color
+                            Color Gradient
                              </InputLabel>
                             <Select
                                 native
                                 value={this.state.colorSetting}
                                 onChange={this.handleColorSettingChange}
                             >
-                                <option value={1}>Red-blue</option>
-                                <option value={2}>Red-green</option>
-                                <option value={3}>Red-yellow</option>
+                                <option value={1}>Red</option>
+                                <option value={2}>Green</option>
+                                <option value={3}>Blue</option>
+                                <option value={4}>Purple</option>
                             </Select>
                         </FormControl>
                     </Grid>
                     <Grid item xs={12} style={{ paddingTop: '30px' }}>
-                        <Grid container direction="row" justify="flex-end">
+                        <Grid container direction="row" justify="space-between">
                             <Grid item>
+                                
                                 <div className={classes.wrapper}>
+          
                                     <Button
+                                        variant="contained"
+                                        color="primary"
+                                        disabled={this.state.loading}
+                                        onClick={this.handleAnimateClick}
+                                    >
+                                        Animate
+                                        </Button>
+                                    {this.props.mapLoading && <CircularProgress size={24} className={classes.buttonProgress} />}
+                                </div>
+                            </Grid>
+                                {this.props.animationYear ? 
+                                <Grid item>
+                                <div className={classes.wrapper}>
+                                    <p style={{fontSize: '18px', margin:0}}>{this.props.animationYear}</p>
+                                    </div>
+                                </Grid>
+                        :
+                        <div />}
+                            <Grid item>
+                            <div className={classes.wrapper}>
+                            <Button
                                         variant="contained"
                                         color="primary"
                                         disabled={this.state.loading}
@@ -214,8 +259,7 @@ class Settings extends Component {
                                     >
                                         Apply
                                         </Button>
-                                    {this.props.mapLoading && <CircularProgress size={24} className={classes.buttonProgress} />}
-                                </div>
+                             </div>
                             </Grid>
                         </Grid>
                     </Grid>
