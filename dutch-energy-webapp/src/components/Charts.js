@@ -379,12 +379,33 @@ export class LineChart extends Component {
             .attr('text-anchor', 'middle')
             .text('Year');
 
+            let headingText;
+            switch(this.props.dataType) {
+                case 1:
+                    headingText = 'Total consumption';
+                    break;
+                case 2:
+                    headingText = 'Consumption per connection';
+                    break;
+                case 3:
+                    headingText = 'Total production';
+                    break;
+                case 4:
+                    headingText = 'Production per connection';
+                    break;
+                case 5:
+                    headingText = 'Number of connections';
+                    break;
+                case 6:
+                    headingText = 'Number of smartmeters';
+                    break;
+            }
             svg.append('text')
             .attr('class', 'title')
             .attr('x', width / 2 + margin)
             .attr('y', 40)
             .attr('text-anchor', 'middle')
-            .text('Annual consumption');
+            .text(headingText);
         }
     }
 

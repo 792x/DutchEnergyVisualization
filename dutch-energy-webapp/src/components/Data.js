@@ -3,6 +3,7 @@ import { withStyles } from '@material-ui/core/styles';
 import { Grid, Typography, FormLabel, FormControl, Select, InputLabel, StylesProvider } from '@material-ui/core';
 import { BarChart, LineChart, PieChart } from '../components/Charts';
 import { national_data } from '../assets/national_data.js';
+import LoadingSpinner from './LoadingSpinner';
 
 
 const styles = theme => ({
@@ -155,6 +156,15 @@ class Data extends Component {
                             <Grid item style={{ marginTop: '10px', marginLeft: '10px' }}>
                                 <SelectedItem scope={this.props.scope} specificData={this.props.specificData}></SelectedItem>
                             </Grid>
+                            {(() => {
+                                if (this.props.loading) {
+                                    return (
+                                        <Grid item>
+                                            <LoadingSpinner />
+                                        </Grid>
+                                    );
+                                }
+                            })()}
                             <Grid item>
                                 <Grid container direction="row" justify="flex-end">
                                     <Grid item style={{ paddingRight: '20px', width: '150px' }} >
@@ -214,7 +224,7 @@ class Data extends Component {
                                                 <option value={3}>Total production</option>
                                                 <option value={4}>Production per connection</option>
                                                 <option value={5}>Number of connections</option>
-                                                <option value={6}>Number of smart meters</option>
+                                                <option value={6}>Number of smartmeters</option>
                                                 <option value={7}>Market share</option>
                                             </Select>
                                         </FormControl>
@@ -224,7 +234,7 @@ class Data extends Component {
                         </Grid>
                     </Grid>
                     <Grid item style={{ height: '260px' }} id='d3-wrapper'>
-                            
+
                         {/* Example */}
                         {/* <Grid item style={{ width: '32%' }}>
                             <BarChart

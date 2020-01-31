@@ -157,7 +157,7 @@ class Main extends Component {
                         </Grid>
                         <Grid item style={{ display: 'flex', height: '45%', padding: '10px 20px 20px 20px' }} xs={12}>
                             <Paper className={classes.paper}>
-                                <Data scope={this.state.mapScopeSetting} specificData={this.state.specificData} selectedItem={this.state.selectedItem} />
+                                <Data scope={this.state.mapScopeSetting} specificData={this.state.specificData} selectedItem={this.state.selectedItem} loading={this.state.loadingSpecificData} />
                             </Paper>
                         </Grid>
                     </Grid>
