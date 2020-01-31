@@ -26,8 +26,8 @@ const data_test = {"electricity":[{"gemeente2019":"228","gemeentenaam2019":"Ede"
 
 export class BarChart extends Component {
     makeChart() {
-        // let data = this.props.data;
-        let data = data_test;
+        let data = this.props.data;
+        // let data = data_test;
 
         if (data !== null) {
             // Select energy source
@@ -43,6 +43,9 @@ export class BarChart extends Component {
             children.reduce((res, val) => {
                 let x;
                 switch(this.props.scope) {
+                    case 'national':
+                        x = val.gemeentenaam2019;
+                        break;
                     case 'gemeente':
                         x = val.wijknaam2019;
                         break;
@@ -64,16 +67,19 @@ export class BarChart extends Component {
                         res[x].y += val.annual_consume;
                         break;
                     case 2:
-                        res[x].y += val.annual_consume / val.num_connections; // * val.perc_of_active_connections;
+                        res[x].y += val.annual_consume / (val.num_connections * (val.perc_of_active_connections / 100));
                         break;
                     case 3:
-                        res[x].y += val.annual_consume * val.delivery_perc / 100;
+                        res[x].y += val.annual_consume * (1 - val.delivery_perc / 100);
                         break;
                     case 4:
-                        res[x].y += val.annual_consume * val.delivery_perc / 100 / val.num_connections; // * val.perc_of_active_connections;
+                        res[x].y += val.annual_consume * (1 - val.delivery_perc / 100) / (val.num_connections * (val.perc_of_active_connections / 100));
                         break;
                     case 5:
-                        res[x].y += val.num_connections;
+                        res[x].y += val.num_connections * (val.perc_of_active_connections / 100);
+                        break;
+                    case 6:
+                        res[x].y += val.num_connections * (val.smartmeter_perc / 100);
                         break;
                 }
                 return res;
@@ -104,12 +110,13 @@ export class BarChart extends Component {
                         d2.y = d.y.toFixed(2);
                         break;
                     case 5:
-                        d2.y = d.y.toFixed(2);
+                    case 6:
+                        d2.y = (d.y / 1000000).toFixed(2);
                         break;
                 }
                 return d2;
             });
-            console.log('BarChart', data);
+            // console.log('BarChart', data);
 
             const max = Math.max.apply(Math, data.map(function(d) { return d.y; }));
             const svg = select('#'+this.props.id);
@@ -183,6 +190,9 @@ export class BarChart extends Component {
 
             let scopeText;
             switch(this.props.scope) {
+                case 'national':
+                    scopeText = 'Gemeente';
+                    break;
                 case 'gemeente':
                     scopeText = 'Wijk';
                     break;
@@ -205,7 +215,7 @@ export class BarChart extends Component {
             .attr('x', width / 2 + margin)
             .attr('y', 40)
             .attr('text-anchor', 'middle')
-            .text(capitalize(this.props.type) + ' 5 consumption');
+            .text(capitalize(this.props.type) + ' 5');
         }
     }
 
@@ -228,8 +238,8 @@ export class BarChart extends Component {
 
 export class LineChart extends Component {
     makeChart() {
-        // let data = this.props.data;
-        let data = data_test;
+        let data = this.props.data;
+        // let data = data_test;
 
         if (data !== null) {
             // Select energy source
@@ -254,19 +264,21 @@ export class LineChart extends Component {
                         res[val.year].y += val.annual_consume;
                         break;
                     case 2:
-                        res[val.year].y += val.annual_consume / val.num_connections; // * val.perc_of_active_connections;
+                        res[val.year].y += val.annual_consume / (val.num_connections * (val.perc_of_active_connections / 100));
                         break;
                     case 3:
-                        res[val.year].y += val.annual_consume * val.delivery_perc / 100;
+                        res[val.year].y += val.annual_consume * (1 - val.delivery_perc / 100);
                         break;
                     case 4:
-                        res[val.year].y += val.annual_consume * val.delivery_perc / 100 / val.num_connections; // * val.perc_of_active_connections;
+                        res[val.year].y += val.annual_consume * (1 - val.delivery_perc / 100) / (val.num_connections * (val.perc_of_active_connections / 100));
                         break;
                     case 5:
-                        res[val.year].y += val.num_connections;
+                        res[val.year].y += val.num_connections * (val.perc_of_active_connections / 100);
+                        break;
+                    case 6:
+                        res[val.year].y += val.num_connections * (val.smartmeter_perc / 100);
                         break;
                 }
-                // res[val.year].y += val.annual_consume;
                 return res;
             }, {});
 
@@ -291,13 +303,13 @@ export class LineChart extends Component {
                         d2.y = d.y.toFixed(2);
                         break;
                     case 5:
-                        d2.y = d.y.toFixed(2);
+                    case 6:
+                        d2.y = (d.y / 1000000).toFixed(2);
                         break;
                 }
-                // d2.y = (d.annual_consume / 1000000).toFixed(2);
                 return d2;
             });
-            console.log('LineChart', data);
+            // console.log('LineChart', data);
 
             const max = Math.max.apply(Math, data.map(function(d) { return d.y; }));
             const svg = selectAll('#'+this.props.id);
@@ -395,8 +407,8 @@ export class LineChart extends Component {
 
 export class PieChart extends Component {
     makeChart() {
-        // let data = this.props.data;
-        let data = data_test;
+        let data = this.props.data;
+        // let data = data_test;
 
         if (data !== null) {
             // Select energy source
@@ -426,10 +438,19 @@ export class PieChart extends Component {
                     res[manager] = { net_manager: manager, y: 0 };
                     children2.push(res[manager]);
                 }
-                res[manager].y += val.annual_consume;
+                switch(this.props.type) {
+                    case 'cons':
+                        res[manager].y += val.annual_consume;
+                        break;
+                    case 'prod':
+                        res[manager].y += val.annual_consume * (1 - val.delivery_perc / 100);
+                        break;
+                    case 'nuco':
+                        res[manager].y += val.num_connections * (val.perc_of_active_connections / 100);
+                        break;
+                }
                 return res;
             }, {});
-            // console.log('arr', children2);
 
             // Convert array to object
             let children3 = {};
@@ -439,10 +460,9 @@ export class PieChart extends Component {
                 [item['net_manager']]: (item.y / 1000000).toFixed(2),
                 };
             }, children3);
-            // console.log("obj", children3);
 
             data = children3;
-            console.log(data);
+            // console.log('PieChart', data);
 
             const svg = select('#'+this.props.id);
             svg.selectAll("*")
@@ -510,12 +530,24 @@ export class PieChart extends Component {
             .attr('text-anchor', 'middle')
             .text(capitalize(this.props.source) + ' (*10^6)');
 
+            let textProvider;
+            switch(this.props.type) {
+                case 'cons':
+                    textProvider = 'Total consumption';
+                    break;
+                case 'prod':
+                    textProvider = 'Total production';
+                    break;
+                case 'nuco':
+                    textProvider = 'Number of connections';
+                    break;
+            }
             svg.append('text')
             .attr('class', 'title')
             .attr('x', width / 2)
             .attr('y', 40)
             .attr('text-anchor', 'middle')
-            .text('Provider market share');
+            .text(textProvider);
         }
     }
 

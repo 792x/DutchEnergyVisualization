@@ -48,6 +48,7 @@ class Main extends Component {
         nationalData: null,
         loadingNationalData: false,
         specificData: null,
+        loadingSpecificData: false,
     }
 
 
@@ -89,9 +90,10 @@ class Main extends Component {
     }
 
     loadSpecificData = async (id) => {
+        this.setState({loadingSpecificData: true});
         let specificDataResult = await this.fetchSpecificData(this.state.mapScopeSetting, id);
         let specificDataParsed = await JSON.parse(specificDataResult);
-        this.setState({specificData: specificDataParsed});
+        this.setState({specificData: specificDataParsed, loadingSpecificData: false});
     }
 
     applyMapSettings = async (scopeSetting, netManagerSetting, energySourceSetting, timeframeSetting, dataSetting, colorSetting) => {

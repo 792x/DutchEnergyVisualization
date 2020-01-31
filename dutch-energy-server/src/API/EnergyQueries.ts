@@ -333,6 +333,68 @@ export async function getSpecificData(scope:string, id:number){
     let gasManager:any;
 
     switch (scope) {
+        case "national":
+            elec = await Electricity.findAll({
+                attributes: [
+                    'gemeente2019',
+                    'gemeentenaam2019',
+                    'year',
+                    [fn('sum', col('annual_consume')), 'annual_consume'],
+                    [fn('sum', col('num_connections')), 'num_connections'],
+                    [fn('avg', col('smartmeter_perc')), 'smartmeter_perc'],
+                    [fn('avg', col('annual_consume_lowtarif_perc')), 'annual_consume_lowtarif_perc'],
+                    [fn('avg', col('delivery_perc')), 'delivery_perc'],
+                    [fn('avg', col('perc_of_active_connections')), 'perc_of_active_connections'],
+                ],
+                group: ['gemeente2019', 'gemeentenaam2019', 'year'],
+                raw: true,
+            });
+
+            gas = await Gas.findAll({
+                attributes: [
+                    'gemeente2019',
+                    'gemeentenaam2019',
+                    'year',
+                    [fn('sum', col('annual_consume')), 'annual_consume'],
+                    [fn('sum', col('num_connections')), 'num_connections'],
+                    [fn('avg', col('smartmeter_perc')), 'smartmeter_perc'],
+                    [fn('avg', col('annual_consume_lowtarif_perc')), 'annual_consume_lowtarif_perc'],
+                    [fn('avg', col('delivery_perc')), 'delivery_perc'],
+                    [fn('avg', col('perc_of_active_connections')), 'perc_of_active_connections'],
+                ],
+                group: ['gemeente2019', 'gemeentenaam2019', 'year'],
+                raw: true,
+            });
+
+            elecManager = await Electricity.findAll({
+                attributes: [
+                    'net_manager',
+                    'year',
+                    [fn('sum', col('annual_consume')), 'annual_consume'],
+                    [fn('sum', col('num_connections')), 'num_connections'],
+                    [fn('avg', col('annual_consume_lowtarif_perc')), 'annual_consume_lowtarif_perc'],
+                    [fn('avg', col('delivery_perc')), 'delivery_perc'],
+                    [fn('avg', col('perc_of_active_connections')), 'perc_of_active_connections'],
+                ],
+                group: ['net_manager', 'year'],
+                raw: true,
+            });
+
+            gasManager = await Gas.findAll({
+                attributes: [
+                    'net_manager',
+                    'year',
+                    [fn('sum', col('annual_consume')), 'annual_consume'],
+                    [fn('sum', col('num_connections')), 'num_connections'],
+                    [fn('avg', col('annual_consume_lowtarif_perc')), 'annual_consume_lowtarif_perc'],
+                    [fn('avg', col('delivery_perc')), 'delivery_perc'],
+                    [fn('avg', col('perc_of_active_connections')), 'perc_of_active_connections'],
+                ],
+                group: ['net_manager', 'year'],
+                raw: true,
+            });
+            break;
+
         case "gemeente":
             elec = await Electricity.findAll({
                 where: {
@@ -348,6 +410,7 @@ export async function getSpecificData(scope:string, id:number){
                     'year',
                     [fn('sum', col('annual_consume')), 'annual_consume'],
                     [fn('sum', col('num_connections')), 'num_connections'],
+                    [fn('avg', col('smartmeter_perc')), 'smartmeter_perc'],
                     [fn('avg', col('annual_consume_lowtarif_perc')), 'annual_consume_lowtarif_perc'],
                     [fn('avg', col('delivery_perc')), 'delivery_perc'],
                     [fn('avg', col('perc_of_active_connections')), 'perc_of_active_connections'],
@@ -370,6 +433,7 @@ export async function getSpecificData(scope:string, id:number){
                     'year',
                     [fn('sum', col('annual_consume')), 'annual_consume'],
                     [fn('sum', col('num_connections')), 'num_connections'],
+                    [fn('avg', col('smartmeter_perc')), 'smartmeter_perc'],
                     [fn('avg', col('annual_consume_lowtarif_perc')), 'annual_consume_lowtarif_perc'],
                     [fn('avg', col('delivery_perc')), 'delivery_perc'],
                     [fn('avg', col('perc_of_active_connections')), 'perc_of_active_connections'],
@@ -438,6 +502,7 @@ export async function getSpecificData(scope:string, id:number){
                     'year',
                     [fn('sum', col('annual_consume')), 'annual_consume'],
                     [fn('sum', col('num_connections')), 'num_connections'],
+                    [fn('avg', col('smartmeter_perc')), 'smartmeter_perc'],
                     [fn('avg', col('annual_consume_lowtarif_perc')), 'annual_consume_lowtarif_perc'],
                     [fn('avg', col('delivery_perc')), 'delivery_perc'],
                     [fn('avg', col('perc_of_active_connections')), 'perc_of_active_connections'],
@@ -462,6 +527,7 @@ export async function getSpecificData(scope:string, id:number){
                     'year',
                     [fn('sum', col('annual_consume')), 'annual_consume'],
                     [fn('sum', col('num_connections')), 'num_connections'],
+                    [fn('avg', col('smartmeter_perc')), 'smartmeter_perc'],
                     [fn('avg', col('annual_consume_lowtarif_perc')), 'annual_consume_lowtarif_perc'],
                     [fn('avg', col('delivery_perc')), 'delivery_perc'],
                     [fn('avg', col('perc_of_active_connections')), 'perc_of_active_connections'],
@@ -535,6 +601,7 @@ export async function getSpecificData(scope:string, id:number){
                     'year',
                     [fn('sum', col('annual_consume')), 'annual_consume'],
                     [fn('sum', col('num_connections')), 'num_connections'],
+                    [fn('avg', col('smartmeter_perc')), 'smartmeter_perc'],
                     [fn('avg', col('annual_consume_lowtarif_perc')), 'annual_consume_lowtarif_perc'],
                     [fn('avg', col('delivery_perc')), 'delivery_perc'],
                     [fn('avg', col('perc_of_active_connections')), 'perc_of_active_connections'],
@@ -560,6 +627,7 @@ export async function getSpecificData(scope:string, id:number){
                     'year',
                     [fn('sum', col('annual_consume')), 'annual_consume'],
                     [fn('sum', col('num_connections')), 'num_connections'],
+                    [fn('avg', col('smartmeter_perc')), 'smartmeter_perc'],
                     [fn('avg', col('annual_consume_lowtarif_perc')), 'annual_consume_lowtarif_perc'],
                     [fn('avg', col('delivery_perc')), 'delivery_perc'],
                     [fn('avg', col('perc_of_active_connections')), 'perc_of_active_connections'],

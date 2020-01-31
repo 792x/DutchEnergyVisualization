@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import { Grid, Typography, FormLabel, FormControl, Select, InputLabel, StylesProvider } from '@material-ui/core';
-import { BarChart, LineChart, PieChart } from '../components/Charts'
+import { BarChart, LineChart, PieChart } from '../components/Charts';
+import { national_data } from '../assets/national_data.js';
 
 
 const styles = theme => ({
@@ -41,8 +42,6 @@ const SelectedItem = (props) => {
                 selected.buurt = props.specificData["electricity"][0].buurtnaam2019;
                 break;
         }
-    } else {
-        selected.gemeente = '...';
     }
 
     if (selected.buurt) {
@@ -57,10 +56,16 @@ const SelectedItem = (props) => {
                 Gemeente: <strong>{selected.gemeente}</strong>, Wijk: <strong>{selected.wijk}</strong>
             </Typography>
         )
-    } else {
+    } else if (selected.gemeente) {
         return (
             <Typography variant="h6">
                 Gemeente: <strong>{selected.gemeente}</strong>
+            </Typography>
+        )
+    } else {
+        return (
+            <Typography variant="h6">
+                National
             </Typography>
         )
     }
@@ -74,6 +79,11 @@ class Data extends Component {
         energySourceSetting: 'electricity',
         dataSetting: 1,
         timeframeSetting: 1,
+        graphSettings: {
+            width: 350,
+            height: 320,
+            margin: 55,
+        },
     }
 
     handleTimeFrameSettingChange = (e) => {
@@ -126,19 +136,20 @@ class Data extends Component {
         }
     }
 
+    componentDidMount() {
+        const boxHeight = document.getElementById('data-wrapper').clientHeight - 48;
+        console.log(boxHeight);
+        document.getElementById('d3-wrapper').style.height = boxHeight+'px';
+
+        this.state.graphSettings.height = boxHeight;
+    }
 
     render() {
         const { classes } = this.props;
-        
-        const graphSettings = {
-            width: 350,
-            height: 320,
-            margin: 60,
-        };
 
         return (
             <div className={classes.root}>
-                <Grid container direction="row" justify="flex-start" style={{ height: '100%' }}>
+                <Grid container direction="row" justify="flex-start" style={{ height: '100%' }} id='data-wrapper'>
                     <Grid item style={{ height: '48px', width: '100%' }}>
                         <Grid container direction="row" justify="space-between" style={{ width: '100%', height: '48px' }} >
                             <Grid item style={{ marginTop: '10px', marginLeft: '10px' }}>
@@ -212,7 +223,7 @@ class Data extends Component {
                             </Grid>
                         </Grid>
                     </Grid>
-                    <Grid item style={{ height: '400px' }}>
+                    <Grid item style={{ height: '260px' }} id='d3-wrapper'>
                             
                         {/* Example */}
                         {/* <Grid item style={{ width: '32%' }}>
@@ -255,28 +266,29 @@ class Data extends Component {
                                 case 6:
                                     return (
                                         /* Total consumption */
-                                        <Grid container direction="row" justify="space-between" style={{ width: '100%', marginTop: '10px' }} >
+                                        <Grid container direction="row" justify="space-between" style={{ width: '100%', height: '100%' }} >
                                             <Grid item style={{ width: '32%' }}>
                                                 <LineChart
                                                     id='linechart1'
-                                                    data={this.props.specificData}
+                                                    data={this.props.selectedItem === null ? national_data : this.props.specificData}
                                                     dataType={this.state.dataSetting}
-                                                    settings={graphSettings}
+                                                    settings={this.state.graphSettings}
                                                     years={this.handleTimeframe(this.state.timeframeSetting)}
                                                     source={this.state.energySourceSetting}
                                                     scope={this.props.scope}
+                                                    
                                                 ></LineChart>
                                             </Grid>
 
                                             <Grid item style={{ width: '32%' }}>
                                                 <BarChart
                                                     id='barchart1'
-                                                    data={this.props.specificData}
+                                                    data={this.props.selectedItem === null ? national_data : this.props.specificData}
                                                     dataType={this.state.dataSetting}
-                                                    settings={graphSettings}
+                                                    settings={this.state.graphSettings}
                                                     years={this.handleTimeframe(this.state.timeframeSetting)}
                                                     source={this.state.energySourceSetting}
-                                                    scope={this.props.scope}
+                                                    scope={this.props.selectedItem === null ? 'national' : this.props.scope}
                                                     type='top'
                                                 ></BarChart>
                                             </Grid>
@@ -284,12 +296,12 @@ class Data extends Component {
                                             <Grid item style={{ width: '32%' }}>
                                                 <BarChart
                                                     id='barchart2'
-                                                    data={this.props.specificData}
+                                                    data={this.props.selectedItem === null ? national_data : this.props.specificData}
                                                     dataType={this.state.dataSetting}
-                                                    settings={graphSettings}
+                                                    settings={this.state.graphSettings}
                                                     years={this.handleTimeframe(this.state.timeframeSetting)}
                                                     source={this.state.energySourceSetting}
-                                                    scope={this.props.scope}
+                                                    scope={this.props.selectedItem === null ? 'national' : this.props.scope}
                                                     type='bottom'
                                                 ></BarChart>
                                             </Grid>
@@ -299,15 +311,15 @@ class Data extends Component {
                                 case 7:
                                     return (
                                         /* Market share */
-                                        <Grid container direction="row" justify="space-between" style={{ width: '100%', marginTop: '10px' }} >
+                                        <Grid container direction="row" justify="space-between" style={{ width: '100%', height: '100%' }} >
                                             <Grid item style={{ width: '32%' }}>
                                                 <PieChart
                                                     id='piechart1'
-                                                    data={this.props.specificData}
-                                                    settings={graphSettings}
+                                                    data={this.props.selectedItem === null ? national_data : this.props.specificData}
+                                                    settings={this.state.graphSettings}
                                                     years={this.handleTimeframe(this.state.timeframeSetting)}
                                                     source={this.state.energySourceSetting}
-                                                    scope={this.props.scope}
+                                                    scope={this.props.selectedItem === null ? 'national' : this.props.scope}
                                                     type='cons'
                                                 ></PieChart>
                                             </Grid>
@@ -315,24 +327,24 @@ class Data extends Component {
                                             <Grid item style={{ width: '32%' }}>
                                                 <PieChart
                                                     id='piechart2'
-                                                    data={this.props.specificData}
-                                                    settings={graphSettings}
+                                                    data={this.props.selectedItem === null ? national_data : this.props.specificData}
+                                                    settings={this.state.graphSettings}
                                                     years={this.handleTimeframe(this.state.timeframeSetting)}
                                                     source={this.state.energySourceSetting}
-                                                    scope={this.props.scope}
-                                                    type='cons_avg'
+                                                    scope={this.props.selectedItem === null ? 'national' : this.props.scope}
+                                                    type='prod'
                                                 ></PieChart>
                                             </Grid>
 
                                             <Grid item style={{ width: '32%' }}>
                                                 <PieChart
                                                     id='piechart3'
-                                                    data={this.props.specificData}
-                                                    settings={graphSettings}
+                                                    data={this.props.selectedItem === null ? national_data : this.props.specificData}
+                                                    settings={this.state.graphSettings}
                                                     years={this.handleTimeframe(this.state.timeframeSetting)}
                                                     source={this.state.energySourceSetting}
-                                                    scope={this.props.scope}
-                                                    type='prod'
+                                                    scope={this.props.selectedItem === null ? 'national' : this.props.scope}
+                                                    type='nuco'
                                                 ></PieChart>
                                             </Grid>
                                         </Grid>
