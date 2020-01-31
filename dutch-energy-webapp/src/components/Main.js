@@ -104,9 +104,9 @@ class Main extends Component {
     // <option value={13}>Last five years</option>
     // <option value={14}>Last ten years</option>
 
-    fetchNationalData = async (scopeSetting) => {
+    fetchNationalData = async (scopeSetting, energySourceSetting) => {
         //fetch national data based on map settings
-        const result = await fetch(`http://localhost:3001/nationalsummary?scope=${scopeSetting}`)
+        const result = await fetch(`http://localhost:3001/national?scope=${scopeSetting}&energysource=${energySourceSetting}`)
             .then(async (response) => {
                 if(response.status === 200){
                     console.log('Succesful response');
@@ -136,7 +136,7 @@ class Main extends Component {
 
     loadNationalData = async () => {
         await this.setState({loadingNationalData: true});
-        let nationalDataResult = await this.fetchNationalData(this.state.mapScopeSetting);
+        let nationalDataResult = await this.fetchNationalData(this.state.mapScopeSetting, this.state.mapEnergySourceSetting);
         let nationalDataParsed = await JSON.parse(nationalDataResult);
         this.setState({nationalData: nationalDataParsed, loadingNationalData: false});
     }
@@ -169,14 +169,15 @@ class Main extends Component {
     applyMapSettings = async (scopeSetting, netManagerSetting, energySourceSetting, timeFrameSetting, dataSetting, colorSetting) => {
         console.log('applying settings:', scopeSetting, netManagerSetting, energySourceSetting, timeFrameSetting, dataSetting, colorSetting)
         let prevMapScopeSetting = this.state.mapScopeSetting;
+        let prevEnergySourceSetting = this.state.mapEnergySourceSetting;
         let shownNationalData = this.state.nationalData;
         let allowedYears = handleTimeframe(timeFrameSetting);
         console.log('allowedYears', allowedYears);
 
 
         //reload data only if we change scope setting
-        if(prevMapScopeSetting !== scopeSetting){
-            await this.setState({mapScopeSetting: scopeSetting});
+        if(prevMapScopeSetting !== scopeSetting || prevEnergySourceSetting !== energySourceSetting ){
+            await this.setState({mapScopeSetting: scopeSetting, mapEnergySourceSetting: energySourceSetting});
             await this.loadNationalData();
         }
 

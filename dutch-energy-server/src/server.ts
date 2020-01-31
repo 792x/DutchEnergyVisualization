@@ -32,8 +32,8 @@ server.get('/', (req, res) => res.status(200).send('server running yooo'));
 //     energyRoutingFunctions.getNationalData
 // );
 
-server.get('/nationalsummary',
-    energyRoutingFunctions.getNationalDataSummary
+server.get('/national',
+    energyRoutingFunctions.getNationalData
 );
 
 server.get('/specific',
