@@ -248,6 +248,11 @@ class Data extends Component {
                         {(() => {
                             switch (this.state.dataSetting) {
                                 case 1:
+                                case 2:
+                                case 3:
+                                case 4:
+                                case 5:
+                                case 6:
                                     return (
                                         /* Total consumption */
                                         <Grid container direction="row" justify="space-between" style={{ width: '100%', marginTop: '10px' }} >
@@ -287,7 +292,6 @@ class Data extends Component {
                                             </Grid>
                                         </Grid>
                                     );
-                                    
 
                                 case 7:
                                     return (

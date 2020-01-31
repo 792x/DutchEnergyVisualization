@@ -45,7 +45,23 @@ export class BarChart extends Component {
                     res[val.wijknaam2019] = { wijknaam2019: val.wijknaam2019, y: 0 };
                     children2.push(res[val.wijknaam2019]);
                 }
-                res[val.wijknaam2019].y += val.annual_consume;
+                switch(this.props.dataType) {
+                    case 1:
+                        res[val.wijknaam2019].y += val.annual_consume;
+                        break;
+                    case 2:
+                        res[val.wijknaam2019].y += val.annual_consume / val.num_connections; // * val.perc_of_active_connections;
+                        break;
+                    case 3:
+                        res[val.wijknaam2019].y += val.annual_consume * val.delivery_perc / 100;
+                        break;
+                    case 4:
+                        res[val.wijknaam2019].y += val.annual_consume * val.delivery_perc / 100 / val.num_connections; // * val.perc_of_active_connections;
+                        break;
+                    case 5:
+                        res[val.wijknaam2019].y += val.num_connections;
+                        break;
+                }
                 return res;
             }, {});
 
@@ -60,7 +76,23 @@ export class BarChart extends Component {
             data = data.map((d) => {
                 var d2 = {};
                 d2.x = d.wijknaam2019;
-                d2.y = (d.y / 1000000).toFixed(2);
+                switch(this.props.dataType) {
+                    case 1:
+                        d2.y = (d.y / 1000000).toFixed(2);
+                        break;
+                    case 2:
+                        d2.y = d.y.toFixed(2);
+                        break;
+                    case 3:
+                        d2.y = (d.y / 1000000).toFixed(2);
+                        break;
+                    case 4:
+                        d2.y = d.y.toFixed(2);
+                        break;
+                    case 5:
+                        d2.y = d.y.toFixed(2);
+                        break;
+                }
                 return d2;
             });
             console.log('BarChart', data);
@@ -188,10 +220,27 @@ export class LineChart extends Component {
             let children2 = [];
             children.reduce((res, val) => {
                 if (!res[val.year]) {
-                    res[val.year] = { year: val.year, annual_consume: 0 };
+                    res[val.year] = { year: val.year, y: 0 };
                     children2.push(res[val.year]);
                 }
-                res[val.year].annual_consume += val.annual_consume;
+                switch(this.props.dataType) {
+                    case 1:
+                        res[val.year].y += val.annual_consume;
+                        break;
+                    case 2:
+                        res[val.year].y += val.annual_consume / val.num_connections; // * val.perc_of_active_connections;
+                        break;
+                    case 3:
+                        res[val.year].y += val.annual_consume * val.delivery_perc / 100;
+                        break;
+                    case 4:
+                        res[val.year].y += val.annual_consume * val.delivery_perc / 100 / val.num_connections; // * val.perc_of_active_connections;
+                        break;
+                    case 5:
+                        res[val.year].y += val.num_connections;
+                        break;
+                }
+                // res[val.year].y += val.annual_consume;
                 return res;
             }, {});
 
@@ -202,7 +251,24 @@ export class LineChart extends Component {
             data = data.map((d) => {
                 var d2 = {};
                 d2.x = d.year;
-                d2.y = (d.annual_consume / 1000000).toFixed(2);
+                switch(this.props.dataType) {
+                    case 1:
+                        d2.y = (d.y / 1000000).toFixed(2);
+                        break;
+                    case 2:
+                        d2.y = d.y.toFixed(2);
+                        break;
+                    case 3:
+                        d2.y = (d.y / 1000000).toFixed(2);
+                        break;
+                    case 4:
+                        d2.y = d.y.toFixed(2);
+                        break;
+                    case 5:
+                        d2.y = d.y.toFixed(2);
+                        break;
+                }
+                // d2.y = (d.annual_consume / 1000000).toFixed(2);
                 return d2;
             });
             console.log('LineChart', data);
