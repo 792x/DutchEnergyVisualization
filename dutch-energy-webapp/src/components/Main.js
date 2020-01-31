@@ -53,7 +53,7 @@ class Main extends Component {
 
     fetchNationalData = async (scopeSetting, netManagerSetting, energySourceSetting, timeframeSetting, dataSetting) => {
         //fetch national data based on map settings
-        const result =await fetch(`http://localhost:3001/national?scope=${scopeSetting}&netmanager=${netManagerSetting}&energysource=${energySourceSetting}&timeframe=${timeframeSetting}&data=${dataSetting}`)
+        const result =await fetch(`http://localhost:3001/nationalsummary?scope=${scopeSetting}&netmanager=${netManagerSetting}&energysource=${energySourceSetting}&timeframe=${timeframeSetting}&data=${dataSetting}`)
             .then(async (response) => {
                 if(response.status === 200){
                     console.log('Succesful response');

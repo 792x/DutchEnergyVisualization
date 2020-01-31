@@ -79,28 +79,52 @@ class Map extends Component {
 
     delayHelper = ms => new Promise(res => setTimeout(res, ms));
 
+    getColor = (percent, start, end) => {
+            var a = percent / 100,
+                b = (end - start) * a,
+                c = b + start;
+          
+            // Return a CSS HSL string
+            return 'hsl('+c+', 100%, 50%)';
+          
+          //Change the start and end values to reflect the hue map
+          //Refernece : http://www.ncl.ucar.edu/Applications/Images/colormap_6_3_lg.png
+          
+          /*
+          Quick ref:
+              0 – red
+              60 – yellow
+              120 – green
+              180 – turquoise
+              240 – blue
+              300 – pink
+              360 – red
+          */    
+    }
     styleEachFeature = (feature, layer) => {
         // return {color: "#ff0000"};
         let style  = {
             "color": "#B8B8B8",
             "weight": 1,
-            "opacity": 1
+            "opacity": 1,
+            "fillOpacity": 0.75
         };
         feature.properties.identifier = this.parseIdentifier(feature.properties.statcode);
 
         if(this.props.nationalData){
             const data = this.props.nationalData[feature.properties.identifier];
             if(data) {
-                //TODO: replace with data.relativeValue
-                if(data.gemeentenaam2019 === 'Hollands Kroon'){
-                    style = {
-                            "color": "#ff7800",
-                            "weight": 1,
-                            "opacity": 1
-                        };
-                    }
-                }
+                console.log(data);
+                const perc = data.annual_consume_color;
+                //TODO: change depending on setting
+                style = {
+                        "color": this.getColor(perc, 60, 0),
+                        "weight": 1,
+                        "opacity": 0.75,
+                        "fillOpacity": 0.75
+                    };
             }
+        }
         return style;
     }
 
@@ -140,8 +164,9 @@ class Map extends Component {
             }
         }
         
+        //TODO fix no data popup crash
         layer.bindPopup(popupContent).on("popupopen", (e) => {
-            if(this.props.nationalData){
+            if(this.props.nationalData && feature.properties.identifier){
                 L.DomEvent.addListener(L.DomUtil.get(`button-explore-${feature.properties.identifier}`), 'click', (e) => {
                     console.log('clicked explore!')
                     const identifier = feature.properties.identifier;
