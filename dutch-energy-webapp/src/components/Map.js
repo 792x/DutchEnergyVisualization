@@ -27,13 +27,25 @@ function getGeoJson(scope){
     }
 }
 
+function getColorz(d) {
+    return d > 1000 ? '#800026' :
+           d > 500  ? '#BD0026' :
+           d > 200  ? '#E31A1C' :
+           d > 100  ? '#FC4E2A' :
+           d > 50   ? '#FD8D3C' :
+           d > 20   ? '#FEB24C' :
+           d > 10   ? '#FED976' :
+                      '#FFEDA0';
+}
 
 
 class Map extends Component {
 
     state = {
-        data: {}
+        data: {},
     }
+
+
 
     createMap =  async (scope) => {
         this.map = L.map('map').setView([52.3667, 4.8945], 7);
@@ -50,6 +62,25 @@ class Map extends Component {
         })
 
 
+        var legend = L.control({position: 'bottomright'});
+
+        legend.onAdd = function (map) {
+        
+            var div = L.DomUtil.create('div', 'info legend'),
+                grades = [0, 10, 20, 50, 100, 200, 500, 1000],
+                labels = [];
+        
+            // loop through our density intervals and generate a label with a colored square for each interval
+            for (var i = 0; i < grades.length; i++) {
+                div.innerHTML +=
+                    '<i style="background:' + getColorz(grades[i] + 1) + '"></i> ' +
+                    grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
+            }
+        
+            return div;
+        };
+        
+        legend.addTo(this.map);
 
         this.map.addLayer(titleLayer);
         this.map.addLayer(this.customLayer);
@@ -66,6 +97,8 @@ class Map extends Component {
         })
 
         this.map.addLayer(this.customLayer);
+
+        
     }
 
     parseIdentifier = (input) => {
@@ -101,6 +134,7 @@ class Map extends Component {
               360 – red
           */    
     }
+
     styleEachFeature = (feature, layer) => {
         // return {color: "#ff0000"};
         let style  = {
