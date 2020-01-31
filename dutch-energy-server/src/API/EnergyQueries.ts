@@ -111,216 +111,216 @@ export async function getNationalSummaryData(scope: string){
     let perc_of_active_connections_min :number;
     
     switch(scope){
-        // case 'buurt':
-        //     //return json with buurtnummer as index
-        //     elec = await Electricity.findAll({
-        //         attributes: [
-        //             'net_manager',
-        //             'gemeente2019',
-        //             'gemeentenaam2019',
-        //             'wijk2019',
-        //             'wijknaam2019',
-        //             'buurt2019',
-        //             'buurtnaam2019',
-        //             'city',
-        //             'year',
-        //             [fn('sum', col('annual_consume')), 'annual_consume'],
-        //             [fn('sum', col('num_connections')), 'num_connections'],
-        //             [fn('avg', col('annual_consume_lowtarif_perc')), 'annual_consume_lowtarif_perc'],
-        //             [fn('avg', col('delivery_perc')), 'delivery_perc'],
-        //             [fn('avg', col('perc_of_active_connections')), 'perc_of_active_connections'],
-        //             [fn('avg', col('smartmeter_perc')), 'smartmeter_perc'],
-        //         ],
-        //         group: ['net_manager', 'gemeente2019', 'gemeentenaam2019', 'wijk2019', 'wijknaam2019','buurt2019', 'buurtnaam2019', 'city', 'year'],
-        //         raw: true,
-        //     });
+        case 'buurt':
+            //return json with buurtnummer as index
+            elec = await Electricity.findAll({
+                attributes: [
+                    'net_manager',
+                    'gemeente2019',
+                    'gemeentenaam2019',
+                    'wijk2019',
+                    'wijknaam2019',
+                    'buurt2019',
+                    'buurtnaam2019',
+                    'city',
+                    'year',
+                    [fn('sum', col('annual_consume')), 'annual_consume'],
+                    [fn('sum', col('num_connections')), 'num_connections'],
+                    [fn('avg', col('annual_consume_lowtarif_perc')), 'annual_consume_lowtarif_perc'],
+                    [fn('avg', col('delivery_perc')), 'delivery_perc'],
+                    [fn('avg', col('perc_of_active_connections')), 'perc_of_active_connections'],
+                    [fn('avg', col('smartmeter_perc')), 'smartmeter_perc'],
+                ],
+                group: ['net_manager', 'gemeente2019', 'gemeentenaam2019', 'wijk2019', 'wijknaam2019','buurt2019', 'buurtnaam2019', 'city', 'year'],
+                raw: true,
+            });
 
-        //     elec.reduce((res:any, val:any) => {
-        //         if (!res[`${val.gemeente2019}_${val.year}`]) {
-        //             res[`${val.gemeente2019}_${val.year}`] = {
-        //                 gemeente2019: val.gemeente2019,
-        //                 gemeentenaam2019: val.gemeentenaam2019,
-        //                 wijk2019: val.wijk2019,
-        //                 wijknaam2019: val.wijknaam2019,
-        //                 buurt2019: val.buurt2019,
-        //                 buurtnaam2019: val.buurtnaam2019,
-        //                 net_manager: val.net_manager,
-        //                 year: val.year,
-        //                 annual_consume: 0,
-        //                 annual_consume_low_tarif: 0,
-        //                 num_connections: 0,
-        //                 delivery_perc: [],
-        //                 average_delivery_perc: 0,
-        //                 perc_of_active_connections: [],
-        //                 average_perc_of_active_connections: 0,
-        //                 smartmeter_perc: [],
-        //                 average_smartmeter_perc: 0,
-        //             };
-        //             data.push(res[`${val.gemeente2019}_${val.year}`]);
-        //         }
+            elec.reduce((res:any, val:any) => {
+                if (!res[`${val.buurt2019}_${val.year}`]) {
+                    res[`${val.buurt2019}_${val.year}`] = {
+                        gemeente2019: val.gemeente2019,
+                        gemeentenaam2019: val.gemeentenaam2019,
+                        wijk2019: val.wijk2019,
+                        wijknaam2019: val.wijknaam2019,
+                        buurt2019: val.buurt2019,
+                        buurtnaam2019: val.buurtnaam2019,
+                        net_manager: val.net_manager,
+                        year: val.year,
+                        annual_consume: 0,
+                        annual_consume_low_tarif: 0,
+                        num_connections: 0,
+                        delivery_perc_count: 0,
+                        delivery_perc: 0,
+                        perc_of_active_connections_count: 0,
+                        perc_of_active_connections: 0,
+                        smartmeter_perc_count: 0,
+                        smartmeter_perc: 0,
+                    };
+                    data.push(res[`${val.buurt2019}_${val.year}`]);
+                }
 
-        //         res[`${val.gemeente2019}_${val.year}`].annual_consume += parseFloat(val.annual_consume);
-        //         res[`${val.gemeente2019}_${val.year}`].num_connections += parseFloat(val.num_connections);
-        //         res[`${val.gemeente2019}_${val.year}`].annual_consume_low_tarif += (parseFloat(val.annual_consume) * parseFloat(val.annual_consume_lowtarif_perc));
-        //         res[`${val.gemeente2019}_${val.year}`].delivery_perc.push(parseFloat(val.delivery_perc));
-        //         res[`${val.gemeente2019}_${val.year}`].smartmeter_perc.push(parseFloat(val.smartmeter_perc));
-        //         res[`${val.gemeente2019}_${val.year}`].perc_of_active_connections.push(parseFloat(val.perc_of_active_connections));
-        //         res[`${val.gemeente2019}_${val.year}`].average_delivery_perc = getAverage(res[`${val.gemeente2019}_${val.year}`].delivery_perc)
-        //         res[`${val.gemeente2019}_${val.year}`].average_smartmeter_perc = getAverage(res[`${val.gemeente2019}_${val.year}`].smartmeter_perc);
-        //         res[`${val.gemeente2019}_${val.year}`].average_perc_of_active_connections = getAverage(res[`${val.gemeente2019}_${val.year}`].perc_of_active_connections);
-        //         return res;
-        //     }, {});
+                res[`${val.buurt2019}_${val.year}`].annual_consume += parseFloat(val.annual_consume);
+                res[`${val.buurt2019}_${val.year}`].num_connections += parseFloat(val.num_connections);
+                res[`${val.buurt2019}_${val.year}`].annual_consume_low_tarif += (parseFloat(val.annual_consume) * parseFloat(val.annual_consume_lowtarif_perc));
+                res[`${val.buurt2019}_${val.year}`].delivery_perc += parseFloat(val.delivery_perc);
+                res[`${val.buurt2019}_${val.year}`].smartmeter_perc += parseFloat(val.smartmeter_perc);
+                res[`${val.buurt2019}_${val.year}`].perc_of_active_connections += parseFloat(val.perc_of_active_connections);
+                res[`${val.buurt2019}_${val.year}`].delivery_perc_count += 1;
+                res[`${val.buurt2019}_${val.year}`].smartmeter_perc_count += 1;
+                res[`${val.buurt2019}_${val.year}`].perc_of_active_connections_count += 1;
+                
+                return res;
+            }, {});
 
-        //     // Get max values
-        //     annual_consume_max =Math.max.apply(Math, data.map(function(d:any) { return d.annual_consume; }));
-        //     num_connections_max = Math.max.apply(Math, data.map(function(d:any) { return d.num_connections; }));
-        //     annual_consume_low_tarif_max = Math.max.apply(Math, data.map(function(d:any) { return d.annual_consume_low_tarif; }));
-        //     average_delivery_perc_max =Math.max.apply(Math, data.map(function(d:any) { return d.average_delivery_perc; }));
-        //     average_smartmeter_perc_max = Math.max.apply(Math, data.map(function(d:any) { return d.average_smartmeter_perc; }));
-        //     average_perc_of_active_connections_max = Math.max.apply(Math, data.map(function(d:any) { return d.average_perc_of_active_connections; }));
-        //     annual_consume_min = Math.min.apply(Math, data.map(function(d:any) { return d.annual_consume; }));
-        //     num_connections_min = Math.min.apply(Math, data.map(function(d:any) { return d.num_connections; }));
-        //     annual_consume_low_tarif_min = Math.min.apply(Math, data.map(function(d:any) { return d.annual_consume_low_tarif; }));
-        //     average_delivery_perc_min = Math.min.apply(Math, data.map(function(d:any) { return d.average_delivery_perc; }));
-        //     average_smartmeter_perc_min = Math.min.apply(Math, data.map(function(d:any) { return d.average_smartmeter_perc; }));
-        //     average_perc_of_active_connections_min = Math.min.apply(Math, data.map(function(d:any) { return d.average_perc_of_active_connections; }));
+            // Get max values
+            annual_consume_max =Math.max.apply(Math, data.map(function(d:any) { return d.annual_consume; }));
+            num_connections_max = Math.max.apply(Math, data.map(function(d:any) { return d.num_connections; }));
+            annual_consume_low_tarif_max = Math.max.apply(Math, data.map(function(d:any) { return d.annual_consume_low_tarif; }));
+            delivery_perc_max =Math.max.apply(Math, data.map(function(d:any) { return d.delivery_perc/d.delivery_perc_count; }));
+            smartmeter_perc_max = Math.max.apply(Math, data.map(function(d:any) { return d.smartmeter_perc/d.smartmeter_perc_count; }));
+            perc_of_active_connections_max = Math.max.apply(Math, data.map(function(d:any) { return d.perc_of_active_connections/d.perc_of_active_connections_count; }));
+            annual_consume_min = Math.min.apply(Math, data.map(function(d:any) { return d.annual_consume; }));
+            num_connections_min = Math.min.apply(Math, data.map(function(d:any) { return d.num_connections; }));
+            annual_consume_low_tarif_min = Math.min.apply(Math, data.map(function(d:any) { return d.annual_consume_low_tarif; }));
+            delivery_perc_min = Math.min.apply(Math, data.map(function(d:any) { return d.delivery_perc/d.delivery_perc_count; }));
+            smartmeter_perc_min = Math.min.apply(Math, data.map(function(d:any) { return d.smartmeter_perc/d.smartmeter_perc_count; }));
+            perc_of_active_connections_min = Math.min.apply(Math, data.map(function(d:any) { return d.perc_of_active_connections/d.perc_of_active_connections_count; }));
         
-        //     // Map values to range (0, 100)
-        //     data.reduce((res:any, val:any) => {
-        //         res[`${val.gemeente2019}_${val.year}`] = {
-        //             net_manager: val.net_manager,
-        //             gemeente2019: val.gemeente2019,
-        //             gemeentenaam2019: val.gemeentenaam2019,
-        //             wijk2019: val.wijk2019,
-        //             wijknaam2019: val.wijknaam2019,
-        //             buurt2019: val.buurt2019,
-        //             buurtnaam2019: val.buurtnaam2019,
-        //             year: val.year,
-        //             annual_consume_max: annual_consume_max,
-        //             annual_consume: val.annual_consume,
-        //             annual_consume_lowtarif_color: normalizeData(Math.log10(val.annual_consume_low_tarif), Math.log10(annual_consume_low_tarif_min), Math.log10(annual_consume_low_tarif_max)),
-        //             annual_consume_color: normalizeData(Math.log10(val.annual_consume), Math.log10(annual_consume_min), Math.log10(annual_consume_max)),
-        //             num_connections_color: normalizeData(val.num_connections, num_connections_min, num_connections_max),
-        //             self_produced_color: normalizeData(Math.log10(val.average_delivery_perc), Math.log10(average_delivery_perc_min), Math.log10(average_delivery_perc_max)),
-        //             active_connections_color: normalizeData(val.average_perc_of_active_connections, average_perc_of_active_connections_min, average_perc_of_active_connections_max),
-        //             smartmeters_color: normalizeData(val.average_smartmeter_perc, average_smartmeter_perc_min, average_smartmeter_perc_max),
-        //         };
-        //         values.push(res[`${val.gemeente2019}_${val.year}`]);
-        //         return res;
-        //     }, {});
+            // Map values to range (0, 100)
+            data.reduce((res:any, val:any) => {
+                res[`${val.buurt2019}_${val.year}`] = {
+                    net_manager: val.net_manager,
+                    gemeente2019: val.gemeente2019,
+                    gemeentenaam2019: val.gemeentenaam2019,
+                    wijk2019: val.wijk2019,
+                    wijknaam2019: val.wijknaam2019,
+                    buurt2019: val.buurt2019,
+                    buurtnaam2019: val.buurtnaam2019,
+                    year: val.year,
+                    annual_consume: val.annual_consume,
+                    annual_consume_lowtarif_color: normalizeData(Math.log10(val.annual_consume_low_tarif), Math.log10(annual_consume_low_tarif_min), Math.log10(annual_consume_low_tarif_max)),
+                    annual_consume_color: normalizeData(Math.log10(val.annual_consume), Math.log10(annual_consume_min), Math.log10(annual_consume_max)),
+                    num_connections_color: normalizeData(Math.log10(val.num_connections), Math.log10(num_connections_min), Math.log10(num_connections_max)),
+                    delivery_perc_color: Math.floor(val.delivery_perc/val.delivery_perc_count),
+                    perc_of_active_connections_color: Math.floor(val.perc_of_active_connections/val.perc_of_active_connections_count),
+                    smartmeter_perc_color: Math.floor(val.smartmeter_perc/val.perc_of_active_connections_count),
+                };
+                values.push(res[`${val.buurt2019}_${val.year}`]);
+                return res;
+            }, {});
         
-        //     if(values){
-        //         if(Object.keys(values).length > 0){
-        //             // console.log(values);
-        //             return values;
-        //         } else {
-        //             return null;
-        //         }
-        //     } else {
-        //         return false;
-        //     }
-        // case 'wijk':
-        //     //return json with wijknummer as index
-        //     elec = await Electricity.findAll({
-        //         attributes: [
-        //             'net_manager',
-        //             'gemeente2019',
-        //             'gemeentenaam2019',
-        //             'wijk2019',
-        //             'wijknaam2019',
-        //             'city',
-        //             'year',
-        //             [fn('sum', col('annual_consume')), 'annual_consume'],
-        //             [fn('sum', col('num_connections')), 'num_connections'],
-        //             [fn('avg', col('annual_consume_lowtarif_perc')), 'annual_consume_lowtarif_perc'],
-        //             [fn('avg', col('delivery_perc')), 'delivery_perc'],
-        //             [fn('avg', col('perc_of_active_connections')), 'perc_of_active_connections'],
-        //             [fn('avg', col('smartmeter_perc')), 'smartmeter_perc'],
-        //         ],
-        //         group: ['net_manager', 'gemeente2019', 'gemeentenaam2019', 'wijk2019', 'wijknaam2019', 'city', 'year'],
-        //         raw: true,
-        //     });
+            if(values){
+                if(Object.keys(values).length > 0){
+                    // console.log(values);
+                    return values;
+                } else {
+                    return null;
+                }
+            } else {
+                return false;
+            }
+        case 'wijk':
+            //return json with wijknummer as index
+            elec = await Electricity.findAll({
+                attributes: [
+                    'net_manager',
+                    'gemeente2019',
+                    'gemeentenaam2019',
+                    'wijk2019',
+                    'wijknaam2019',
+                    'city',
+                    'year',
+                    [fn('sum', col('annual_consume')), 'annual_consume'],
+                    [fn('sum', col('num_connections')), 'num_connections'],
+                    [fn('avg', col('annual_consume_lowtarif_perc')), 'annual_consume_lowtarif_perc'],
+                    [fn('avg', col('delivery_perc')), 'delivery_perc'],
+                    [fn('avg', col('perc_of_active_connections')), 'perc_of_active_connections'],
+                    [fn('avg', col('smartmeter_perc')), 'smartmeter_perc'],
+                ],
+                group: ['net_manager', 'gemeente2019', 'gemeentenaam2019', 'wijk2019', 'wijknaam2019', 'city', 'year'],
+                raw: true,
+            });
         
-        //     elec.reduce((res:any, val:any) => {
-        //         if (!res[`${val.gemeente2019}_${val.year}`]) {
-        //             res[`${val.gemeente2019}_${val.year}`] = {
-        //                 gemeente2019: val.gemeente2019,
-        //                 gemeentenaam2019: val.gemeentenaam2019,
-        //                 wijk2019: val.wijk2019,
-        //                 wijknaam2019: val.wijknaam2019,
-        //                 net_manager: val.net_manager,
-        //                 year: val.year,
-        //                 annual_consume: 0,
-        //                 annual_consume_low_tarif: 0,
-        //                 num_connections: 0,
-        //                 delivery_perc: [],
-        //                 average_delivery_perc: 0,
-        //                 perc_of_active_connections: [],
-        //                 average_perc_of_active_connections: 0,
-        //                 smartmeter_perc: [],
-        //                 average_smartmeter_perc: 0,
-        //             };
-        //             data.push(res[`${val.gemeente2019}_${val.year}`]);
-        //         }
+            elec.reduce((res:any, val:any) => {
+                if (!res[`${val.wijk2019}_${val.year}`]) {
+                    res[`${val.wijk2019}_${val.year}`] = {
+                        gemeente2019: val.gemeente2019,
+                        gemeentenaam2019: val.gemeentenaam2019,
+                        wijk2019: val.wijk2019,
+                        wijknaam2019: val.wijknaam2019,
+                        net_manager: val.net_manager,
+                        year: val.year,
+                        annual_consume: 0,
+                        annual_consume_low_tarif: 0,
+                        num_connections: 0,
+                        delivery_perc_count: 0,
+                        delivery_perc: 0,
+                        perc_of_active_connections_count: 0,
+                        perc_of_active_connections: 0,
+                        smartmeter_perc_count: 0,
+                        smartmeter_perc: 0,
+                    };
+                    data.push(res[`${val.wijk2019}_${val.year}`]);
+                }
 
-        //         res[`${val.gemeente2019}_${val.year}`].annual_consume += parseFloat(val.annual_consume);
-        //         res[`${val.gemeente2019}_${val.year}`].num_connections += parseFloat(val.num_connections);
-        //         res[`${val.gemeente2019}_${val.year}`].annual_consume_low_tarif += (parseFloat(val.annual_consume) * parseFloat(val.annual_consume_lowtarif_perc));
-        //         res[`${val.gemeente2019}_${val.year}`].delivery_perc.push(parseFloat(val.delivery_perc));
-        //         res[`${val.gemeente2019}_${val.year}`].smartmeter_perc.push(parseFloat(val.smartmeter_perc));
-        //         res[`${val.gemeente2019}_${val.year}`].perc_of_active_connections.push(parseFloat(val.perc_of_active_connections));
-        //         res[`${val.gemeente2019}_${val.year}`].average_delivery_perc = getAverage(res[`${val.gemeente2019}_${val.year}`].delivery_perc)
-        //         res[`${val.gemeente2019}_${val.year}`].average_smartmeter_perc = getAverage(res[`${val.gemeente2019}_${val.year}`].smartmeter_perc);
-        //         res[`${val.gemeente2019}_${val.year}`].average_perc_of_active_connections = getAverage(res[`${val.gemeente2019}_${val.year}`].perc_of_active_connections);
-        //         return res;
-        //     }, {});
+                res[`${val.wijk2019}_${val.year}`].annual_consume += parseFloat(val.annual_consume);
+                res[`${val.wijk2019}_${val.year}`].num_connections += parseFloat(val.num_connections);
+                res[`${val.wijk2019}_${val.year}`].annual_consume_low_tarif += (parseFloat(val.annual_consume) * parseFloat(val.annual_consume_lowtarif_perc));
+                res[`${val.wijk2019}_${val.year}`].delivery_perc += parseFloat(val.delivery_perc);
+                res[`${val.wijk2019}_${val.year}`].smartmeter_perc += parseFloat(val.smartmeter_perc);
+                res[`${val.wijk2019}_${val.year}`].perc_of_active_connections += parseFloat(val.perc_of_active_connections);
+                res[`${val.wijk2019}_${val.year}`].delivery_perc_count += 1;
+                res[`${val.wijk2019}_${val.year}`].smartmeter_perc_count += 1;
+                res[`${val.wijk2019}_${val.year}`].perc_of_active_connections_count += 1;
+                
+                return res;
+            }, {});
 
-        //     // Get max values
-        //     annual_consume_max =Math.max.apply(Math, data.map(function(d:any) { return d.annual_consume; }));
-        //     num_connections_max = Math.max.apply(Math, data.map(function(d:any) { return d.num_connections; }));
-        //     annual_consume_low_tarif_max = Math.max.apply(Math, data.map(function(d:any) { return d.annual_consume_low_tarif; }));
-        //     average_delivery_perc_max =Math.max.apply(Math, data.map(function(d:any) { return d.average_delivery_perc; }));
-        //     average_smartmeter_perc_max = Math.max.apply(Math, data.map(function(d:any) { return d.average_smartmeter_perc; }));
-        //     average_perc_of_active_connections_max = Math.max.apply(Math, data.map(function(d:any) { return d.average_perc_of_active_connections; }));
-        //     annual_consume_min = Math.min.apply(Math, data.map(function(d:any) { return d.annual_consume; }));
-        //     num_connections_min = Math.min.apply(Math, data.map(function(d:any) { return d.num_connections; }));
-        //     annual_consume_low_tarif_min = Math.min.apply(Math, data.map(function(d:any) { return d.annual_consume_low_tarif; }));
-        //     average_delivery_perc_min = Math.min.apply(Math, data.map(function(d:any) { return d.average_delivery_perc; }));
-        //     average_smartmeter_perc_min = Math.min.apply(Math, data.map(function(d:any) { return d.average_smartmeter_perc; }));
-        //     average_perc_of_active_connections_min = Math.min.apply(Math, data.map(function(d:any) { return d.average_perc_of_active_connections; }));
+            // Get max values
+            annual_consume_max =Math.max.apply(Math, data.map(function(d:any) { return d.annual_consume; }));
+            num_connections_max = Math.max.apply(Math, data.map(function(d:any) { return d.num_connections; }));
+            annual_consume_low_tarif_max = Math.max.apply(Math, data.map(function(d:any) { return d.annual_consume_low_tarif; }));
+            delivery_perc_max =Math.max.apply(Math, data.map(function(d:any) { return d.delivery_perc/d.delivery_perc_count; }));
+            smartmeter_perc_max = Math.max.apply(Math, data.map(function(d:any) { return d.smartmeter_perc/d.smartmeter_perc_count; }));
+            perc_of_active_connections_max = Math.max.apply(Math, data.map(function(d:any) { return d.perc_of_active_connections/d.perc_of_active_connections_count; }));
+            annual_consume_min = Math.min.apply(Math, data.map(function(d:any) { return d.annual_consume; }));
+            num_connections_min = Math.min.apply(Math, data.map(function(d:any) { return d.num_connections; }));
+            annual_consume_low_tarif_min = Math.min.apply(Math, data.map(function(d:any) { return d.annual_consume_low_tarif; }));
+            delivery_perc_min = Math.min.apply(Math, data.map(function(d:any) { return d.delivery_perc/d.delivery_perc_count; }));
+            smartmeter_perc_min = Math.min.apply(Math, data.map(function(d:any) { return d.smartmeter_perc/d.smartmeter_perc_count; }));
+            perc_of_active_connections_min = Math.min.apply(Math, data.map(function(d:any) { return d.perc_of_active_connections/d.perc_of_active_connections_count; }));
         
-        //     // Map values to range (0, 100)
-        //     data.reduce((res:any, val:any) => {
-        //         res[`${val.gemeente2019}_${val.year}`] = {
-        //             net_manager: val.net_manager,
-        //             gemeente2019: val.gemeente2019,
-        //             gemeentenaam2019: val.gemeentenaam2019,
-        //             wijk2019: val.wijk2019,
-        //             wijknaam2019: val.wijknaam2019,
-        //             year: val.year,
-        //             annual_consume_max: annual_consume_max,
-        //             annual_consume: val.annual_consume,
-        //             annual_consume_lowtarif_color: normalizeData(Math.log10(val.annual_consume_low_tarif), Math.log10(annual_consume_low_tarif_min), Math.log10(annual_consume_low_tarif_max)),
-        //             annual_consume_color: normalizeData(Math.log10(val.annual_consume), Math.log10(annual_consume_min), Math.log10(annual_consume_max)),
-        //             num_connections_color: normalizeData(val.num_connections, num_connections_min, num_connections_max),
-        //             self_produced_color: normalizeData(Math.log10(val.average_delivery_perc), Math.log10(average_delivery_perc_min), Math.log10(average_delivery_perc_max)),
-        //             active_connections_color: normalizeData(val.average_perc_of_active_connections, average_perc_of_active_connections_min, average_perc_of_active_connections_max),
-        //             smartmeters_color: normalizeData(val.average_smartmeter_perc, average_smartmeter_perc_min, average_smartmeter_perc_max),
-        //         };
-        //         values.push(res[`${val.gemeente2019}_${val.year}`]);
-        //         return res;
-        //     }, {});
+            // Map values to range (0, 100)
+            data.reduce((res:any, val:any) => {
+                res[`${val.wijk2019}_${val.year}`] = {
+                    net_manager: val.net_manager,
+                    gemeente2019: val.gemeente2019,
+                    gemeentenaam2019: val.gemeentenaam2019,
+                    wijk2019: val.wijk2019,
+                    wijknaam2019: val.wijknaam2019,
+                    year: val.year,
+                    annual_consume: val.annual_consume,
+                    annual_consume_lowtarif_color: normalizeData(Math.log10(val.annual_consume_low_tarif), Math.log10(annual_consume_low_tarif_min), Math.log10(annual_consume_low_tarif_max)),
+                    annual_consume_color: normalizeData(Math.log10(val.annual_consume), Math.log10(annual_consume_min), Math.log10(annual_consume_max)),
+                    num_connections_color: normalizeData(Math.log10(val.num_connections), Math.log10(num_connections_min), Math.log10(num_connections_max)),
+                    delivery_perc_color: Math.floor(val.delivery_perc/val.delivery_perc_count),
+                    perc_of_active_connections_color: Math.floor(val.perc_of_active_connections/val.perc_of_active_connections_count),
+                    smartmeter_perc_color: Math.floor(val.smartmeter_perc/val.perc_of_active_connections_count),
+                };
+                values.push(res[`${val.wijk2019}_${val.year}`]);
+                return res;
+            }, {});
         
-        //     if(values){
-        //         if(Object.keys(values).length > 0){
-        //             console.log(values);
-        //             return values;
-        //         } else {
-        //             return null;
-        //         }
-        //     } else {
-        //         return false;
-        //     }
+            if(values){
+                if(Object.keys(values).length > 0){
+                    console.log(values);
+                    return values;
+                } else {
+                    return null;
+                }
+            } else {
+                return false;
+            }
         case 'gemeente':
             //return json with gemeentenummer as index
             elec = await Electricity.findAll({
@@ -390,7 +390,6 @@ export async function getNationalSummaryData(scope: string){
         
             // Map values to range (0, 100)
             data.reduce((res:any, val:any) => {
-                console.log('NIGGA', val.delivery_perc_count);
                 res[`${val.gemeente2019}_${val.year}`] = {
                     net_manager: val.net_manager,
                     gemeente2019: val.gemeente2019,
@@ -400,9 +399,9 @@ export async function getNationalSummaryData(scope: string){
                     annual_consume_lowtarif_color: normalizeData(Math.log10(val.annual_consume_low_tarif), Math.log10(annual_consume_low_tarif_min), Math.log10(annual_consume_low_tarif_max)),
                     annual_consume_color: normalizeData(Math.log10(val.annual_consume), Math.log10(annual_consume_min), Math.log10(annual_consume_max)),
                     num_connections_color: normalizeData(Math.log10(val.num_connections), Math.log10(num_connections_min), Math.log10(num_connections_max)),
-                    delivery_perc_color: Math.floor(val.delivery_perc),
-                    perc_of_active_connections_color: Math.floor(val.perc_of_active_connections),
-                    smartmeter_perc_color: Math.floor(val.smartmeter_perc),
+                    delivery_perc_color: Math.floor(val.delivery_perc/val.delivery_perc_count),
+                    perc_of_active_connections_color: Math.floor(val.perc_of_active_connections/val.perc_of_active_connections_count),
+                    smartmeter_perc_color: Math.floor(val.smartmeter_perc/val.perc_of_active_connections_count),
                 };
                 values.push(res[`${val.gemeente2019}_${val.year}`]);
                 return res;

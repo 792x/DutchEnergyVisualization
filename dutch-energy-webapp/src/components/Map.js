@@ -39,66 +39,60 @@ function getProviderColor(provider){
 
 
 function getColor(d, colorSetting) {
-
     switch(colorSetting){
         case '1':
             //red
-            return d > 87.5 ? '#800026' :
-            d > 75          ? '#BD0026' :
-            d > 62.5        ? '#E31A1C' :
+            return d > 90 ? '#800026' :
+            d > 80          ? '#BD0026' :
+            d > 65        ? '#E31A1C' :
             d > 50          ? '#FC4E2A' :
-            d > 37.5        ? '#FD8D3C' :
+            d > 35        ? '#FD8D3C' :
             d > 25          ? '#FEB24C' :
-            d > 12.5        ? '#FED976' :
+            d > 10        ? '#FED976' :
                             '#FFEDA0';
-
         case '2':
             //green
-            return d > 87.5 ? '#005a32':
+            return d > 90 ? '#005a32':
             d > 75          ? '#238b45':
-            d > 62.5        ? '#41ab5d':
+            d > 65        ? '#41ab5d':
             d > 50          ? '#78c679':
-            d > 37.5        ? '#addd8e':
+            d > 35        ? '#addd8e':
             d > 25          ? '#d9f0a3':
-            d > 12.5        ? '#f7fcb9':
+            d > 10        ? '#f7fcb9':
                             '#ffffe5';
 
         case '3':
             //blue
-            return d > 87.5 ? '#0c2c84':
+            return d > 90 ? '#0c2c84':
             d > 75          ? '#225ea8':
-            d > 62.5        ? '#1d91c0':
+            d > 65        ? '#1d91c0':
             d > 50          ? '#41b6c4':
-            d > 37.5        ? '#7fcdbb':
+            d > 35        ? '#7fcdbb':
             d > 25          ? '#c7e9b4':
-            d > 12.5        ? '#edf8b1':
+            d > 10        ? '#edf8b1':
                             '#ffffd9';
 
         case '4':
             //purple
-            return d > 87.5 ? '#7a0177':
+            return d > 90 ? '#7a0177':
             d > 75          ? '#ae017e':
-            d > 62.5        ? '#dd3497':
+            d > 65        ? '#dd3497':
             d > 50          ? '#f768a1':
-            d > 37.5        ? '#fa9fb5':
+            d > 35        ? '#fa9fb5':
             d > 25          ? '#fcc5c0':
-            d > 12.5        ? '#fde0dd':
+            d > 10        ? '#fde0dd':
                             '#fff7f3';
 
         default:
-            return d > 87.5 ? '#800026' :
+            return d > 90 ? '#800026' :
             d > 75  ? '#BD0026' :
-            d > 62.5  ? '#E31A1C' :
+            d > 65  ? '#E31A1C' :
             d > 50  ? '#FC4E2A' :
-            d > 37.5   ? '#FD8D3C' :
+            d > 35   ? '#FD8D3C' :
             d > 25   ? '#FEB24C' :
-            d > 12.5   ? '#FED976' :
+            d > 10   ? '#FED976' :
                         '#FFEDA0';
-
-
-
     }
-
 }
 
 
@@ -175,7 +169,7 @@ class Map extends Component {
             this.legend.onAdd = function (map) {
         
                 var div = L.DomUtil.create('div', 'info legend'),
-                    grades = [0, 12.5, 25, 37.5, 50, 62.5, 75, 87.5],
+                    grades = [0, 10, 25, 35, 50, 65, 75, 90],
                     labels = [];
             
                 // loop through our density intervals and generate a label with a colored square for each interval
@@ -263,7 +257,10 @@ class Map extends Component {
                         perc = data.perc_of_active_connections_color;
                         break;
                     case '6':
-                        perc = data.delivery_perc_color;
+                        perc = data.delivery_perc_color * 2.5;
+                        if(perc >100){
+                            perc = 100;
+                        }
                         break;
                     case '7':
                         marketShare = true;

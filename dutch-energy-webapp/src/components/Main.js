@@ -174,6 +174,7 @@ class Main extends Component {
 
         //reload data only if we change scope setting
         if(prevMapScopeSetting !== scopeSetting){
+            await this.setState({mapScopeSetting: scopeSetting});
             await this.loadNationalData();
         }
 
@@ -187,7 +188,7 @@ class Main extends Component {
                     shownNationalData = shownNationalData.filter(e => e.net_manager.includes("Enexis"));
                     break;
                 case '8716':
-                    shownNationalData = shownNationalData.filter(e => e.net_manager.includes("8176"));
+                    shownNationalData = shownNationalData.filter(e => e.net_manager.includes("8716"));
                     break;
                 default:
                     console.log('something went wrong filtering for net manager settings')
