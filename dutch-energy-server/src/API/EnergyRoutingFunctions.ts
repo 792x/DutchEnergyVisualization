@@ -78,9 +78,4 @@ export async function getSpecificData(req: Request, res: Response): Promise<void
     } else {
         res.status(500).send({error: "something went wrong"})
     }
-
-    //TODO gas data
-
-
-    // res.status(200).send();
 }

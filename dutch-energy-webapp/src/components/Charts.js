@@ -120,7 +120,7 @@ export class BarChart extends Component {
 
             // Sort on attribute and select first/last 5 elements
             children2.sort((a, b) => { return b.y - a.y });
-            if (this.props.type === 'top') {
+            if (this.props.type === 'top' || children2.length <= 5) {
                 data = children2.slice(0, 5);
             } else if (this.props.type === 'bottom') {
                 data = children2.slice(children2.length - 5);
