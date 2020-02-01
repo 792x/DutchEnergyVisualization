@@ -121,9 +121,9 @@ class Settings extends Component {
                                 value={this.state.scopeSetting}
                                 onChange={this.handleScopeSettingChange}
                             >
-                                <option value={'gemeente'}>Gemeenten</option>
-                                <option value={'wijk'}>Wijken</option>
-                                <option value={'buurt'}>Buurten</option>
+                                <option value={'gemeente'}>Municipalities</option>
+                                <option value={'wijk'}>Districts</option>
+                                <option value={'buurt'}>Neighborhoods</option>
                             </Select>
                         </FormControl>
                     </Grid>

@@ -20,7 +20,7 @@
 
 .svg-d3 text {
   font-size: 12px;
-  fill: #262626;
+  fill: rgba(0,0,0,0.75);
 }
 
 .svg-d3 path.domain {
