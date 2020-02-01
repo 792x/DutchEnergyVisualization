@@ -83,7 +83,7 @@ class Data extends Component {
         graphSettings: {
             width: 350,
             height: 320,
-            margin: 55,
+            margin: 60,
         },
     }
 
@@ -219,13 +219,13 @@ class Data extends Component {
                                                 value={this.state.dataSetting}
                                                 onChange={this.handleDataSettingChange}
                                             >
-                                                <option value={1}>Total consumption</option>
+                                                <option value={1}>Energy consumption</option>
                                                 <option value={2}>Consumption per connection</option>
-                                                <option value={3}>Total production</option>
+                                                <option value={3}>Energy production</option>
                                                 <option value={4}>Production per connection</option>
                                                 <option value={5}>Number of connections</option>
                                                 <option value={6}>Number of smartmeters</option>
-                                                <option value={7}>Market share</option>
+                                                <option value={7}>Provider market share</option>
                                             </Select>
                                         </FormControl>
                                     </Grid>
@@ -233,7 +233,7 @@ class Data extends Component {
                             </Grid>
                         </Grid>
                     </Grid>
-                    <Grid item style={{ height: '260px' }} id='d3-wrapper'>
+                    <Grid item style={{ height: '260px', width: '100%' }} id='d3-wrapper'>
 
                         {/* Example */}
                         {/* <Grid item style={{ width: '32%' }}>
