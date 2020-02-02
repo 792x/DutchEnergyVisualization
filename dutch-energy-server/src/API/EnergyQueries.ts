@@ -125,7 +125,7 @@ export async function getNationalGasData(scope: string){
                     num_connections_color: normalizeData(Math.log10(val.num_connections), Math.log10(num_connections_min), Math.log10(num_connections_max)),
                     delivery_perc_color: Math.floor(val.delivery_perc/val.delivery_perc_count),
                     perc_of_active_connections_color: Math.floor(val.perc_of_active_connections/val.perc_of_active_connections_count),
-                    smartmeter_perc_color: Math.floor(val.smartmeter_perc/val.perc_of_active_connections_count),
+                    smartmeter_perc_color: Math.floor(val.smartmeter_perc/val.smartmeter_perc_count),
                 };
                 values.push(res[`${val.buurt2019}_${val.year}`]);
                 return res;
@@ -242,7 +242,7 @@ export async function getNationalGasData(scope: string){
                     num_connections_color: normalizeData(Math.log10(val.num_connections), Math.log10(num_connections_min), Math.log10(num_connections_max)),
                     delivery_perc_color: Math.floor(val.delivery_perc/val.delivery_perc_count),
                     perc_of_active_connections_color: Math.floor(val.perc_of_active_connections/val.perc_of_active_connections_count),
-                    smartmeter_perc_color: Math.floor(val.smartmeter_perc/val.perc_of_active_connections_count),
+                    smartmeter_perc_color: Math.floor(val.smartmeter_perc/val.smartmeter_perc_count),
                 };
                 values.push(res[`${val.wijk2019}_${val.year}`]);
                 return res;
@@ -353,7 +353,7 @@ export async function getNationalGasData(scope: string){
                     num_connections_color: normalizeData(Math.log10(val.num_connections), Math.log10(num_connections_min), Math.log10(num_connections_max)),
                     delivery_perc_color: Math.floor(val.delivery_perc/val.delivery_perc_count),
                     perc_of_active_connections_color: Math.floor(val.perc_of_active_connections/val.perc_of_active_connections_count),
-                    smartmeter_perc_color: Math.floor(val.smartmeter_perc/val.perc_of_active_connections_count),
+                    smartmeter_perc_color: Math.floor(val.smartmeter_perc/val.smartmeter_perc_count),
                 };
                 values.push(res[`${val.gemeente2019}_${val.year}`]);
                 return res;
@@ -499,7 +499,7 @@ export async function getNationalElectricityData(scope: string){
                     num_connections_color: normalizeData(Math.log10(val.num_connections), Math.log10(num_connections_min), Math.log10(num_connections_max)),
                     delivery_perc_color: Math.floor(val.delivery_perc/val.delivery_perc_count),
                     perc_of_active_connections_color: Math.floor(val.perc_of_active_connections/val.perc_of_active_connections_count),
-                    smartmeter_perc_color: Math.floor(val.smartmeter_perc/val.perc_of_active_connections_count),
+                    smartmeter_perc_color: Math.floor(val.smartmeter_perc/val.smartmeter_perc_count),
                 };
                 values.push(res[`${val.buurt2019}_${val.year}`]);
                 return res;
@@ -617,7 +617,7 @@ export async function getNationalElectricityData(scope: string){
                     num_connections_color: normalizeData(Math.log10(val.num_connections), Math.log10(num_connections_min), Math.log10(num_connections_max)),
                     delivery_perc_color: Math.floor(val.delivery_perc/val.delivery_perc_count),
                     perc_of_active_connections_color: Math.floor(val.perc_of_active_connections/val.perc_of_active_connections_count),
-                    smartmeter_perc_color: Math.floor(val.smartmeter_perc/val.perc_of_active_connections_count),
+                    smartmeter_perc_color: Math.floor(val.smartmeter_perc/val.smartmeter_perc_count),
                 };
                 values.push(res[`${val.wijk2019}_${val.year}`]);
                 return res;
@@ -728,7 +728,7 @@ export async function getNationalElectricityData(scope: string){
                     num_connections_color: normalizeData(Math.log10(val.num_connections), Math.log10(num_connections_min), Math.log10(num_connections_max)),
                     delivery_perc_color: Math.floor(val.delivery_perc/val.delivery_perc_count),
                     perc_of_active_connections_color: Math.floor(val.perc_of_active_connections/val.perc_of_active_connections_count),
-                    smartmeter_perc_color: Math.floor(val.smartmeter_perc/val.perc_of_active_connections_count),
+                    smartmeter_perc_color: Math.floor(val.smartmeter_perc/val.smartmeter_perc_count),
                 };
                 values.push(res[`${val.gemeente2019}_${val.year}`]);
                 return res;

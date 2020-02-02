@@ -46,7 +46,7 @@ function getLegendTitle(dataSetting){
         case '3':
             return 'Smartmeter Percentage (%)';
         case '4':
-            return 'Number of Connections';
+            return 'Log10 Number of Connections';
         case '5':
             return 'Active Connections Percentage (%)';
         case '6':
@@ -107,13 +107,13 @@ function getColorLabels(legend, dataSetting){
             // perc = data.smartmeter_perc_color;
             max = 100;
             values[0] = 0;
-            values[1] = (0.1 * max).toFixed(2);
-            values[2] = (0.25 * max).toFixed(2);
-            values[3] = (0.35 * max).toFixed(2);
-            values[4] = (0.50 * max).toFixed(2);
-            values[5] = (0.65 * max).toFixed(2);
-            values[6] = (0.75 * max).toFixed(2);
-            values[7] = (0.90 * max).toFixed(2);
+            values[1] = (0.1 * max).toFixed();
+            values[2] = (0.25 * max).toFixed();
+            values[3] = (0.35 * max).toFixed();
+            values[4] = (0.50 * max).toFixed();
+            values[5] = (0.65 * max).toFixed();
+            values[6] = (0.75 * max).toFixed();
+            values[7] = (0.90 * max).toFixed();
             values[8] = 100;
             return values;
 
@@ -135,13 +135,13 @@ function getColorLabels(legend, dataSetting){
             // perc = data.perc_of_active_connections_color;
             max = 100;
             values[0] = 0;
-            values[1] = (0.1 * max).toFixed(2);
-            values[2] = (0.25 * max).toFixed(2);
-            values[3] = (0.35 * max).toFixed(2);
-            values[4] = (0.50 * max).toFixed(2);
-            values[5] = (0.65 * max).toFixed(2);
-            values[6] = (0.75 * max).toFixed(2);
-            values[7] = (0.90 * max).toFixed(2);
+            values[1] = (0.1 * max).toFixed();
+            values[2] = (0.25 * max).toFixed();
+            values[3] = (0.35 * max).toFixed();
+            values[4] = (0.50 * max).toFixed();
+            values[5] = (0.65 * max).toFixed();
+            values[6] = (0.75 * max).toFixed();
+            values[7] = (0.90 * max).toFixed();
             values[8] = 100;
             return values;
 
@@ -149,13 +149,13 @@ function getColorLabels(legend, dataSetting){
             max = 100;
             //deliveryperc
             values[0] = 0;
-            values[1] = (0.1 * max).toFixed(2);
-            values[2] = (0.25 * max).toFixed(2);
-            values[3] = (0.35 * max).toFixed(2);
-            values[4] = (0.50 * max).toFixed(2);
-            values[5] = (0.65 * max).toFixed(2);
-            values[6] = (0.75 * max).toFixed(2);
-            values[7] = (0.90 * max).toFixed(2);
+            values[1] = (0.1 * max).toFixed();
+            values[2] = (0.25 * max).toFixed();
+            values[3] = (0.35 * max).toFixed();
+            values[4] = (0.50 * max).toFixed();
+            values[5] = (0.65 * max).toFixed();
+            values[6] = (0.75 * max).toFixed();
+            values[7] = (0.90 * max).toFixed();
             values[8] = 100;
             return values;
         default:
