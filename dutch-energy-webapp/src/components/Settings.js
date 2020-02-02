@@ -198,7 +198,7 @@ class Settings extends Component {
                                 onChange={this.handleDataSettingChange}
                             >
                                 <option value={1}>Energy consumption</option>
-                                <option value={2}>Energy low tarif consumption</option>
+                                <option value={2}>Energy low tariff consumption</option>
                                 <option value={3}>Percentage of smartmeters</option>
                                 <option value={4}>Number of connections</option>
                                 <option value={5}>Percentage of active connections</option>

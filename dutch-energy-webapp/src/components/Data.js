@@ -48,19 +48,19 @@ const SelectedItem = (props) => {
     if (selected.buurt) {
         return (
             <Typography variant="h6">
-                Gemeente: <strong>{selected.gemeente}</strong>, Wijk: <strong>{selected.wijk}</strong>, Buurt: <strong>{selected.buurt}</strong>
+                Municipality: <strong>{selected.gemeente}</strong>, District: <strong>{selected.wijk}</strong>, Neighborhood: <strong>{selected.buurt}</strong>
             </Typography>
         )
     } else if (selected.wijk) {
         return (
             <Typography variant="h6">
-                Gemeente: <strong>{selected.gemeente}</strong>, Wijk: <strong>{selected.wijk}</strong>
+                Municipality: <strong>{selected.gemeente}</strong>, District: <strong>{selected.wijk}</strong>
             </Typography>
         )
     } else if (selected.gemeente) {
         return (
             <Typography variant="h6">
-                Gemeente: <strong>{selected.gemeente}</strong>
+                Municipality: <strong>{selected.gemeente}</strong>
             </Typography>
         )
     } else {
