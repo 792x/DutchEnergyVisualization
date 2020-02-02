@@ -83,6 +83,7 @@ class Main extends Component {
         mapColorSetting: '1',
         shownNationalData: null,
         nationalData: null,
+        nationalDataLegend: null,
         loadingNationalData: false,
         specificData: null,
         loadingSpecificData: false,
@@ -104,9 +105,9 @@ class Main extends Component {
     // <option value={13}>Last five years</option>
     // <option value={14}>Last ten years</option>
 
-    fetchNationalData = async (scopeSetting) => {
+    fetchNationalData = async (scopeSetting, energySourceSetting) => {
         //fetch national data based on map settings
-        const result = await fetch(`http://localhost:3001/nationalsummary?scope=${scopeSetting}`)
+        const result = await fetch(`http://localhost:3001/national?scope=${scopeSetting}&energysource=${energySourceSetting}`)
             .then(async (response) => {
                 if(response.status === 200){
                     console.log('Succesful response');
@@ -136,9 +137,10 @@ class Main extends Component {
 
     loadNationalData = async () => {
         await this.setState({loadingNationalData: true});
-        let nationalDataResult = await this.fetchNationalData(this.state.mapScopeSetting);
+        let nationalDataResult = await this.fetchNationalData(this.state.mapScopeSetting, this.state.mapEnergySourceSetting);
         let nationalDataParsed = await JSON.parse(nationalDataResult);
-        this.setState({nationalData: nationalDataParsed, loadingNationalData: false});
+        this.setState({nationalData: nationalDataParsed.values, nationalDataLegend: nationalDataParsed.legend, loadingNationalData: false});
+        console.log(nationalDataParsed.legend);
     }
 
     loadSpecificData = async (id) => {
@@ -169,14 +171,15 @@ class Main extends Component {
     applyMapSettings = async (scopeSetting, netManagerSetting, energySourceSetting, timeFrameSetting, dataSetting, colorSetting) => {
         console.log('applying settings:', scopeSetting, netManagerSetting, energySourceSetting, timeFrameSetting, dataSetting, colorSetting)
         let prevMapScopeSetting = this.state.mapScopeSetting;
+        let prevEnergySourceSetting = this.state.mapEnergySourceSetting;
         let shownNationalData = this.state.nationalData;
         let allowedYears = handleTimeframe(timeFrameSetting);
         console.log('allowedYears', allowedYears);
 
 
         //reload data only if we change scope setting
-        if(prevMapScopeSetting !== scopeSetting){
-            await this.setState({mapScopeSetting: scopeSetting});
+        if(prevMapScopeSetting !== scopeSetting || prevEnergySourceSetting !== energySourceSetting ){
+            await this.setState({mapScopeSetting: scopeSetting, mapEnergySourceSetting: energySourceSetting});
             await this.loadNationalData();
         }
 
@@ -225,6 +228,11 @@ class Main extends Component {
         this.setState({selectedItem: identifier, selectedListItem: identifier, selectedItemType: this.state.mapScopeSetting});
         this.loadSpecificData(identifier);
     }
+
+    clearSelection = async () => {
+        //TODO CLEAR SELECTION CAS
+
+    }
     
     componentDidMount = async () => {
         await this.loadNationalData();
@@ -247,7 +255,7 @@ class Main extends Component {
                                 </Grid>
                                 <Grid item style={{ display: 'flex', height: '100%', padding: '20px 10px 10px 10px' }} xs={6}>
                                     <Paper className={classes.paper}>
-                                        <Map scope={this.state.mapScopeSetting} selectItem={this.selectItem} selectedListItem={this.state.selectedListItem} nationalData={this.state.shownNationalData} mapDataSetting={this.state.mapDataSetting} mapColorSetting={this.state.mapColorSetting}/>
+                                        <Map scope={this.state.mapScopeSetting} selectItem={this.selectItem} selectedListItem={this.state.selectedListItem} nationalData={this.state.shownNationalData} mapDataSetting={this.state.mapDataSetting} mapColorSetting={this.state.mapColorSetting} mapLegend={this.state.nationalDataLegend}/>
                                     </Paper>
                                 </Grid>
                                 <Grid item style={{ display: 'flex', height: '100%', padding: '20px 20px 10px 10px' }} xs={3}>
@@ -259,7 +267,7 @@ class Main extends Component {
                         </Grid>
                         <Grid item style={{ display: 'flex', height: '45%', padding: '10px 20px 20px 20px' }} xs={12}>
                             <Paper className={classes.paper}>
-                                <Data scope={this.state.mapScopeSetting} specificData={this.state.specificData} selectedItem={this.state.selectedItem} loading={this.state.loadingSpecificData} />
+                                <Data scope={this.state.mapScopeSetting} specificData={this.state.specificData} selectedItem={this.state.selectedItem} loading={this.state.loadingSpecificData} clearSelection={this.clearSelection}/>
                             </Paper>
                         </Grid>
                     </Grid>

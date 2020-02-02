@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import { Grid, Typography, FormLabel, FormControl, Select, InputLabel, StylesProvider } from '@material-ui/core';
+import { Grid, Typography, FormLabel, Tooltip, IconButton, FormControl, Select, InputLabel, StylesProvider } from '@material-ui/core';
 import { BarChart, LineChart, PieChart } from '../components/Charts';
 import { national_data } from '../assets/national_data.js';
 import LoadingSpinner from './LoadingSpinner';
@@ -23,6 +23,9 @@ const capitalize = (s) => {
     if (typeof s !== 'string') return '';
     return s.charAt(0).toUpperCase() + s.slice(1);
 }
+
+const ClearIcon = () => <box-icon color="#B3B9C4"  type='search' name='x' size="sm"></box-icon>
+
 
 const SelectedItem = (props) => {
     let selected = {};
@@ -48,19 +51,19 @@ const SelectedItem = (props) => {
     if (selected.buurt) {
         return (
             <Typography variant="h6">
-                Gemeente: <strong>{selected.gemeente}</strong>, Wijk: <strong>{selected.wijk}</strong>, Buurt: <strong>{selected.buurt}</strong>
+                Municipality: <strong>{selected.gemeente}</strong>, District: <strong>{selected.wijk}</strong>, Neighborhood: <strong>{selected.buurt}</strong>
             </Typography>
         )
     } else if (selected.wijk) {
         return (
             <Typography variant="h6">
-                Gemeente: <strong>{selected.gemeente}</strong>, Wijk: <strong>{selected.wijk}</strong>
+                Municipality: <strong>{selected.gemeente}</strong>, District: <strong>{selected.wijk}</strong>
             </Typography>
         )
     } else if (selected.gemeente) {
         return (
             <Typography variant="h6">
-                Gemeente: <strong>{selected.gemeente}</strong>
+                Municipality: <strong>{selected.gemeente}</strong>
             </Typography>
         )
     } else {
@@ -154,7 +157,18 @@ class Data extends Component {
                     <Grid item style={{ height: '48px', width: '100%' }}>
                         <Grid container direction="row" justify="space-between" style={{ width: '100%', height: '48px' }} >
                             <Grid item style={{ marginTop: '10px', marginLeft: '10px' }}>
-                                <SelectedItem scope={this.props.scope} specificData={this.props.specificData}></SelectedItem>
+                                <Grid container direction="row" justify="flex-start">
+                                    <Grid item><SelectedItem scope={this.props.scope} specificData={this.props.specificData}></SelectedItem></Grid>
+                                    <Grid item>
+                                        {this.props.selectedItem ?
+                                            <Tooltip title="Clear Selection">
+                                                <IconButton color="primary" aria-label="search" style={{ marginTop: '-8px', marginLeft: '5px' }} onClick={this.props.clearSelection}>
+                                                    <ClearIcon />
+                                                </IconButton>
+                                            </Tooltip> : 
+                                            <div />}
+                                    </Grid>
+                                </Grid>
                             </Grid>
                             {(() => {
                                 if (this.props.loading) {
@@ -205,7 +219,7 @@ class Data extends Component {
                                                 <option value={11}>Last two years</option>
                                                 <option value={12}>Last three years</option>
                                                 <option value={13}>Last five years</option>
-                                                <option value={14}>All data</option>
+                                                <option value={14}>Last ten years</option>
                                             </Select>
                                         </FormControl>
                                     </Grid>
