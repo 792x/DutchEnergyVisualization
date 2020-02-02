@@ -203,7 +203,7 @@ class Settings extends Component {
                                 <option value={4}>Number of connections</option>
                                 <option value={5}>Percentage of active connections</option>
                                 <option value={6}>Delivery percentage</option>
-                                <option value={7}>Provider market share</option>
+                                <option value={7}>Network manager market share</option>
                             </Select>
                         </FormControl>
                     </Grid>

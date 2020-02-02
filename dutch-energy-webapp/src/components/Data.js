@@ -245,7 +245,7 @@ class Data extends Component {
                                                 <option value={4}>Production per connection</option>
                                                 <option value={5}>Number of connections</option>
                                                 <option value={6}>Number of smartmeters</option>
-                                                <option value={7}>Provider market share</option>
+                                                <option value={7}>Network manager market share</option>
                                             </Select>
                                         </FormControl>
                                     </Grid>
