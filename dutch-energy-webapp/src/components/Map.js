@@ -77,30 +77,30 @@ function getColorLabels(legend, dataSetting){
     switch(dataSetting){
         case '1':
             // perc = data.annual_consume_color;
-            max = legend.annual_consume_max;
-            min = legend.annual_consume_min;
+            max = parseFloat(legend.annual_consume_max);
+            min = parseFloat(legend.annual_consume_min);
             values[0] = min;
-            values[1] = (0.1 * max).toFixed(2);
-            values[2] = (0.25 * max).toFixed(2);
-            values[3] = (0.35 * max).toFixed(2);
-            values[4] = (0.50 * max).toFixed(2);
-            values[5] = (0.65 * max).toFixed(2);
-            values[6] = (0.75 * max).toFixed(2);
-            values[7] = (0.90 * max).toFixed(2);
+            values[1] = ((0.1 * (max-min))+min).toFixed(2);
+            values[2] = ((0.25 * (max-min))+min).toFixed(2);
+            values[3] = ((0.35 * (max-min))+min).toFixed(2);
+            values[4] = ((0.50 * (max-min))+min).toFixed(2);
+            values[5] = ((0.65 * (max-min))+min).toFixed(2);
+            values[6] = ((0.75 * (max-min))+min).toFixed(2);
+            values[7] = ((0.90 * (max-min))+min).toFixed(2);
             values[8] = max;
             return values;
         case '2':
             // perc = data.annual_consume_lowtarif_color;
-            max = legend.annual_consume_low_tarif_max;
-            min = legend.annual_consume_low_tarif_min;
+            max = parseFloat(legend.annual_consume_low_tarif_max);
+            min = parseFloat(legend.annual_consume_low_tarif_min);
             values[0] = min;
-            values[1] = (0.1 * max).toFixed(2);
-            values[2] = (0.25 * max).toFixed(2);
-            values[3] = (0.35 * max).toFixed(2);
-            values[4] = (0.50 * max).toFixed(2);
-            values[5] = (0.65 * max).toFixed(2);
-            values[6] = (0.75 * max).toFixed(2);
-            values[7] = (0.90 * max).toFixed(2);
+            values[1] = ((0.1 * (max-min))+min).toFixed(2);
+            values[2] = ((0.25 * (max-min))+min).toFixed(2);
+            values[3] = ((0.35 * (max-min))+min).toFixed(2);
+            values[4] = ((0.50 * (max-min))+min).toFixed(2);
+            values[5] = ((0.65 * (max-min))+min).toFixed(2);
+            values[6] = ((0.75 * (max-min))+min).toFixed(2);
+            values[7] = ((0.90 * (max-min))+min).toFixed(2);
             values[8] = max;
             return values;
         case '3':
@@ -119,16 +119,16 @@ function getColorLabels(legend, dataSetting){
 
         case '4':
             // perc = data.num_connections_color;
-            max = legend.num_connections_max;
-            min = legend.num_connections_min;
+            max = parseFloat(legend.num_connections_max);
+            min = parseFloat(legend.num_connections_min);
             values[0] = min;
-            values[1] = (0.1 * max).toFixed(2);
-            values[2] = (0.25 * max).toFixed(2);
-            values[3] = (0.35 * max).toFixed(2);
-            values[4] = (0.50 * max).toFixed(2);
-            values[5] = (0.65 * max).toFixed(2);
-            values[6] = (0.75 * max).toFixed(2);
-            values[7] = (0.90 * max).toFixed(2);
+            values[1] = ((0.1 * (max-min))+min).toFixed(2);
+            values[2] = ((0.25 * (max-min))+min).toFixed(2);
+            values[3] = ((0.35 * (max-min))+min).toFixed(2);
+            values[4] = ((0.50 * (max-min))+min).toFixed(2);
+            values[5] = ((0.65 * (max-min))+min).toFixed(2);
+            values[6] = ((0.75 * (max-min))+min).toFixed(2);
+            values[7] = ((0.90 * (max-min))+min).toFixed(2);
             values[8] = max;
             return values;
         case '5':
