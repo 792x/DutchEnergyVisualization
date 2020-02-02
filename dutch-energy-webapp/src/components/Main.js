@@ -230,8 +230,7 @@ class Main extends Component {
     }
 
     clearSelection = async () => {
-        //TODO CLEAR SELECTION CAS
-
+        this.setState({selectedItem: null});
     }
     
     componentDidMount = async () => {

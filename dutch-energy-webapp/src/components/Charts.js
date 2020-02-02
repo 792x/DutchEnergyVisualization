@@ -195,8 +195,20 @@ export class BarChart extends Component {
             .enter()
             .append('g');
 
+            let barColor = 'orange';
+            switch (this.props.scope) {
+                case 'gemeente':
+                    barColor = 'blue';
+                    break;
+                case 'wijk':
+                    barColor = 'green';
+                    break;
+                case 'buurt':
+                    barColor = 'red';
+                    break;
+            }
             barGroups.append('rect')
-            .attr('class', 'bar')
+            .attr('class', 'bar bar-'+barColor)
             .attr('x', (g) => xScale(g.x))
             .attr('y', (g) => yScale(g.y))
             .attr('height', (g) => height - yScale(g.y))
@@ -400,7 +412,7 @@ export class LineChart extends Component {
                 chart.append("path")
                 .datum(data)
                 .attr("fill", "none")
-                .attr("stroke", "#FF6200")
+                .attr("stroke", "#005cb8")
                 .attr("stroke-width", 1.5)
                 .attr("d", line()
                     .x(function(d) { return xScale(d.x) })
