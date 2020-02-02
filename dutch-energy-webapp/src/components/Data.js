@@ -205,7 +205,7 @@ class Data extends Component {
                                                 <option value={11}>Last two years</option>
                                                 <option value={12}>Last three years</option>
                                                 <option value={13}>Last five years</option>
-                                                <option value={14}>All data</option>
+                                                <option value={14}>Last ten years</option>
                                             </Select>
                                         </FormControl>
                                     </Grid>

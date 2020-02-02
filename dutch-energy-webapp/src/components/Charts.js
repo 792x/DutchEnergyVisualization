@@ -460,7 +460,7 @@ export class LineChart extends Component {
                     break;
             }
             if ((this.props.dataType === 1 || this.props.dataType === 2) && this.props.source === 'electricity') {
-                headingText += ' (high vs low tarif)';
+                headingText += ' (high vs low tariff)';
             }
             svg.append('text')
             .attr('class', 'title')
