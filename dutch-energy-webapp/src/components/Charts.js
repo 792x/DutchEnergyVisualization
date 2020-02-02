@@ -103,10 +103,10 @@ export class BarChart extends Component {
                         res[x].y += val.annual_consume / (val.num_connections * (val.perc_of_active_connections / 100));
                         break;
                     case 3:
-                        res[x].y += val.annual_consume * (1 - val.delivery_perc / 100);
+                        res[x].y += val.annual_consume * (val.delivery_perc / 100);
                         break;
                     case 4:
-                        res[x].y += val.annual_consume * (1 - val.delivery_perc / 100) / (val.num_connections * (val.perc_of_active_connections / 100));
+                        res[x].y += val.annual_consume * (val.delivery_perc / 100) / (val.num_connections * (val.perc_of_active_connections / 100));
                         break;
                     case 5:
                         res[x].y += val.num_connections * (val.perc_of_active_connections / 100);
@@ -325,10 +325,10 @@ export class LineChart extends Component {
                         res[val.year].t += (val.annual_consume / (val.num_connections * (val.perc_of_active_connections / 100))) * (val.annual_consume_lowtarif_perc / 100);
                         break;
                     case 3:
-                        res[val.year].y += val.annual_consume * (1 - val.delivery_perc / 100);
+                        res[val.year].y += val.annual_consume * (val.delivery_perc / 100);
                         break;
                     case 4:
-                        res[val.year].y += val.annual_consume * (1 - val.delivery_perc / 100) / (val.num_connections * (val.perc_of_active_connections / 100));
+                        res[val.year].y += val.annual_consume * (val.delivery_perc / 100) / (val.num_connections * (val.perc_of_active_connections / 100));
                         break;
                     case 5:
                         res[val.year].y += val.num_connections * (val.perc_of_active_connections / 100);
@@ -538,7 +538,7 @@ export class PieChart extends Component {
                         res[manager].y += val.annual_consume;
                         break;
                     case 'prod':
-                        res[manager].y += val.annual_consume * (1 - val.delivery_perc / 100);
+                        res[manager].y += val.annual_consume * (val.delivery_perc / 100);
                         break;
                     case 'nuco':
                         res[manager].y += val.num_connections * (val.perc_of_active_connections / 100);
