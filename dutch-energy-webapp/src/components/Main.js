@@ -226,6 +226,11 @@ class Main extends Component {
         this.setState({selectedItem: identifier, selectedListItem: identifier, selectedItemType: this.state.mapScopeSetting});
         this.loadSpecificData(identifier);
     }
+
+    clearSelection = async () => {
+        //TODO CLEAR SELECTION CAS
+
+    }
     
     componentDidMount = async () => {
         await this.loadNationalData();
@@ -260,7 +265,7 @@ class Main extends Component {
                         </Grid>
                         <Grid item style={{ display: 'flex', height: '45%', padding: '10px 20px 20px 20px' }} xs={12}>
                             <Paper className={classes.paper}>
-                                <Data scope={this.state.mapScopeSetting} specificData={this.state.specificData} selectedItem={this.state.selectedItem} loading={this.state.loadingSpecificData} />
+                                <Data scope={this.state.mapScopeSetting} specificData={this.state.specificData} selectedItem={this.state.selectedItem} loading={this.state.loadingSpecificData} clearSelection={this.clearSelection}/>
                             </Paper>
                         </Grid>
                     </Grid>
