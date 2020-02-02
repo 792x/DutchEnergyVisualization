@@ -28,6 +28,13 @@ const ClearIcon = () => <box-icon color="#B3B9C4"  type='search' name='x' size="
 
 
 const SelectedItem = (props) => {
+    if (props.selectedItem === null) {
+        return (
+            <Typography variant="h6">
+                National
+            </Typography>
+        )
+    }
     let selected = {};
     if (props.specificData) {
         switch (props.scope) {
@@ -142,7 +149,6 @@ class Data extends Component {
 
     componentDidMount() {
         const boxHeight = document.getElementById('data-wrapper').clientHeight - 48;
-        console.log(boxHeight);
         document.getElementById('d3-wrapper').style.height = boxHeight+'px';
 
         this.state.graphSettings.height = boxHeight;
@@ -158,9 +164,9 @@ class Data extends Component {
                         <Grid container direction="row" justify="space-between" style={{ width: '100%', height: '48px' }} >
                             <Grid item style={{ marginTop: '10px', marginLeft: '10px' }}>
                                 <Grid container direction="row" justify="flex-start">
-                                    <Grid item><SelectedItem scope={this.props.scope} specificData={this.props.specificData}></SelectedItem></Grid>
+                                    <Grid item><SelectedItem scope={this.props.scope} specificData={this.props.specificData} selectedItem={this.props.selectedItem}></SelectedItem></Grid>
                                     <Grid item>
-                                        {this.props.selectedItem ?
+                                        {this.props.selectedItem && !this.state.loading ?
                                             <Tooltip title="Clear Selection">
                                                 <IconButton color="primary" aria-label="search" style={{ marginTop: '-8px', marginLeft: '5px' }} onClick={this.props.clearSelection}>
                                                     <ClearIcon />
@@ -300,7 +306,6 @@ class Data extends Component {
                                                     years={this.handleTimeframe(this.state.timeframeSetting)}
                                                     source={this.state.energySourceSetting}
                                                     scope={this.props.scope}
-                                                    
                                                 ></LineChart>
                                             </Grid>
 

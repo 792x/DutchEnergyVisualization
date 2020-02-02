@@ -14,8 +14,17 @@
   height: 100%;
 }
 
-.svg-d3 .bar {
+.svg-d3 .bar-orange {
   fill: #FF6200;
+}
+.svg-d3 .bar-green {
+  fill: #31880c;
+}
+.svg-d3 .bar-blue {
+  fill: #005cb8;
+}
+.svg-d3 .bar-red {
+  fill: #a7302a;
 }
 
 .svg-d3 text {
