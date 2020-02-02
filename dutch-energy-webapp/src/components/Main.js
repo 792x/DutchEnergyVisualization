@@ -254,7 +254,7 @@ class Main extends Component {
                                 </Grid>
                                 <Grid item style={{ display: 'flex', height: '100%', padding: '20px 10px 10px 10px' }} xs={6}>
                                     <Paper className={classes.paper}>
-                                        <Map scope={this.state.mapScopeSetting} selectItem={this.selectItem} selectedListItem={this.state.selectedListItem} nationalData={this.state.shownNationalData} mapDataSetting={this.state.mapDataSetting} mapColorSetting={this.state.mapColorSetting} mapLegend={this.state.nationalDataLegend}/>
+                                        <Map scope={this.state.mapScopeSetting} selectItem={this.selectItem} selectedListItem={this.state.selectedListItem} nationalData={this.state.shownNationalData} mapEnergySourceSetting={this.state.mapEnergySourceSetting} mapDataSetting={this.state.mapDataSetting} mapColorSetting={this.state.mapColorSetting} mapLegend={this.state.nationalDataLegend}/>
                                     </Paper>
                                 </Grid>
                                 <Grid item style={{ display: 'flex', height: '100%', padding: '20px 20px 10px 10px' }} xs={3}>

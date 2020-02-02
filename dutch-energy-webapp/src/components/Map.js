@@ -37,10 +37,10 @@ function getProviderColor(provider){
     }
 }
 
-function getLegendTitle(dataSetting){
+function getLegendTitle(dataSetting, energySetting){
     switch(dataSetting){
         case '1':
-            return 'Log10 Consumption (kWh)';
+            return energySetting === 'gas' ? 'Log10 Consumption (m3)' : 'Log10 Consumption (kWh)';
         case '2':
             return 'Log10 Low Tarif <br> Consumption (kWH)';
         case '3':
@@ -281,6 +281,7 @@ class Map extends Component {
 
             let legend = this.props.mapLegend;
             let dataSetting = this.props.mapDataSetting;
+            let energySetting = this.props.mapEnergySourceSetting;
 
             if (this.props.mapDataSetting === '7') {
                 this.legend.onAdd = function (map) {
@@ -303,7 +304,7 @@ class Map extends Component {
                         labels = getColorLabels(legend, dataSetting);
 
                     // loop through our density intervals and generate a label with a colored square for each interval
-                    div.innerHTML += '<p style="font-size:10px; line-height: 1;">'+getLegendTitle(dataSetting)+'</p>';
+                    div.innerHTML += '<p style="font-size:10px; line-height: 1;">'+getLegendTitle(dataSetting, energySetting)+'</p>';
                     for (var i = 0; i < grades.length; i++) {
                         div.innerHTML +=
                             '<i style="background:' + getColor(grades[i] + 1, colorSetting) + '"></i> ' +
