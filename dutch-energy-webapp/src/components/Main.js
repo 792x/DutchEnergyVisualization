@@ -83,6 +83,7 @@ class Main extends Component {
         mapColorSetting: '1',
         shownNationalData: null,
         nationalData: null,
+        nationalDataLegend: null,
         loadingNationalData: false,
         specificData: null,
         loadingSpecificData: false,
@@ -138,7 +139,8 @@ class Main extends Component {
         await this.setState({loadingNationalData: true});
         let nationalDataResult = await this.fetchNationalData(this.state.mapScopeSetting, this.state.mapEnergySourceSetting);
         let nationalDataParsed = await JSON.parse(nationalDataResult);
-        this.setState({nationalData: nationalDataParsed, loadingNationalData: false});
+        this.setState({nationalData: nationalDataParsed.values, nationalDataLegend: nationalDataParsed.legend, loadingNationalData: false});
+        console.log(nationalDataParsed.legend);
     }
 
     loadSpecificData = async (id) => {
@@ -253,7 +255,7 @@ class Main extends Component {
                                 </Grid>
                                 <Grid item style={{ display: 'flex', height: '100%', padding: '20px 10px 10px 10px' }} xs={6}>
                                     <Paper className={classes.paper}>
-                                        <Map scope={this.state.mapScopeSetting} selectItem={this.selectItem} selectedListItem={this.state.selectedListItem} nationalData={this.state.shownNationalData} mapDataSetting={this.state.mapDataSetting} mapColorSetting={this.state.mapColorSetting}/>
+                                        <Map scope={this.state.mapScopeSetting} selectItem={this.selectItem} selectedListItem={this.state.selectedListItem} nationalData={this.state.shownNationalData} mapDataSetting={this.state.mapDataSetting} mapColorSetting={this.state.mapColorSetting} mapLegend={this.state.nationalDataLegend}/>
                                     </Paper>
                                 </Grid>
                                 <Grid item style={{ display: 'flex', height: '100%', padding: '20px 20px 10px 10px' }} xs={3}>

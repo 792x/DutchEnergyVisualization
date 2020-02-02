@@ -37,6 +37,132 @@ function getProviderColor(provider){
     }
 }
 
+function getLegendTitle(dataSetting){
+    switch(dataSetting){
+        case '1':
+            return 'Consumption (kWh)';
+        case '2':
+            return 'Low Tarif Consumption (kWH)';
+        case '3':
+            return 'Smartmeter Percentage (%)';
+        case '4':
+            return 'Number of Connections';
+        case '5':
+            return 'Active Connections Percentage (%)';
+        case '6':
+            return 'Delivery Percentage (%)';
+        default:
+            console.log('error in switch this.props.mapDataSetting');
+    }
+}
+
+function getColorLabels(legend, dataSetting){
+    
+    let values = [];
+    // annual_consume_max: 85432370
+    // num_connections_max: 2270893
+    // annual_consume_low_tarif_max: 6976281519
+    // delivery_perc_max: 102
+    // smartmeter_perc_max: 93
+    // perc_of_active_connections_max: 100
+    // annual_consume_min: 32927
+    // num_connections_min: 334
+    // annual_consume_low_tarif_min: 1958934
+    // delivery_perc_min: 15
+    // smartmeter_perc_min: 0
+    // perc_of_active_connections_min: 48
+    let max;
+    let min;
+
+    switch(dataSetting){
+        case '1':
+            // perc = data.annual_consume_color;
+            max = legend.annual_consume_max;
+            min = legend.annual_consume_min;
+            values[0] = min;
+            values[1] = Math.floor(0.1 * max);
+            values[2] = Math.floor(0.25 * max);
+            values[3] = Math.floor(0.35 * max);
+            values[4] = Math.floor(0.50 * max);
+            values[5] = Math.floor(0.65 * max);
+            values[6] = Math.floor(0.80 * max);
+            values[7] = Math.floor(0.90 * max);
+            values[8] = max;
+            return values;
+        case '2':
+            // perc = data.annual_consume_lowtarif_color;
+            max = legend.annual_consume_low_tarif_max;
+            min = legend.annual_consume_low_tarif_min;
+            values[0] = min;
+            values[1] = Math.floor(0.1 * max);
+            values[2] = Math.floor(0.25 * max);
+            values[3] = Math.floor(0.35 * max);
+            values[4] = Math.floor(0.50 * max);
+            values[5] = Math.floor(0.65 * max);
+            values[6] = Math.floor(0.80 * max);
+            values[7] = Math.floor(0.90 * max);
+            values[8] = max;
+            return values;
+        case '3':
+            // perc = data.smartmeter_perc_color;
+            max = 100;
+            values[0] = 0;
+            values[1] = Math.floor(0.1 * max);
+            values[2] = Math.floor(0.25 * max);
+            values[3] = Math.floor(0.35 * max);
+            values[4] = Math.floor(0.50 * max);
+            values[5] = Math.floor(0.65 * max);
+            values[6] = Math.floor(0.80 * max);
+            values[7] = Math.floor(0.90 * max);
+            values[8] = 100;
+            return values;
+
+        case '4':
+            // perc = data.num_connections_color;
+            max = legend.num_connections_max;
+            min = legend.num_connections_min;
+            values[0] = min;
+            values[1] = Math.floor(0.1 * max);
+            values[2] = Math.floor(0.25 * max);
+            values[3] = Math.floor(0.35 * max);
+            values[4] = Math.floor(0.50 * max);
+            values[5] = Math.floor(0.65 * max);
+            values[6] = Math.floor(0.80 * max);
+            values[7] = Math.floor(0.90 * max);
+            values[8] = max;
+            return values;
+        case '5':
+            // perc = data.perc_of_active_connections_color;
+            max = 100;
+            values[0] = 0;
+            values[1] = Math.floor(0.1 * max);
+            values[2] = Math.floor(0.25 * max);
+            values[3] = Math.floor(0.35 * max);
+            values[4] = Math.floor(0.50 * max);
+            values[5] = Math.floor(0.65 * max);
+            values[6] = Math.floor(0.80 * max);
+            values[7] = Math.floor(0.90 * max);
+            values[8] = 100;
+            return values;
+
+        case '6':
+            max = 100;
+            //deliveryperc
+            values[0] = 0;
+            values[1] = Math.floor(0.1 * max);
+            values[2] = Math.floor(0.25 * max);
+            values[3] = Math.floor(0.35 * max);
+            values[4] = Math.floor(0.50 * max);
+            values[5] = Math.floor(0.65 * max);
+            values[6] = Math.floor(0.80 * max);
+            values[7] = Math.floor(0.90 * max);
+            values[8] = 100;
+            return values;
+        default:
+            console.log('error in switch this.props.mapDataSetting');
+    }
+}
+
 
 function getColor(d, colorSetting) {
     switch(colorSetting){
@@ -151,41 +277,46 @@ class Map extends Component {
 
         let colorSetting = this.props.mapColorSetting;
 
+        if (this.props.nationalData) {
 
-        if(this.props.mapDataSetting === '7'){
-            this.legend.onAdd = function (map) {
-        
-                var div = L.DomUtil.create('div', 'info legend');
-            
-                // loop through our density intervals and generate a label with a colored square for each interval
-                div.innerHTML += '<p style="font-size:10px; line-height: 1;">Provider</p>';
-                div.innerHTML +='<i style="background:' + getProviderColor('Enexis') + '"></i> Enexis <br>' + 
-                '<i style="background:' + getProviderColor('Liander') + '"></i> Liander <br>' +
-                '<i style="background:' + getProviderColor('8716') + '"></i> Stendin <br>';
-            
-                return div;
-            };
-        } else {
-            this.legend.onAdd = function (map) {
-        
-                var div = L.DomUtil.create('div', 'info legend'),
-                    grades = [0, 10, 25, 35, 50, 65, 75, 90],
-                    labels = [];
-            
-                // loop through our density intervals and generate a label with a colored square for each interval
-                div.innerHTML += '<p style="font-size:10px; line-height: 1;">Standardized <br> magnitude</p>';
-                for (var i = 0; i < grades.length; i++) {
-                    div.innerHTML +=
-                        '<i style="background:' + getColor(grades[i] + 1, colorSetting) + '"></i> ' +
-                        grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '-100');
-                }
-            
-                return div;
-            };
+            let legend = this.props.mapLegend;
+            let dataSetting = this.props.mapDataSetting;
+
+            if (this.props.mapDataSetting === '7') {
+                this.legend.onAdd = function (map) {
+
+                    var div = L.DomUtil.create('div', 'info legend');
+
+                    // loop through our density intervals and generate a label with a colored square for each interval
+                    div.innerHTML += '<p style="font-size:10px; line-height: 1;">Provider</p>';
+                    div.innerHTML += '<i style="background:' + getProviderColor('Enexis') + '"></i> Enexis <br>' +
+                        '<i style="background:' + getProviderColor('Liander') + '"></i> Liander <br>' +
+                        '<i style="background:' + getProviderColor('8716') + '"></i> Stendin <br>';
+
+                    return div;
+                };
+            } else {
+                this.legend.onAdd = function (map) {
+
+                    var div = L.DomUtil.create('div', 'info legend'),
+                        grades = [0, 10, 25, 35, 50, 65, 75, 90],
+                        labels = getColorLabels(legend, dataSetting);
+
+                    // loop through our density intervals and generate a label with a colored square for each interval
+                    div.innerHTML += '<p style="font-size:10px; line-height: 1;">'+getLegendTitle(dataSetting)+'</p>';
+                    for (var i = 0; i < grades.length; i++) {
+                        div.innerHTML +=
+                            '<i style="background:' + getColor(grades[i] + 1, colorSetting) + '"></i> ' +
+                            labels[i] + (labels[i + 1] ? '&ndash;' + labels[i + 1] + '<br>' : '-100');
+                    }
+
+                    return div;
+                };
+            }
+
+
+            this.legend.addTo(this.map);
         }
-
-        
-        this.legend.addTo(this.map);
 
         this.customLayer = L.geoJSON(geojson, {
             style: this.styleEachFeature,

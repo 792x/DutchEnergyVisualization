@@ -17,6 +17,8 @@ export async function getNationalGasData(scope: string){
     let delivery_perc_min :number;
     let smartmeter_perc_min:number;
     let perc_of_active_connections_min :number;
+
+    let legend: any = {};
     
     switch(scope){
         case 'buurt':
@@ -69,7 +71,7 @@ export async function getNationalGasData(scope: string){
 
                 res[`${val.buurt2019}_${val.year}`].annual_consume += parseFloat(val.annual_consume);
                 res[`${val.buurt2019}_${val.year}`].num_connections += parseFloat(val.num_connections);
-                res[`${val.buurt2019}_${val.year}`].annual_consume_low_tarif += (parseFloat(val.annual_consume) * parseFloat(val.annual_consume_lowtarif_perc));
+                res[`${val.buurt2019}_${val.year}`].annual_consume_low_tarif += (parseFloat(val.annual_consume) * (parseFloat(val.annual_consume_lowtarif_perc)/100));
                 res[`${val.buurt2019}_${val.year}`].delivery_perc += parseFloat(val.delivery_perc);
                 res[`${val.buurt2019}_${val.year}`].smartmeter_perc += parseFloat(val.smartmeter_perc);
                 res[`${val.buurt2019}_${val.year}`].perc_of_active_connections += parseFloat(val.perc_of_active_connections);
@@ -119,8 +121,11 @@ export async function getNationalGasData(scope: string){
         
             if(values){
                 if(Object.keys(values).length > 0){
-                    // console.log(values);
-                    return values;
+                    console.log(values);
+                    let result: any = {};
+                    result.values = values;
+                    result.legend = legend;
+                    return result;
                 } else {
                     return null;
                 }
@@ -173,7 +178,7 @@ export async function getNationalGasData(scope: string){
 
                 res[`${val.wijk2019}_${val.year}`].annual_consume += parseFloat(val.annual_consume);
                 res[`${val.wijk2019}_${val.year}`].num_connections += parseFloat(val.num_connections);
-                res[`${val.wijk2019}_${val.year}`].annual_consume_low_tarif += (parseFloat(val.annual_consume) * parseFloat(val.annual_consume_lowtarif_perc));
+                res[`${val.wijk2019}_${val.year}`].annual_consume_low_tarif += (parseFloat(val.annual_consume) * (parseFloat(val.annual_consume_lowtarif_perc)/100));
                 res[`${val.wijk2019}_${val.year}`].delivery_perc += parseFloat(val.delivery_perc);
                 res[`${val.wijk2019}_${val.year}`].smartmeter_perc += parseFloat(val.smartmeter_perc);
                 res[`${val.wijk2019}_${val.year}`].perc_of_active_connections += parseFloat(val.perc_of_active_connections);
@@ -197,6 +202,19 @@ export async function getNationalGasData(scope: string){
             delivery_perc_min = Math.min.apply(Math, data.map(function(d:any) { return d.delivery_perc/d.delivery_perc_count; }));
             smartmeter_perc_min = Math.min.apply(Math, data.map(function(d:any) { return d.smartmeter_perc/d.smartmeter_perc_count; }));
             perc_of_active_connections_min = Math.min.apply(Math, data.map(function(d:any) { return d.perc_of_active_connections/d.perc_of_active_connections_count; }));
+
+            legend.annual_consume_max = Math.floor(annual_consume_max);
+            legend.num_connections_max = Math.floor(num_connections_max);
+            legend.annual_consume_low_tarif_max = Math.floor(annual_consume_low_tarif_max);
+            legend.delivery_perc_max = Math.floor(delivery_perc_max);
+            legend.smartmeter_perc_max = Math.floor(smartmeter_perc_max);
+            legend.perc_of_active_connections_max = Math.floor(perc_of_active_connections_max);
+            legend.annual_consume_min = Math.floor(annual_consume_min);
+            legend.num_connections_min = Math.floor(num_connections_min);
+            legend.annual_consume_low_tarif_min = Math.floor(annual_consume_low_tarif_min);
+            legend.delivery_perc_min = Math.floor(delivery_perc_min);
+            legend.smartmeter_perc_min = Math.floor(smartmeter_perc_min);
+            legend.perc_of_active_connections_min = Math.floor(perc_of_active_connections_min);
         
             // Map values to range (0, 100)
             data.reduce((res:any, val:any) => {
@@ -222,7 +240,10 @@ export async function getNationalGasData(scope: string){
             if(values){
                 if(Object.keys(values).length > 0){
                     console.log(values);
-                    return values;
+                    let result: any = {};
+                    result.values = values;
+                    result.legend = legend;
+                    return result;
                 } else {
                     return null;
                 }
@@ -271,7 +292,7 @@ export async function getNationalGasData(scope: string){
 
                 res[`${val.gemeente2019}_${val.year}`].annual_consume += parseFloat(val.annual_consume);
                 res[`${val.gemeente2019}_${val.year}`].num_connections += parseFloat(val.num_connections);
-                res[`${val.gemeente2019}_${val.year}`].annual_consume_low_tarif += (parseFloat(val.annual_consume) * parseFloat(val.annual_consume_lowtarif_perc));
+                res[`${val.gemeente2019}_${val.year}`].annual_consume_low_tarif += (parseFloat(val.annual_consume) * (parseFloat(val.annual_consume_lowtarif_perc)/100));
                 res[`${val.gemeente2019}_${val.year}`].delivery_perc += parseFloat(val.delivery_perc);
                 res[`${val.gemeente2019}_${val.year}`].smartmeter_perc += parseFloat(val.smartmeter_perc);
                 res[`${val.gemeente2019}_${val.year}`].perc_of_active_connections += parseFloat(val.perc_of_active_connections);
@@ -295,6 +316,19 @@ export async function getNationalGasData(scope: string){
             delivery_perc_min = Math.min.apply(Math, data.map(function(d:any) { return d.delivery_perc/d.delivery_perc_count; }));
             smartmeter_perc_min = Math.min.apply(Math, data.map(function(d:any) { return d.smartmeter_perc/d.smartmeter_perc_count; }));
             perc_of_active_connections_min = Math.min.apply(Math, data.map(function(d:any) { return d.perc_of_active_connections/d.perc_of_active_connections_count; }));
+
+            legend.annual_consume_max = Math.floor(annual_consume_max);
+            legend.num_connections_max = Math.floor(num_connections_max);
+            legend.annual_consume_low_tarif_max = Math.floor(annual_consume_low_tarif_max);
+            legend.delivery_perc_max = Math.floor(delivery_perc_max);
+            legend.smartmeter_perc_max = Math.floor(smartmeter_perc_max);
+            legend.perc_of_active_connections_max = Math.floor(perc_of_active_connections_max);
+            legend.annual_consume_min = Math.floor(annual_consume_min);
+            legend.num_connections_min = Math.floor(num_connections_min);
+            legend.annual_consume_low_tarif_min = Math.floor(annual_consume_low_tarif_min);
+            legend.delivery_perc_min = Math.floor(delivery_perc_min);
+            legend.smartmeter_perc_min = Math.floor(smartmeter_perc_min);
+            legend.perc_of_active_connections_min = Math.floor(perc_of_active_connections_min);
         
             // Map values to range (0, 100)
             data.reduce((res:any, val:any) => {
@@ -318,7 +352,10 @@ export async function getNationalGasData(scope: string){
             if(values){
                 if(Object.keys(values).length > 0){
                     console.log(values);
-                    return values;
+                    let result: any = {};
+                    result.values = values;
+                    result.legend = legend;
+                    return result;
                 } else {
                     return null;
                 }
@@ -345,6 +382,8 @@ export async function getNationalElectricityData(scope: string){
     let smartmeter_perc_min:number;
     let perc_of_active_connections_min :number;
     
+    let legend: any = {};
+
     switch(scope){
         case 'buurt':
             //return json with buurtnummer as index
@@ -396,7 +435,7 @@ export async function getNationalElectricityData(scope: string){
 
                 res[`${val.buurt2019}_${val.year}`].annual_consume += parseFloat(val.annual_consume);
                 res[`${val.buurt2019}_${val.year}`].num_connections += parseFloat(val.num_connections);
-                res[`${val.buurt2019}_${val.year}`].annual_consume_low_tarif += (parseFloat(val.annual_consume) * parseFloat(val.annual_consume_lowtarif_perc));
+                res[`${val.buurt2019}_${val.year}`].annual_consume_low_tarif += (parseFloat(val.annual_consume) * (parseFloat(val.annual_consume_lowtarif_perc)/100));
                 res[`${val.buurt2019}_${val.year}`].delivery_perc += parseFloat(val.delivery_perc);
                 res[`${val.buurt2019}_${val.year}`].smartmeter_perc += parseFloat(val.smartmeter_perc);
                 res[`${val.buurt2019}_${val.year}`].perc_of_active_connections += parseFloat(val.perc_of_active_connections);
@@ -421,6 +460,19 @@ export async function getNationalElectricityData(scope: string){
             smartmeter_perc_min = Math.min.apply(Math, data.map(function(d:any) { return d.smartmeter_perc/d.smartmeter_perc_count; }));
             perc_of_active_connections_min = Math.min.apply(Math, data.map(function(d:any) { return d.perc_of_active_connections/d.perc_of_active_connections_count; }));
         
+            legend.annual_consume_max = Math.floor(annual_consume_max);
+            legend.num_connections_max = Math.floor(num_connections_max);
+            legend.annual_consume_low_tarif_max = Math.floor(annual_consume_low_tarif_max);
+            legend.delivery_perc_max = Math.floor(delivery_perc_max);
+            legend.smartmeter_perc_max = Math.floor(smartmeter_perc_max);
+            legend.perc_of_active_connections_max = Math.floor(perc_of_active_connections_max);
+            legend.annual_consume_min = Math.floor(annual_consume_min);
+            legend.num_connections_min = Math.floor(num_connections_min);
+            legend.annual_consume_low_tarif_min = Math.floor(annual_consume_low_tarif_min);
+            legend.delivery_perc_min = Math.floor(delivery_perc_min);
+            legend.smartmeter_perc_min = Math.floor(smartmeter_perc_min);
+            legend.perc_of_active_connections_min = Math.floor(perc_of_active_connections_min);
+
             // Map values to range (0, 100)
             data.reduce((res:any, val:any) => {
                 res[`${val.buurt2019}_${val.year}`] = {
@@ -446,8 +498,11 @@ export async function getNationalElectricityData(scope: string){
         
             if(values){
                 if(Object.keys(values).length > 0){
-                    // console.log(values);
-                    return values;
+                    console.log(values);
+                    let result: any = {};
+                    result.values = values;
+                    result.legend = legend;
+                    return result;
                 } else {
                     return null;
                 }
@@ -500,7 +555,7 @@ export async function getNationalElectricityData(scope: string){
 
                 res[`${val.wijk2019}_${val.year}`].annual_consume += parseFloat(val.annual_consume);
                 res[`${val.wijk2019}_${val.year}`].num_connections += parseFloat(val.num_connections);
-                res[`${val.wijk2019}_${val.year}`].annual_consume_low_tarif += (parseFloat(val.annual_consume) * parseFloat(val.annual_consume_lowtarif_perc));
+                res[`${val.wijk2019}_${val.year}`].annual_consume_low_tarif += (parseFloat(val.annual_consume) * (parseFloat(val.annual_consume_lowtarif_perc)/100));
                 res[`${val.wijk2019}_${val.year}`].delivery_perc += parseFloat(val.delivery_perc);
                 res[`${val.wijk2019}_${val.year}`].smartmeter_perc += parseFloat(val.smartmeter_perc);
                 res[`${val.wijk2019}_${val.year}`].perc_of_active_connections += parseFloat(val.perc_of_active_connections);
@@ -524,6 +579,20 @@ export async function getNationalElectricityData(scope: string){
             delivery_perc_min = Math.min.apply(Math, data.map(function(d:any) { return d.delivery_perc/d.delivery_perc_count; }));
             smartmeter_perc_min = Math.min.apply(Math, data.map(function(d:any) { return d.smartmeter_perc/d.smartmeter_perc_count; }));
             perc_of_active_connections_min = Math.min.apply(Math, data.map(function(d:any) { return d.perc_of_active_connections/d.perc_of_active_connections_count; }));
+
+            legend.annual_consume_max = Math.floor(annual_consume_max);
+            legend.num_connections_max = Math.floor(num_connections_max);
+            legend.annual_consume_low_tarif_max = Math.floor(annual_consume_low_tarif_max);
+            legend.delivery_perc_max = Math.floor(delivery_perc_max);
+            legend.smartmeter_perc_max = Math.floor(smartmeter_perc_max);
+            legend.perc_of_active_connections_max = Math.floor(perc_of_active_connections_max);
+            legend.annual_consume_min = Math.floor(annual_consume_min);
+            legend.num_connections_min = Math.floor(num_connections_min);
+            legend.annual_consume_low_tarif_min = Math.floor(annual_consume_low_tarif_min);
+            legend.delivery_perc_min = Math.floor(delivery_perc_min);
+            legend.smartmeter_perc_min = Math.floor(smartmeter_perc_min);
+            legend.perc_of_active_connections_min = Math.floor(perc_of_active_connections_min);
+
         
             // Map values to range (0, 100)
             data.reduce((res:any, val:any) => {
@@ -549,7 +618,10 @@ export async function getNationalElectricityData(scope: string){
             if(values){
                 if(Object.keys(values).length > 0){
                     console.log(values);
-                    return values;
+                    let result: any = {};
+                    result.values = values;
+                    result.legend = legend;
+                    return result;
                 } else {
                     return null;
                 }
@@ -598,7 +670,7 @@ export async function getNationalElectricityData(scope: string){
 
                 res[`${val.gemeente2019}_${val.year}`].annual_consume += parseFloat(val.annual_consume);
                 res[`${val.gemeente2019}_${val.year}`].num_connections += parseFloat(val.num_connections);
-                res[`${val.gemeente2019}_${val.year}`].annual_consume_low_tarif += (parseFloat(val.annual_consume) * parseFloat(val.annual_consume_lowtarif_perc));
+                res[`${val.gemeente2019}_${val.year}`].annual_consume_low_tarif += (parseFloat(val.annual_consume) * (parseFloat(val.annual_consume_lowtarif_perc)/100));
                 res[`${val.gemeente2019}_${val.year}`].delivery_perc += parseFloat(val.delivery_perc);
                 res[`${val.gemeente2019}_${val.year}`].smartmeter_perc += parseFloat(val.smartmeter_perc);
                 res[`${val.gemeente2019}_${val.year}`].perc_of_active_connections += parseFloat(val.perc_of_active_connections);
@@ -623,6 +695,19 @@ export async function getNationalElectricityData(scope: string){
             smartmeter_perc_min = Math.min.apply(Math, data.map(function(d:any) { return d.smartmeter_perc/d.smartmeter_perc_count; }));
             perc_of_active_connections_min = Math.min.apply(Math, data.map(function(d:any) { return d.perc_of_active_connections/d.perc_of_active_connections_count; }));
         
+            legend.annual_consume_max = Math.floor(annual_consume_max);
+            legend.num_connections_max = Math.floor(num_connections_max);
+            legend.annual_consume_low_tarif_max = Math.floor(annual_consume_low_tarif_max);
+            legend.delivery_perc_max = Math.floor(delivery_perc_max);
+            legend.smartmeter_perc_max = Math.floor(smartmeter_perc_max);
+            legend.perc_of_active_connections_max = Math.floor(perc_of_active_connections_max);
+            legend.annual_consume_min = Math.floor(annual_consume_min);
+            legend.num_connections_min = Math.floor(num_connections_min);
+            legend.annual_consume_low_tarif_min = Math.floor(annual_consume_low_tarif_min);
+            legend.delivery_perc_min = Math.floor(delivery_perc_min);
+            legend.smartmeter_perc_min = Math.floor(smartmeter_perc_min);
+            legend.perc_of_active_connections_min = Math.floor(perc_of_active_connections_min);
+
             // Map values to range (0, 100)
             data.reduce((res:any, val:any) => {
                 res[`${val.gemeente2019}_${val.year}`] = {
@@ -645,7 +730,10 @@ export async function getNationalElectricityData(scope: string){
             if(values){
                 if(Object.keys(values).length > 0){
                     console.log(values);
-                    return values;
+                    let result: any = {};
+                    result.values = values;
+                    result.legend = legend;
+                    return result;
                 } else {
                     return null;
                 }
