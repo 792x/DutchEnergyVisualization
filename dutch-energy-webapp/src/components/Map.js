@@ -40,9 +40,9 @@ function getProviderColor(provider){
 function getLegendTitle(dataSetting){
     switch(dataSetting){
         case '1':
-            return 'Consumption (kWh)';
+            return 'Log10 Consumption (kWh)';
         case '2':
-            return 'Low Tarif Consumption (kWH)';
+            return 'Log10 Low Tarif <br> Consumption (kWH)';
         case '3':
             return 'Smartmeter Percentage (%)';
         case '4':
@@ -80,13 +80,13 @@ function getColorLabels(legend, dataSetting){
             max = legend.annual_consume_max;
             min = legend.annual_consume_min;
             values[0] = min;
-            values[1] = Math.floor(0.1 * max);
-            values[2] = Math.floor(0.25 * max);
-            values[3] = Math.floor(0.35 * max);
-            values[4] = Math.floor(0.50 * max);
-            values[5] = Math.floor(0.65 * max);
-            values[6] = Math.floor(0.80 * max);
-            values[7] = Math.floor(0.90 * max);
+            values[1] = (0.1 * max).toFixed(2);
+            values[2] = (0.25 * max).toFixed(2);
+            values[3] = (0.35 * max).toFixed(2);
+            values[4] = (0.50 * max).toFixed(2);
+            values[5] = (0.65 * max).toFixed(2);
+            values[6] = (0.75 * max).toFixed(2);
+            values[7] = (0.90 * max).toFixed(2);
             values[8] = max;
             return values;
         case '2':
@@ -94,26 +94,26 @@ function getColorLabels(legend, dataSetting){
             max = legend.annual_consume_low_tarif_max;
             min = legend.annual_consume_low_tarif_min;
             values[0] = min;
-            values[1] = Math.floor(0.1 * max);
-            values[2] = Math.floor(0.25 * max);
-            values[3] = Math.floor(0.35 * max);
-            values[4] = Math.floor(0.50 * max);
-            values[5] = Math.floor(0.65 * max);
-            values[6] = Math.floor(0.80 * max);
-            values[7] = Math.floor(0.90 * max);
+            values[1] = (0.1 * max).toFixed(2);
+            values[2] = (0.25 * max).toFixed(2);
+            values[3] = (0.35 * max).toFixed(2);
+            values[4] = (0.50 * max).toFixed(2);
+            values[5] = (0.65 * max).toFixed(2);
+            values[6] = (0.75 * max).toFixed(2);
+            values[7] = (0.90 * max).toFixed(2);
             values[8] = max;
             return values;
         case '3':
             // perc = data.smartmeter_perc_color;
             max = 100;
             values[0] = 0;
-            values[1] = Math.floor(0.1 * max);
-            values[2] = Math.floor(0.25 * max);
-            values[3] = Math.floor(0.35 * max);
-            values[4] = Math.floor(0.50 * max);
-            values[5] = Math.floor(0.65 * max);
-            values[6] = Math.floor(0.80 * max);
-            values[7] = Math.floor(0.90 * max);
+            values[1] = (0.1 * max).toFixed(2);
+            values[2] = (0.25 * max).toFixed(2);
+            values[3] = (0.35 * max).toFixed(2);
+            values[4] = (0.50 * max).toFixed(2);
+            values[5] = (0.65 * max).toFixed(2);
+            values[6] = (0.75 * max).toFixed(2);
+            values[7] = (0.90 * max).toFixed(2);
             values[8] = 100;
             return values;
 
@@ -122,26 +122,26 @@ function getColorLabels(legend, dataSetting){
             max = legend.num_connections_max;
             min = legend.num_connections_min;
             values[0] = min;
-            values[1] = Math.floor(0.1 * max);
-            values[2] = Math.floor(0.25 * max);
-            values[3] = Math.floor(0.35 * max);
-            values[4] = Math.floor(0.50 * max);
-            values[5] = Math.floor(0.65 * max);
-            values[6] = Math.floor(0.80 * max);
-            values[7] = Math.floor(0.90 * max);
+            values[1] = (0.1 * max).toFixed(2);
+            values[2] = (0.25 * max).toFixed(2);
+            values[3] = (0.35 * max).toFixed(2);
+            values[4] = (0.50 * max).toFixed(2);
+            values[5] = (0.65 * max).toFixed(2);
+            values[6] = (0.75 * max).toFixed(2);
+            values[7] = (0.90 * max).toFixed(2);
             values[8] = max;
             return values;
         case '5':
             // perc = data.perc_of_active_connections_color;
             max = 100;
             values[0] = 0;
-            values[1] = Math.floor(0.1 * max);
-            values[2] = Math.floor(0.25 * max);
-            values[3] = Math.floor(0.35 * max);
-            values[4] = Math.floor(0.50 * max);
-            values[5] = Math.floor(0.65 * max);
-            values[6] = Math.floor(0.80 * max);
-            values[7] = Math.floor(0.90 * max);
+            values[1] = (0.1 * max).toFixed(2);
+            values[2] = (0.25 * max).toFixed(2);
+            values[3] = (0.35 * max).toFixed(2);
+            values[4] = (0.50 * max).toFixed(2);
+            values[5] = (0.65 * max).toFixed(2);
+            values[6] = (0.75 * max).toFixed(2);
+            values[7] = (0.90 * max).toFixed(2);
             values[8] = 100;
             return values;
 
@@ -149,13 +149,13 @@ function getColorLabels(legend, dataSetting){
             max = 100;
             //deliveryperc
             values[0] = 0;
-            values[1] = Math.floor(0.1 * max);
-            values[2] = Math.floor(0.25 * max);
-            values[3] = Math.floor(0.35 * max);
-            values[4] = Math.floor(0.50 * max);
-            values[5] = Math.floor(0.65 * max);
-            values[6] = Math.floor(0.80 * max);
-            values[7] = Math.floor(0.90 * max);
+            values[1] = (0.1 * max).toFixed(2);
+            values[2] = (0.25 * max).toFixed(2);
+            values[3] = (0.35 * max).toFixed(2);
+            values[4] = (0.50 * max).toFixed(2);
+            values[5] = (0.65 * max).toFixed(2);
+            values[6] = (0.75 * max).toFixed(2);
+            values[7] = (0.90 * max).toFixed(2);
             values[8] = 100;
             return values;
         default:
@@ -169,7 +169,7 @@ function getColor(d, colorSetting) {
         case '1':
             //red
             return d > 90 ? '#800026' :
-            d > 80          ? '#BD0026' :
+            d > 75          ? '#BD0026' :
             d > 65        ? '#E31A1C' :
             d > 50          ? '#FC4E2A' :
             d > 35        ? '#FD8D3C' :
@@ -251,7 +251,7 @@ class Map extends Component {
         this.legend.onAdd = function (map) {
         
             var div = L.DomUtil.create('div', 'info legend'),
-                grades = [0, 12.5, 25, 37.5, 50, 62.5, 75, 87.5];
+                grades = [0, 10, 25, 35, 50, 65, 75, 90];
         
             // loop through our density intervals and generate a label with a colored square for each interval
             for (var i = 0; i < grades.length; i++) {

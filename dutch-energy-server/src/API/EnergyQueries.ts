@@ -95,6 +95,19 @@ export async function getNationalGasData(scope: string){
             delivery_perc_min = Math.min.apply(Math, data.map(function(d:any) { return d.delivery_perc/d.delivery_perc_count; }));
             smartmeter_perc_min = Math.min.apply(Math, data.map(function(d:any) { return d.smartmeter_perc/d.smartmeter_perc_count; }));
             perc_of_active_connections_min = Math.min.apply(Math, data.map(function(d:any) { return d.perc_of_active_connections/d.perc_of_active_connections_count; }));
+            
+            legend.annual_consume_max = Math.log10(annual_consume_max).toFixed(2);
+            legend.num_connections_max = Math.log10(num_connections_max).toFixed(2);
+            legend.annual_consume_low_tarif_max = Math.log10(annual_consume_low_tarif_max).toFixed(2);
+            legend.delivery_perc_max = Math.floor(delivery_perc_max);
+            legend.smartmeter_perc_max = Math.floor(smartmeter_perc_max);
+            legend.perc_of_active_connections_max = Math.floor(perc_of_active_connections_max);
+            legend.annual_consume_min = Math.log10(annual_consume_min).toFixed(2);
+            legend.num_connections_min = Math.log10(num_connections_min).toFixed(2);
+            legend.annual_consume_low_tarif_min = Math.log10(annual_consume_low_tarif_min).toFixed(2);
+            legend.delivery_perc_min = Math.floor(delivery_perc_min);
+            legend.smartmeter_perc_min = Math.floor(smartmeter_perc_min);
+            legend.perc_of_active_connections_min = Math.floor(perc_of_active_connections_min);
         
             // Map values to range (0, 100)
             data.reduce((res:any, val:any) => {
@@ -107,7 +120,6 @@ export async function getNationalGasData(scope: string){
                     buurt2019: val.buurt2019,
                     buurtnaam2019: val.buurtnaam2019,
                     year: val.year,
-                    annual_consume: val.annual_consume,
                     annual_consume_lowtarif_color: normalizeData(Math.log10(val.annual_consume_low_tarif), Math.log10(annual_consume_low_tarif_min), Math.log10(annual_consume_low_tarif_max)),
                     annual_consume_color: normalizeData(Math.log10(val.annual_consume), Math.log10(annual_consume_min), Math.log10(annual_consume_max)),
                     num_connections_color: normalizeData(Math.log10(val.num_connections), Math.log10(num_connections_min), Math.log10(num_connections_max)),
@@ -203,15 +215,15 @@ export async function getNationalGasData(scope: string){
             smartmeter_perc_min = Math.min.apply(Math, data.map(function(d:any) { return d.smartmeter_perc/d.smartmeter_perc_count; }));
             perc_of_active_connections_min = Math.min.apply(Math, data.map(function(d:any) { return d.perc_of_active_connections/d.perc_of_active_connections_count; }));
 
-            legend.annual_consume_max = Math.floor(annual_consume_max);
-            legend.num_connections_max = Math.floor(num_connections_max);
-            legend.annual_consume_low_tarif_max = Math.floor(annual_consume_low_tarif_max);
+            legend.annual_consume_max = Math.log10(annual_consume_max).toFixed(2);
+            legend.num_connections_max = Math.log10(num_connections_max).toFixed(2);
+            legend.annual_consume_low_tarif_max = Math.log10(annual_consume_low_tarif_max).toFixed(2);
             legend.delivery_perc_max = Math.floor(delivery_perc_max);
             legend.smartmeter_perc_max = Math.floor(smartmeter_perc_max);
             legend.perc_of_active_connections_max = Math.floor(perc_of_active_connections_max);
-            legend.annual_consume_min = Math.floor(annual_consume_min);
-            legend.num_connections_min = Math.floor(num_connections_min);
-            legend.annual_consume_low_tarif_min = Math.floor(annual_consume_low_tarif_min);
+            legend.annual_consume_min = Math.log10(annual_consume_min).toFixed(2);
+            legend.num_connections_min = Math.log10(num_connections_min).toFixed(2);
+            legend.annual_consume_low_tarif_min = Math.log10(annual_consume_low_tarif_min).toFixed(2);
             legend.delivery_perc_min = Math.floor(delivery_perc_min);
             legend.smartmeter_perc_min = Math.floor(smartmeter_perc_min);
             legend.perc_of_active_connections_min = Math.floor(perc_of_active_connections_min);
@@ -225,7 +237,6 @@ export async function getNationalGasData(scope: string){
                     wijk2019: val.wijk2019,
                     wijknaam2019: val.wijknaam2019,
                     year: val.year,
-                    annual_consume: val.annual_consume,
                     annual_consume_lowtarif_color: normalizeData(Math.log10(val.annual_consume_low_tarif), Math.log10(annual_consume_low_tarif_min), Math.log10(annual_consume_low_tarif_max)),
                     annual_consume_color: normalizeData(Math.log10(val.annual_consume), Math.log10(annual_consume_min), Math.log10(annual_consume_max)),
                     num_connections_color: normalizeData(Math.log10(val.num_connections), Math.log10(num_connections_min), Math.log10(num_connections_max)),
@@ -317,15 +328,15 @@ export async function getNationalGasData(scope: string){
             smartmeter_perc_min = Math.min.apply(Math, data.map(function(d:any) { return d.smartmeter_perc/d.smartmeter_perc_count; }));
             perc_of_active_connections_min = Math.min.apply(Math, data.map(function(d:any) { return d.perc_of_active_connections/d.perc_of_active_connections_count; }));
 
-            legend.annual_consume_max = Math.floor(annual_consume_max);
-            legend.num_connections_max = Math.floor(num_connections_max);
-            legend.annual_consume_low_tarif_max = Math.floor(annual_consume_low_tarif_max);
+            legend.annual_consume_max = Math.log10(annual_consume_max).toFixed(2);
+            legend.num_connections_max = Math.log10(num_connections_max).toFixed(2);
+            legend.annual_consume_low_tarif_max = Math.log10(annual_consume_low_tarif_max).toFixed(2);
             legend.delivery_perc_max = Math.floor(delivery_perc_max);
             legend.smartmeter_perc_max = Math.floor(smartmeter_perc_max);
             legend.perc_of_active_connections_max = Math.floor(perc_of_active_connections_max);
-            legend.annual_consume_min = Math.floor(annual_consume_min);
-            legend.num_connections_min = Math.floor(num_connections_min);
-            legend.annual_consume_low_tarif_min = Math.floor(annual_consume_low_tarif_min);
+            legend.annual_consume_min = Math.log10(annual_consume_min).toFixed(2);
+            legend.num_connections_min = Math.log10(num_connections_min).toFixed(2);
+            legend.annual_consume_low_tarif_min = Math.log10(annual_consume_low_tarif_min).toFixed(2);
             legend.delivery_perc_min = Math.floor(delivery_perc_min);
             legend.smartmeter_perc_min = Math.floor(smartmeter_perc_min);
             legend.perc_of_active_connections_min = Math.floor(perc_of_active_connections_min);
@@ -337,7 +348,6 @@ export async function getNationalGasData(scope: string){
                     gemeente2019: val.gemeente2019,
                     gemeentenaam2019: val.gemeentenaam2019,
                     year: val.year,
-                    annual_consume: val.annual_consume,
                     annual_consume_lowtarif_color: normalizeData(Math.log10(val.annual_consume_low_tarif), Math.log10(annual_consume_low_tarif_min), Math.log10(annual_consume_low_tarif_max)),
                     annual_consume_color: normalizeData(Math.log10(val.annual_consume), Math.log10(annual_consume_min), Math.log10(annual_consume_max)),
                     num_connections_color: normalizeData(Math.log10(val.num_connections), Math.log10(num_connections_min), Math.log10(num_connections_max)),
@@ -460,15 +470,15 @@ export async function getNationalElectricityData(scope: string){
             smartmeter_perc_min = Math.min.apply(Math, data.map(function(d:any) { return d.smartmeter_perc/d.smartmeter_perc_count; }));
             perc_of_active_connections_min = Math.min.apply(Math, data.map(function(d:any) { return d.perc_of_active_connections/d.perc_of_active_connections_count; }));
         
-            legend.annual_consume_max = Math.floor(annual_consume_max);
-            legend.num_connections_max = Math.floor(num_connections_max);
-            legend.annual_consume_low_tarif_max = Math.floor(annual_consume_low_tarif_max);
+            legend.annual_consume_max = Math.log10(annual_consume_max).toFixed(2);
+            legend.num_connections_max = Math.log10(num_connections_max).toFixed(2);
+            legend.annual_consume_low_tarif_max = Math.log10(annual_consume_low_tarif_max).toFixed(2);
             legend.delivery_perc_max = Math.floor(delivery_perc_max);
             legend.smartmeter_perc_max = Math.floor(smartmeter_perc_max);
             legend.perc_of_active_connections_max = Math.floor(perc_of_active_connections_max);
-            legend.annual_consume_min = Math.floor(annual_consume_min);
-            legend.num_connections_min = Math.floor(num_connections_min);
-            legend.annual_consume_low_tarif_min = Math.floor(annual_consume_low_tarif_min);
+            legend.annual_consume_min = Math.log10(annual_consume_min).toFixed(2);
+            legend.num_connections_min = Math.log10(num_connections_min).toFixed(2);
+            legend.annual_consume_low_tarif_min = Math.log10(annual_consume_low_tarif_min).toFixed(2);
             legend.delivery_perc_min = Math.floor(delivery_perc_min);
             legend.smartmeter_perc_min = Math.floor(smartmeter_perc_min);
             legend.perc_of_active_connections_min = Math.floor(perc_of_active_connections_min);
@@ -484,7 +494,6 @@ export async function getNationalElectricityData(scope: string){
                     buurt2019: val.buurt2019,
                     buurtnaam2019: val.buurtnaam2019,
                     year: val.year,
-                    annual_consume: val.annual_consume,
                     annual_consume_lowtarif_color: normalizeData(Math.log10(val.annual_consume_low_tarif), Math.log10(annual_consume_low_tarif_min), Math.log10(annual_consume_low_tarif_max)),
                     annual_consume_color: normalizeData(Math.log10(val.annual_consume), Math.log10(annual_consume_min), Math.log10(annual_consume_max)),
                     num_connections_color: normalizeData(Math.log10(val.num_connections), Math.log10(num_connections_min), Math.log10(num_connections_max)),
@@ -580,15 +589,15 @@ export async function getNationalElectricityData(scope: string){
             smartmeter_perc_min = Math.min.apply(Math, data.map(function(d:any) { return d.smartmeter_perc/d.smartmeter_perc_count; }));
             perc_of_active_connections_min = Math.min.apply(Math, data.map(function(d:any) { return d.perc_of_active_connections/d.perc_of_active_connections_count; }));
 
-            legend.annual_consume_max = Math.floor(annual_consume_max);
-            legend.num_connections_max = Math.floor(num_connections_max);
-            legend.annual_consume_low_tarif_max = Math.floor(annual_consume_low_tarif_max);
+            legend.annual_consume_max = Math.log10(annual_consume_max).toFixed(2);
+            legend.num_connections_max = Math.log10(num_connections_max).toFixed(2);
+            legend.annual_consume_low_tarif_max = Math.log10(annual_consume_low_tarif_max).toFixed(2);
             legend.delivery_perc_max = Math.floor(delivery_perc_max);
             legend.smartmeter_perc_max = Math.floor(smartmeter_perc_max);
             legend.perc_of_active_connections_max = Math.floor(perc_of_active_connections_max);
-            legend.annual_consume_min = Math.floor(annual_consume_min);
-            legend.num_connections_min = Math.floor(num_connections_min);
-            legend.annual_consume_low_tarif_min = Math.floor(annual_consume_low_tarif_min);
+            legend.annual_consume_min = Math.log10(annual_consume_min).toFixed(2);
+            legend.num_connections_min = Math.log10(num_connections_min).toFixed(2);
+            legend.annual_consume_low_tarif_min = Math.log10(annual_consume_low_tarif_min).toFixed(2);
             legend.delivery_perc_min = Math.floor(delivery_perc_min);
             legend.smartmeter_perc_min = Math.floor(smartmeter_perc_min);
             legend.perc_of_active_connections_min = Math.floor(perc_of_active_connections_min);
@@ -603,7 +612,6 @@ export async function getNationalElectricityData(scope: string){
                     wijk2019: val.wijk2019,
                     wijknaam2019: val.wijknaam2019,
                     year: val.year,
-                    annual_consume: val.annual_consume,
                     annual_consume_lowtarif_color: normalizeData(Math.log10(val.annual_consume_low_tarif), Math.log10(annual_consume_low_tarif_min), Math.log10(annual_consume_low_tarif_max)),
                     annual_consume_color: normalizeData(Math.log10(val.annual_consume), Math.log10(annual_consume_min), Math.log10(annual_consume_max)),
                     num_connections_color: normalizeData(Math.log10(val.num_connections), Math.log10(num_connections_min), Math.log10(num_connections_max)),
@@ -694,16 +702,16 @@ export async function getNationalElectricityData(scope: string){
             delivery_perc_min = Math.min.apply(Math, data.map(function(d:any) { return d.delivery_perc/d.delivery_perc_count; }));
             smartmeter_perc_min = Math.min.apply(Math, data.map(function(d:any) { return d.smartmeter_perc/d.smartmeter_perc_count; }));
             perc_of_active_connections_min = Math.min.apply(Math, data.map(function(d:any) { return d.perc_of_active_connections/d.perc_of_active_connections_count; }));
-        
-            legend.annual_consume_max = Math.floor(annual_consume_max);
-            legend.num_connections_max = Math.floor(num_connections_max);
-            legend.annual_consume_low_tarif_max = Math.floor(annual_consume_low_tarif_max);
+            
+            legend.annual_consume_max = Math.log10(annual_consume_max).toFixed(2);
+            legend.num_connections_max = Math.log10(num_connections_max).toFixed(2);
+            legend.annual_consume_low_tarif_max = Math.log10(annual_consume_low_tarif_max).toFixed(2);
             legend.delivery_perc_max = Math.floor(delivery_perc_max);
             legend.smartmeter_perc_max = Math.floor(smartmeter_perc_max);
             legend.perc_of_active_connections_max = Math.floor(perc_of_active_connections_max);
-            legend.annual_consume_min = Math.floor(annual_consume_min);
-            legend.num_connections_min = Math.floor(num_connections_min);
-            legend.annual_consume_low_tarif_min = Math.floor(annual_consume_low_tarif_min);
+            legend.annual_consume_min = Math.log10(annual_consume_min).toFixed(2);
+            legend.num_connections_min = Math.log10(num_connections_min).toFixed(2);
+            legend.annual_consume_low_tarif_min = Math.log10(annual_consume_low_tarif_min).toFixed(2);
             legend.delivery_perc_min = Math.floor(delivery_perc_min);
             legend.smartmeter_perc_min = Math.floor(smartmeter_perc_min);
             legend.perc_of_active_connections_min = Math.floor(perc_of_active_connections_min);
@@ -715,7 +723,6 @@ export async function getNationalElectricityData(scope: string){
                     gemeente2019: val.gemeente2019,
                     gemeentenaam2019: val.gemeentenaam2019,
                     year: val.year,
-                    annual_consume: val.annual_consume,
                     annual_consume_lowtarif_color: normalizeData(Math.log10(val.annual_consume_low_tarif), Math.log10(annual_consume_low_tarif_min), Math.log10(annual_consume_low_tarif_max)),
                     annual_consume_color: normalizeData(Math.log10(val.annual_consume), Math.log10(annual_consume_min), Math.log10(annual_consume_max)),
                     num_connections_color: normalizeData(Math.log10(val.num_connections), Math.log10(num_connections_min), Math.log10(num_connections_max)),
