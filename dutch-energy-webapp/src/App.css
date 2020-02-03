@@ -1,5 +1,5 @@
 .App {
-  background-color: #F7FAFC;
+  background-color: #FAFAFA;
   height: 100vh;
 }
 
@@ -14,13 +14,22 @@
   height: 100%;
 }
 
-.svg-d3 .bar {
+.svg-d3 .bar-orange {
   fill: #FF6200;
+}
+.svg-d3 .bar-green {
+  fill: #31880c;
+}
+.svg-d3 .bar-blue {
+  fill: #005cb8;
+}
+.svg-d3 .bar-red {
+  fill: #a7302a;
 }
 
 .svg-d3 text {
   font-size: 12px;
-  fill: #262626;
+  fill: rgba(0,0,0,0.75);
 }
 
 .svg-d3 path.domain {
@@ -57,4 +66,16 @@
 .svg-d3 text.label {
   font-size: 15px;
   font-weight: 400;
+}
+
+.legend {
+  line-height: 18px;
+  color: #555;
+}
+.legend i {
+  width: 18px;
+  height: 18px;
+  float: left;
+  margin-right: 8px;
+  opacity: 0.7;
 }

@@ -12,6 +12,39 @@ const capitalize = (s) => {
     return s.charAt(0).toUpperCase() + s.slice(1);
 }
 
+const calcCap = (val) => {
+    let cap;
+    if (val / 1000000000 > 1) {
+        cap = 'b';
+    } else if (val / 1000000 > 1) {
+        cap = 'm';
+    } else if (val / 1000 > 1) {
+        cap = 'k';
+    } else  {
+        cap = 'z';
+    }
+    return cap;
+}
+
+const capValue = (val, cap) => {
+    let res;
+    switch (cap) {
+        case 'b':
+            res = val / 1000000000;
+            break;
+        case 'm':
+            res = val / 1000000;
+            break;
+        case 'k':
+            res = val / 1000;
+            break;
+        case 'z':
+            res = val;
+            break;
+    }
+    return res.toFixed(2);
+}
+
 const data_test = {"electricity":[{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22801","wijknaam2019":"Ede-Oost","year":2010,"annual_consume":1251857,"num_connections":21158.229999999996,"annual_consume_lowtarif_perc":22.46400943396226,"delivery_perc":26.287735849056602,"perc_of_active_connections":94.58518867924528},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22801","wijknaam2019":"Ede-Oost","year":2011,"annual_consume":1227890,"num_connections":21245.14,"annual_consume_lowtarif_perc":29.750328638497653,"delivery_perc":26.314553990610328,"perc_of_active_connections":95.21708920187793},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22801","wijknaam2019":"Ede-Oost","year":2012,"annual_consume":1232855,"num_connections":21519.53,"annual_consume_lowtarif_perc":29.137731481481485,"delivery_perc":26.953703703703702,"perc_of_active_connections":94.48175925925925},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22801","wijknaam2019":"Ede-Oost","year":2013,"annual_consume":1259301,"num_connections":21651.659999999996,"annual_consume_lowtarif_perc":30.78793577981652,"delivery_perc":26.78440366972477,"perc_of_active_connections":94.36678899082568},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22801","wijknaam2019":"Ede-Oost","year":2014,"annual_consume":1265363,"num_connections":21437.12,"annual_consume_lowtarif_perc":34.154954545454544,"delivery_perc":26.804545454545455,"perc_of_active_connections":92.87822727272727},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22801","wijknaam2019":"Ede-Oost","year":2015,"annual_consume":1238976,"num_connections":21408.96,"annual_consume_lowtarif_perc":33.8524886877828,"delivery_perc":26.764705882352942,"perc_of_active_connections":92.63990950226241},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22801","wijknaam2019":"Ede-Oost","year":2016,"annual_consume":1234248,"num_connections":21454.649999999998,"annual_consume_lowtarif_perc":38.986591928251116,"delivery_perc":27.04932735426009,"perc_of_active_connections":92.21282511210762},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22801","wijknaam2019":"Ede-Oost","year":2017,"annual_consume":1189992,"num_connections":21220.13,"annual_consume_lowtarif_perc":40.03739910313901,"delivery_perc":27.130044843049326,"perc_of_active_connections":92.0614798206278},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22801","wijknaam2019":"Ede-Oost","year":2018,"annual_consume":1177681,"num_connections":21095.309999999998,"annual_consume_lowtarif_perc":41.83446428571428,"delivery_perc":27.424107142857142,"perc_of_active_connections":92.0915625},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22801","wijknaam2019":"Ede-Oost","year":2019,"annual_consume":1253822,"num_connections":20787.67,"annual_consume_lowtarif_perc":22.70620192307692,"delivery_perc":25.990384615384617,"perc_of_active_connections":95.97899038461537},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22802","wijknaam2019":"Ede-West","year":2010,"annual_consume":1427639,"num_connections":32553.469999999998,"annual_consume_lowtarif_perc":22.446932515337426,"delivery_perc":21.279141104294478,"perc_of_active_connections":97.77748466257668},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22802","wijknaam2019":"Ede-West","year":2011,"annual_consume":1413970,"num_connections":32547.11,"annual_consume_lowtarif_perc":31.175398773006137,"delivery_perc":21.733128834355828,"perc_of_active_connections":96.91131901840488},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22802","wijknaam2019":"Ede-West","year":2012,"annual_consume":1435819,"num_connections":32934.64,"annual_consume_lowtarif_perc":31.010666666666662,"delivery_perc":21.803030303030305,"perc_of_active_connections":96.69651515151514},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22802","wijknaam2019":"Ede-West","year":2013,"annual_consume":1403262,"num_connections":32859.159999999996,"annual_consume_lowtarif_perc":32.702454545454536,"delivery_perc":22.26060606060606,"perc_of_active_connections":96.98963636363635},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22802","wijknaam2019":"Ede-West","year":2014,"annual_consume":1389696,"num_connections":32452.769999999997,"annual_consume_lowtarif_perc":38.33680722891566,"delivery_perc":22.283132530120483,"perc_of_active_connections":95.57659638554216},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22802","wijknaam2019":"Ede-West","year":2015,"annual_consume":1343783,"num_connections":32262.28999999999,"annual_consume_lowtarif_perc":38.75168674698796,"delivery_perc":22.298192771084338,"perc_of_active_connections":95.69487951807228},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22802","wijknaam2019":"Ede-West","year":2016,"annual_consume":1334733,"num_connections":31753.48999999999,"annual_consume_lowtarif_perc":43.784504504504504,"delivery_perc":22.3003003003003,"perc_of_active_connections":95.58894894894894},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22802","wijknaam2019":"Ede-West","year":2017,"annual_consume":1306546,"num_connections":31250.84999999999,"annual_consume_lowtarif_perc":47.2538622754491,"delivery_perc":22.29640718562874,"perc_of_active_connections":95.53254491017962},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22802","wijknaam2019":"Ede-West","year":2018,"annual_consume":1284266,"num_connections":30942.39,"annual_consume_lowtarif_perc":48.12417910447762,"delivery_perc":22.632835820895522,"perc_of_active_connections":95.11707462686566},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22802","wijknaam2019":"Ede-West","year":2019,"annual_consume":1405143,"num_connections":32489.4,"annual_consume_lowtarif_perc":22.816307692307692,"delivery_perc":21.166153846153847,"perc_of_active_connections":98.00043076923076},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22803","wijknaam2019":"Ede-Veldhuizen","year":2010,"annual_consume":1078690,"num_connections":28337.640000000003,"annual_consume_lowtarif_perc":23.07612676056338,"delivery_perc":21.482394366197184,"perc_of_active_connections":98.40570422535211},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22803","wijknaam2019":"Ede-Veldhuizen","year":2011,"annual_consume":1083347,"num_connections":28537.64,"annual_consume_lowtarif_perc":30.61664335664336,"delivery_perc":21.814685314685313,"perc_of_active_connections":97.4148951048951},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22803","wijknaam2019":"Ede-Veldhuizen","year":2012,"annual_consume":1075166,"num_connections":28632.64,"annual_consume_lowtarif_perc":30.53076655052265,"delivery_perc":21.878048780487806,"perc_of_active_connections":97.48013937282231},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22803","wijknaam2019":"Ede-Veldhuizen","year":2013,"annual_consume":1086610,"num_connections":28831.18,"annual_consume_lowtarif_perc":31.125931034482754,"delivery_perc":21.924137931034483,"perc_of_active_connections":97.34610344827585},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22803","wijknaam2019":"Ede-Veldhuizen","year":2014,"annual_consume":1044567,"num_connections":27994.569999999996,"annual_consume_lowtarif_perc":33.35275261324042,"delivery_perc":21.916376306620208,"perc_of_active_connections":96.26282229965157},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22803","wijknaam2019":"Ede-Veldhuizen","year":2015,"annual_consume":1034477,"num_connections":28135.85,"annual_consume_lowtarif_perc":34.402448275862064,"delivery_perc":21.858620689655172,"perc_of_active_connections":96.27796551724138},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22803","wijknaam2019":"Ede-Veldhuizen","year":2016,"annual_consume":1021226,"num_connections":27347.189999999995,"annual_consume_lowtarif_perc":44.139106529209606,"delivery_perc":22.16151202749141,"perc_of_active_connections":96.49938144329897},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22803","wijknaam2019":"Ede-Veldhuizen","year":2017,"annual_consume":993916,"num_connections":26748.989999999994,"annual_consume_lowtarif_perc":45.44383561643834,"delivery_perc":22.328767123287673,"perc_of_active_connections":96.62140410958904},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22803","wijknaam2019":"Ede-Veldhuizen","year":2018,"annual_consume":958197,"num_connections":26183.159999999996,"annual_consume_lowtarif_perc":47.68276450511945,"delivery_perc":22.37542662116041,"perc_of_active_connections":96.64068259385665},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22803","wijknaam2019":"Ede-Veldhuizen","year":2019,"annual_consume":1091518,"num_connections":28264.510000000002,"annual_consume_lowtarif_perc":23.182685512367495,"delivery_perc":21.501766784452297,"perc_of_active_connections":98.11356890459363},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22804","wijknaam2019":"Kernhem","year":2010,"annual_consume":176459,"num_connections":4286.48,"annual_consume_lowtarif_perc":22.41911111111111,"delivery_perc":29.266666666666666,"perc_of_active_connections":93.77688888888889},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22804","wijknaam2019":"Kernhem","year":2011,"annual_consume":178092,"num_connections":4282.719999999999,"annual_consume_lowtarif_perc":33.65755555555556,"delivery_perc":29.733333333333334,"perc_of_active_connections":93.98222222222223},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22804","wijknaam2019":"Kernhem","year":2012,"annual_consume":217149,"num_connections":5049.459999999999,"annual_consume_lowtarif_perc":29.01622641509434,"delivery_perc":29.11320754716981,"perc_of_active_connections":90.63301886792452},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22804","wijknaam2019":"Kernhem","year":2013,"annual_consume":263541,"num_connections":5191.459999999999,"annual_consume_lowtarif_perc":34.75272727272727,
 "delivery_perc":29.89090909090909,"perc_of_active_connections":91.984},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22804","wijknaam2019":"Kernhem","year":2014,"annual_consume":274912,"num_connections":4965.66,"annual_consume_lowtarif_perc":42.063508771929826,"delivery_perc":31.24561403508772,"perc_of_active_connections":84.9717543859649},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22804","wijknaam2019":"Kernhem","year":2015,"annual_consume":318158,"num_connections":5169.949999999999,"annual_consume_lowtarif_perc":45.580000000000005,"delivery_perc":31.066666666666666,"perc_of_active_connections":83.00799999999998},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22804","wijknaam2019":"Kernhem","year":2016,"annual_consume":314415,"num_connections":5092.099999999999,"annual_consume_lowtarif_perc":84.55649999999999,"delivery_perc":32.03333333333333,"perc_of_active_connections":86.52483333333332},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22804","wijknaam2019":"Kernhem","year":2017,"annual_consume":334828,"num_connections":5404.56,"annual_consume_lowtarif_perc":85.0996923076923,"delivery_perc":32,"perc_of_active_connections":84.62353846153844},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22804","wijknaam2019":"Kernhem","year":2018,"annual_consume":337136,"num_connections":5555.610000000001,"annual_consume_lowtarif_perc":85.54279411764705,"delivery_perc":32.029411764705884,"perc_of_active_connections":85.20397058823528},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22804","wijknaam2019":"Kernhem","year":2019,"annual_consume":175892,"num_connections":4219.29,"annual_consume_lowtarif_perc":22.802272727272733,"delivery_perc":28.5,"perc_of_active_connections":93.86068181818182},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22805","wijknaam2019":"Veluwse Poort","year":2010,"annual_consume":10547,"num_connections":200,"annual_consume_lowtarif_perc":30.939999999999998,"delivery_perc":21,"perc_of_active_connections":95},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22805","wijknaam2019":"Veluwse Poort","year":2011,"annual_consume":11759,"num_connections":200,"annual_consume_lowtarif_perc":36.46,"delivery_perc":22,"perc_of_active_connections":95.83500000000001},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22805","wijknaam2019":"Veluwse Poort","year":2012,"annual_consume":10093,"num_connections":200,"annual_consume_lowtarif_perc":38.7,"delivery_perc":22.5,"perc_of_active_connections":96.155},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22805","wijknaam2019":"Veluwse Poort","year":2013,"annual_consume":11088,"num_connections":200,"annual_consume_lowtarif_perc":42.55,"delivery_perc":22.5,"perc_of_active_connections":96.155},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22805","wijknaam2019":"Veluwse Poort","year":2014,"annual_consume":9966,"num_connections":200,"annual_consume_lowtarif_perc":35.625,"delivery_perc":21,"perc_of_active_connections":95},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22805","wijknaam2019":"Veluwse Poort","year":2015,"annual_consume":29739,"num_connections":400,"annual_consume_lowtarif_perc":62.394999999999996,"delivery_perc":23.5,"perc_of_active_connections":49.582499999999996},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22805","wijknaam2019":"Veluwse Poort","year":2016,"annual_consume":48077,"num_connections":626.15,"annual_consume_lowtarif_perc":73.53142857142858,"delivery_perc":23.285714285714285,"perc_of_active_connections":88.78714285714285},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22805","wijknaam2019":"Veluwse Poort","year":2017,"annual_consume":65218,"num_connections":872.6800000000001,"annual_consume_lowtarif_perc":67.92454545454547,"delivery_perc":27.90909090909091,"perc_of_active_connections":86.81727272727272},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22805","wijknaam2019":"Veluwse Poort","year":2018,"annual_consume":77696,"num_connections":860.6800000000001,"annual_consume_lowtarif_perc":63.701666666666675,"delivery_perc":28.833333333333332,"perc_of_active_connections":75.69500000000001},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22805","wijknaam2019":"Veluwse Poort","year":2019,"annual_consume":11826,"num_connections":200,"annual_consume_lowtarif_perc":27.085,"delivery_perc":28,"perc_of_active_connections":97.91499999999999},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22810","wijknaam2019":"Ede-Zuid","year":2010,"annual_consume":689532,"num_connections":16790.06,"annual_consume_lowtarif_perc":17.1675,"delivery_perc":23.970238095238095,"perc_of_active_connections":89.4995238095238},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22810","wijknaam2019":"Ede-Zuid","year":2011,"annual_consume":696752,"num_connections":16774.28,"annual_consume_lowtarif_perc":24.96630952380953,"delivery_perc":24.648809523809526,"perc_of_active_connections":86.43982142857142},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22810","wijknaam2019":"Ede-Zuid","year":2012,"annual_consume":735520,"num_connections":17281.1,"annual_consume_lowtarif_perc":24.12988439306358,"delivery_perc":25.046242774566473,"perc_of_active_connections":85.6735260115607},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22810","wijknaam2019":"Ede-Zuid","year":2013,"annual_consume":771709,"num_connections":17596.12,"annual_consume_lowtarif_perc":27.79740112994351,"delivery_perc":25.451977401129945,"perc_of_active_connections":86.61745762711864},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22810","wijknaam2019":"Ede-Zuid","year":2014,"annual_consume":839792,"num_connections":17701.09,"annual_consume_lowtarif_perc":31.838729281767954,"delivery_perc":25.734806629834253,"perc_of_active_connections":84.85519337016574},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22810","wijknaam2019":"Ede-Zuid","year":2015,"annual_consume":768925,"num_connections":17789.96,"annual_consume_lowtarif_perc":33.939945355191256,"delivery_perc":26.524590163934427,"perc_of_active_connections":85.62174863387978},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22810","wijknaam2019":"Ede-Zuid","year":2016,"annual_consume":757247,"num_connections":17799.96,"annual_consume_lowtarif_perc":36.63551351351351,"delivery_perc":27.14054054054054,"perc_of_active_connections":85.87113513513512},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22810","wijknaam2019":"Ede-Zuid","year":2017,"annual_consume":760192,"num_connections":17888.619999999995,"annual_consume_lowtarif_perc":38.775691489361705,"delivery_perc":27.595744680851062,"perc_of_active_connections":86.4120744680851},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22810","wijknaam2019":"Ede-Zuid","year":2018,"annual_consume":806164,"num_connections":18487.31,"annual_consume_lowtarif_perc":40.50760204081632,"delivery_perc":27.816326530612244,"perc_of_active_connections":85.4019387755102},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22810","wijknaam2019":"Ede-Zuid","year":2019,"annual_consume":705649,"num_connections":16593.18,"annual_consume_lowtarif_perc":17.627289156626507,"delivery_perc":23.427710843373493,"perc_of_active_connections":90.65813253012048},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22811","wijknaam2019":"Maandereng","year":2010,"annual_consume":421051,"num_connections":10600,"annual_consume_lowtarif_perc":23.002924528301886,"delivery_perc":26.69811320754717,"perc_of_active_connections":99.66396226415095},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22811","wijknaam2019":"Maandereng","year":2011,"annual_consume":414852,"num_connections":10600,"annual_consume_lowtarif_perc":32.33405660377358,"delivery_perc":26.69811320754717,"perc_of_active_connections":99.75198113207546},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22811","wijknaam2019":"Maandereng","year":2012,"annual_consume":415274,"num_connections":10592.86,"annual_consume_lowtarif_perc":32.31669811320754,"delivery_perc":26.79245283018868,"perc_of_active_connections":99.48641509433962},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22811","wijknaam2019":"Maandereng","year":2013,"annual_consume":399643,"num_connections":10555.689999999999,"annual_consume_lowtarif_perc":32.260471698113214,"delivery_perc":26.89622641509434,"perc_of_active_connections":99.49047169811321},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22811","wijknaam2019":"Maandereng","year":2014,"annual_consume":395264,"num_connections":10486.98,"annual_consume_lowtarif_perc":39.92532710280375,"delivery_perc":26.588785046728972,"perc_of_active_connections":98.82439252336448},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22811","wijknaam2019":"Maandereng","year":2015,"annual_consume":392146,"num_connections":10374.96,"annual_consume_lowtarif_perc":40.397850467289715,"delivery_perc":26.598130841121495,"perc_of_active_connections":98.73682242990654},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22811","wijknaam2019":"Maandereng","year":2016,"annual_consume":378349,"num_connections":10242.7,"annual_consume_lowtarif_perc":43.39598130841121,"delivery_perc":26.598130841121495,"perc_of_active_connections":98.70934579439252},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22811","wijknaam2019":"Maandereng","year":2017,"annual_consume":361418,"num_connections":9863.700000000003,"annual_consume_lowtarif_perc":45.06896226415094,"delivery_perc":26.32075471698113,"perc_of_active_connections":98.76566037735849},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22811","wijknaam2019":"Maandereng","year":2018,"annual_consume":351795,"num_connections":9837.13,"annual_consume_lowtarif_perc":45.48065420560747,"delivery_perc":26.61682242990654,"perc_of_active_connections":98.53859813084111},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22811",
 "wijknaam2019":"Maandereng","year":2019,"annual_consume":418650,"num_connections":10600,"annual_consume_lowtarif_perc":23.249811320754716,"delivery_perc":26.632075471698112,"perc_of_active_connections":99.75943396226415},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22812","wijknaam2019":"Rietkampen","year":2010,"annual_consume":587485,"num_connections":13096,"annual_consume_lowtarif_perc":30.37160305343511,"delivery_perc":24.908396946564885,"perc_of_active_connections":99.08312977099236},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22812","wijknaam2019":"Rietkampen","year":2011,"annual_consume":589702,"num_connections":13192.43,"annual_consume_lowtarif_perc":58.807651515151505,"delivery_perc":24.954545454545453,"perc_of_active_connections":98.99515151515152},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22812","wijknaam2019":"Rietkampen","year":2012,"annual_consume":594309,"num_connections":13192.58,"annual_consume_lowtarif_perc":58.53272727272727,"delivery_perc":25.060606060606062,"perc_of_active_connections":99.31015151515152},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22812","wijknaam2019":"Rietkampen","year":2013,"annual_consume":579028,"num_connections":13262.369999999999,"annual_consume_lowtarif_perc":58.83736842105264,"delivery_perc":24.93984962406015,"perc_of_active_connections":99.35804511278197},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22812","wijknaam2019":"Rietkampen","year":2014,"annual_consume":572232,"num_connections":13023.39,"annual_consume_lowtarif_perc":60.24263157894737,"delivery_perc":25.022556390977442,"perc_of_active_connections":98.41240601503759},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22812","wijknaam2019":"Rietkampen","year":2015,"annual_consume":559129,"num_connections":12876.52,"annual_consume_lowtarif_perc":60.46503759398497,"delivery_perc":25.05263157894737,"perc_of_active_connections":98.30300751879699},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22812","wijknaam2019":"Rietkampen","year":2016,"annual_consume":541712,"num_connections":12687.16,"annual_consume_lowtarif_perc":61.60360902255641,"delivery_perc":25.06766917293233,"perc_of_active_connections":98.26541353383456},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22812","wijknaam2019":"Rietkampen","year":2017,"annual_consume":525131,"num_connections":12310.53,"annual_consume_lowtarif_perc":63.09150375939851,"delivery_perc":25.097744360902254,"perc_of_active_connections":98.20150375939849},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22812","wijknaam2019":"Rietkampen","year":2018,"annual_consume":510497,"num_connections":12035.949999999999,"annual_consume_lowtarif_perc":63.85406015037594,"delivery_perc":25.112781954887218,"perc_of_active_connections":98.14180451127817},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22812","wijknaam2019":"Rietkampen","year":2019,"annual_consume":571221,"num_connections":13100,"annual_consume_lowtarif_perc":30.558167938931298,"delivery_perc":24.85496183206107,"perc_of_active_connections":99.16824427480917},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22813","wijknaam2019":"Bedrijventerrein","year":2010,"annual_consume":472864,"num_connections":2497.44,"annual_consume_lowtarif_perc":25.5592,"delivery_perc":26.48,"perc_of_active_connections":78.67599999999999},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22813","wijknaam2019":"Bedrijventerrein","year":2011,"annual_consume":491655,"num_connections":2600,"annual_consume_lowtarif_perc":36.52038461538461,"delivery_perc":26.846153846153847,"perc_of_active_connections":78.10499999999999},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22813","wijknaam2019":"Bedrijventerrein","year":2012,"annual_consume":483065,"num_connections":2695.24,"annual_consume_lowtarif_perc":32.19,"delivery_perc":25.185185185185187,"perc_of_active_connections":77.33962962962963},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22813","wijknaam2019":"Bedrijventerrein","year":2013,"annual_consume":474950,"num_connections":2894.44,"annual_consume_lowtarif_perc":39.10137931034483,"delivery_perc":27.24137931034483,"perc_of_active_connections":77.60068965517242},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22813","wijknaam2019":"Bedrijventerrein","year":2014,"annual_consume":485549,"num_connections":2938.12,"annual_consume_lowtarif_perc":41.106666666666676,"delivery_perc":26.033333333333335,"perc_of_active_connections":76.09333333333333},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22813","wijknaam2019":"Bedrijventerrein","year":2015,"annual_consume":503938,"num_connections":3037.55,"annual_consume_lowtarif_perc":41.840322580645164,"delivery_perc":25.677419354838708,"perc_of_active_connections":73.95838709677419},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22813","wijknaam2019":"Bedrijventerrein","year":2016,"annual_consume":540662,"num_connections":3222.3999999999996,"annual_consume_lowtarif_perc":42.69333333333332,"delivery_perc":24.939393939393938,"perc_of_active_connections":72.03000000000002},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22813","wijknaam2019":"Bedrijventerrein","year":2017,"annual_consume":514889,"num_connections":3201.79,"annual_consume_lowtarif_perc":44.6139393939394,"delivery_perc":25.151515151515152,"perc_of_active_connections":71.62060606060606},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22813","wijknaam2019":"Bedrijventerrein","year":2018,"annual_consume":509128,"num_connections":3193.7200000000007,"annual_consume_lowtarif_perc":49.1790909090909,"delivery_perc":26.545454545454547,"perc_of_active_connections":71.60060606060605},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22813","wijknaam2019":"Bedrijventerrein","year":2019,"annual_consume":472005,"num_connections":2397.37,"annual_consume_lowtarif_perc":27.94916666666667,"delivery_perc":26.208333333333332,"perc_of_active_connections":80.97208333333333},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22820","wijknaam2019":"Buitengebied Ede-Stad","year":2010,"annual_consume":508461,"num_connections":4681.57,"annual_consume_lowtarif_perc":49.03170212765957,"delivery_perc":24.382978723404257,"perc_of_active_connections":90.30893617021277},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22820","wijknaam2019":"Buitengebied Ede-Stad","year":2011,"annual_consume":555668,"num_connections":4977.87,"annual_consume_lowtarif_perc":54.9124,"delivery_perc":23.04,"perc_of_active_connections":88.93960000000001},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22820","wijknaam2019":"Buitengebied Ede-Stad","year":2012,"annual_consume":530553,"num_connections":4970.28,"annual_consume_lowtarif_perc":54.0402,"delivery_perc":22.84,"perc_of_active_connections":87.0724},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22820","wijknaam2019":"Buitengebied Ede-Stad","year":2013,"annual_consume":541912,"num_connections":5151.56,"annual_consume_lowtarif_perc":57.075961538461534,"delivery_perc":22.576923076923077,"perc_of_active_connections":87.76461538461538},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22820","wijknaam2019":"Buitengebied Ede-Stad","year":2014,"annual_consume":538025,"num_connections":5117.13,"annual_consume_lowtarif_perc":56.574150943396226,"delivery_perc":22.264150943396228,"perc_of_active_connections":85.44716981132075},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22820","wijknaam2019":"Buitengebied Ede-Stad","year":2015,"annual_consume":509437,"num_connections":4929.51,"annual_consume_lowtarif_perc":56.35461538461539,"delivery_perc":22.807692307692307,"perc_of_active_connections":84.91230769230768},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22820","wijknaam2019":"Buitengebied Ede-Stad","year":2016,"annual_consume":527674,"num_connections":5069.41,"annual_consume_lowtarif_perc":63.10740740740741,"delivery_perc":22.944444444444443,"perc_of_active_connections":84.41277777777776},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22820","wijknaam2019":"Buitengebied Ede-Stad","year":2017,"annual_consume":508748,"num_connections":5027.79,"annual_consume_lowtarif_perc":62.974629629629625,"delivery_perc":22.537037037037038,"perc_of_active_connections":84.09185185185186},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22820","wijknaam2019":"Buitengebied Ede-Stad","year":2018,"annual_consume":505400,"num_connections":4929.31,"annual_consume_lowtarif_perc":64.48314814814815,"delivery_perc":22.814814814814813,"perc_of_active_connections":83.36851851851851},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22820","wijknaam2019":"Buitengebied Ede-Stad","year":2019,"annual_consume":485230,"num_connections":4500,"annual_consume_lowtarif_perc":49.476444444444446,"delivery_perc":24.2,"perc_of_active_connections":91.53711111111112},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22830","wijknaam2019":"Bennekom","year":2010,"annual_consume":1688249,"num_connections":28968.949999999997,"annual_consume_lowtarif_perc":29.422931034482758,"delivery_perc":23.306896551724137,"perc_of_active_connections":96.10324137931033},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22830","wijknaam2019":"Bennekom","year":2011,"annual_consume":1687343,"num_connections":28858.76,"annual_consume_lowtarif_perc":36.455501730103805,"delivery_perc":23.72318339100346,"perc_of_active_connections":95.63076124567475},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22830","wijknaam2019":"Bennekom","year":2012,"annual_consume":1693188,"num_connections":29325.970000000005,"annual_consume_lowtarif_perc":36.143571428571434,"delivery_perc":23.74829931972789,"perc_of_active_connections":94.57085034013606},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22830","wijknaam2019":"Bennekom","year":2013,"annual_consume":1716172,
@@ -24,382 +57,625 @@ const data_test = {"electricity":[{"gemeente2019":"228","gemeentenaam2019":"Ede"
 "wijknaam2019":"Wekerom","year":2014,"annual_consume":119190,"num_connections":3800,"annual_consume_lowtarif_perc":0,"delivery_perc":22.973684210526315,"perc_of_active_connections":96.82605263157896},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22880","wijknaam2019":"Wekerom","year":2015,"annual_consume":238594,"num_connections":7500,"annual_consume_lowtarif_perc":0,"delivery_perc":22.36,"perc_of_active_connections":97.58493333333332},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22880","wijknaam2019":"Wekerom","year":2016,"annual_consume":112561,"num_connections":4000,"annual_consume_lowtarif_perc":0,"delivery_perc":23.175,"perc_of_active_connections":96.58275},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22880","wijknaam2019":"Wekerom","year":2017,"annual_consume":120969,"num_connections":4300,"annual_consume_lowtarif_perc":0,"delivery_perc":22.953488372093023,"perc_of_active_connections":96.18325581395347},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22880","wijknaam2019":"Wekerom","year":2018,"annual_consume":118708,"num_connections":4300,"annual_consume_lowtarif_perc":0,"delivery_perc":23.325581395348838,"perc_of_active_connections":93.21139534883719},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22880","wijknaam2019":"Wekerom","year":2019,"annual_consume":118595,"num_connections":4400,"annual_consume_lowtarif_perc":0,"delivery_perc":23.227272727272727,"perc_of_active_connections":96.23659090909092},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22890","wijknaam2019":"Otterlo","year":2010,"annual_consume":188147,"num_connections":4500,"annual_consume_lowtarif_perc":0,"delivery_perc":21.644444444444446,"perc_of_active_connections":98.53466666666665},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22890","wijknaam2019":"Otterlo","year":2011,"annual_consume":183213,"num_connections":4500,"annual_consume_lowtarif_perc":0,"delivery_perc":21.844444444444445,"perc_of_active_connections":98.53466666666665},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22890","wijknaam2019":"Otterlo","year":2012,"annual_consume":183879,"num_connections":4500,"annual_consume_lowtarif_perc":0,"delivery_perc":22.044444444444444,"perc_of_active_connections":98.35822222222224},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22890","wijknaam2019":"Otterlo","year":2013,"annual_consume":176458,"num_connections":4500,"annual_consume_lowtarif_perc":0,"delivery_perc":22.066666666666666,"perc_of_active_connections":98.2928888888889},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22890","wijknaam2019":"Otterlo","year":2014,"annual_consume":171025,"num_connections":4500,"annual_consume_lowtarif_perc":0,"delivery_perc":22.244444444444444,"perc_of_active_connections":97.76844444444444},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22890","wijknaam2019":"Otterlo","year":2015,"annual_consume":359506,"num_connections":9000,"annual_consume_lowtarif_perc":0,"delivery_perc":21.966666666666665,"perc_of_active_connections":97.85888888888888},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22890","wijknaam2019":"Otterlo","year":2016,"annual_consume":166855,"num_connections":4500,"annual_consume_lowtarif_perc":0,"delivery_perc":22.333333333333332,"perc_of_active_connections":96.92577777777777},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22890","wijknaam2019":"Otterlo","year":2017,"annual_consume":175743,"num_connections":4700,"annual_consume_lowtarif_perc":0,"delivery_perc":22.21276595744681,"perc_of_active_connections":96.24063829787232},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22890","wijknaam2019":"Otterlo","year":2018,"annual_consume":176503,"num_connections":4700,"annual_consume_lowtarif_perc":0,"delivery_perc":22.4468085106383,"perc_of_active_connections":96.0163829787234},{"gemeente2019":"228","gemeentenaam2019":"Ede","wijk2019":"22890","wijknaam2019":"Otterlo","year":2019,"annual_consume":170719,"num_connections":4700,"annual_consume_lowtarif_perc":0,"delivery_perc":22.51063829787234,"perc_of_active_connections":95.20659574468083}],"electricity_manager":[{"net_manager":"Liander N.V.","gemeente2019":"228","gemeentenaam2019":"Ede","year":2010,"annual_consume":12709966,"num_connections":212256.59,"annual_consume_lowtarif_perc":28.15123178185239,"delivery_perc":23.42031029619182,"perc_of_active_connections":95.73246356370475},{"net_manager":"Liander N.V.","gemeente2019":"228","gemeentenaam2019":"Ede","year":2011,"annual_consume":12788932,"num_connections":213063.18,"annual_consume_lowtarif_perc":37.29589419475655,"delivery_perc":23.700842696629213,"perc_of_active_connections":95.00422752808998},{"net_manager":"Liander N.V.","gemeente2019":"228","gemeentenaam2019":"Ede","year":2012,"annual_consume":12927963,"num_connections":216098.77,"annual_consume_lowtarif_perc":36.72179428044281,"delivery_perc":23.926660516605168,"perc_of_active_connections":94.47870848708493},{"net_manager":"Liander N.V.","gemeente2019":"228","gemeentenaam2019":"Ede","year":2013,"annual_consume":12874736,"num_connections":217213.96000000002,"annual_consume_lowtarif_perc":38.242836911831894,"delivery_perc":24.194152581087256,"perc_of_active_connections":94.3902055733212},{"net_manager":"Liander N.V.","gemeente2019":"228","gemeentenaam2019":"Ede","year":2014,"annual_consume":12985125,"num_connections":213649.3900000001,"annual_consume_lowtarif_perc":41.40977787851316,"delivery_perc":24.35131459655485,"perc_of_active_connections":92.56286038077975},{"net_manager":"Liander N.V.","gemeente2019":"228","gemeentenaam2019":"Ede","year":2015,"annual_consume":12641393,"num_connections":213709.7900000001,"annual_consume_lowtarif_perc":42.38593258426967,"delivery_perc":24.519101123595505,"perc_of_active_connections":92.33178426966298},{"net_manager":"Liander N.V.","gemeente2019":"228","gemeentenaam2019":"Ede","year":2016,"annual_consume":12550147,"num_connections":211899.95000000013,"annual_consume_lowtarif_perc":47.45334225792054,"delivery_perc":24.73850959393128,"perc_of_active_connections":92.27740740740745},{"net_manager":"Liander N.V.","gemeente2019":"228","gemeentenaam2019":"Ede","year":2017,"annual_consume":12342830,"num_connections":210244.76000000004,"annual_consume_lowtarif_perc":49.96639293598233,"delivery_perc":24.8476821192053,"perc_of_active_connections":92.13759381898458},{"net_manager":"Liander N.V.","gemeente2019":"228","gemeentenaam2019":"Ede","year":2018,"annual_consume":12207933,"num_connections":208791.56,"annual_consume_lowtarif_perc":52.26584171403584,"delivery_perc":25.078268473983385,"perc_of_active_connections":91.7665150852646},{"net_manager":"Liander N.V.","gemeente2019":"228","gemeentenaam2019":"Ede","year":2019,"annual_consume":12547692,"num_connections":210544.09000000003,"annual_consume_lowtarif_perc":28.44055977229603,"delivery_perc":23.246679316888045,"perc_of_active_connections":96.17319734345352},{"net_manager":"Liander N.V. (NW)","gemeente2019":"228","gemeentenaam2019":"Ede","year":2010,"annual_consume":100665,"num_connections":1000,"annual_consume_lowtarif_perc":27.519,"delivery_perc":29.7,"perc_of_active_connections":90.03},{"net_manager":"Liander N.V. (NW)","gemeente2019":"228","gemeentenaam2019":"Ede","year":2011,"annual_consume":106188,"num_connections":1000,"annual_consume_lowtarif_perc":35.89,"delivery_perc":29.8,"perc_of_active_connections":90.063},{"net_manager":"Liander N.V. (NW)","gemeente2019":"228","gemeentenaam2019":"Ede","year":2012,"annual_consume":115742,"num_connections":1100,"annual_consume_lowtarif_perc":34.942727272727275,"delivery_perc":30.727272727272727,"perc_of_active_connections":87.34181818181818},{"net_manager":"Liander N.V. (NW)","gemeente2019":"228","gemeentenaam2019":"Ede","year":2013,"annual_consume":111157,"num_connections":1085.12,"annual_consume_lowtarif_perc":37.947272727272725,"delivery_perc":31.545454545454547,"perc_of_active_connections":85.16909090909093},{"net_manager":"Liander N.V. (NW)","gemeente2019":"228","gemeentenaam2019":"Ede","year":2014,"annual_consume":104810,"num_connections":1055.46,"annual_consume_lowtarif_perc":39.92999999999999,"delivery_perc":29.727272727272727,"perc_of_active_connections":84.22090909090909},{"net_manager":"Liander N.V. (NW)","gemeente2019":"228","gemeentenaam2019":"Ede","year":2015,"annual_consume":100746,"num_connections":1040.76,"annual_consume_lowtarif_perc":39.52909090909091,"delivery_perc":29.727272727272727,"perc_of_active_connections":83.87090909090908},{"net_manager":"Liander N.V. (NW)","gemeente2019":"228","gemeentenaam2019":"Ede","year":2016,"annual_consume":107489,"num_connections":1030.79,"annual_consume_lowtarif_perc":41.693636363636365,"delivery_perc":29.90909090909091,"perc_of_active_connections":83.53454545454545},{"net_manager":"Liander N.V. (NW)","gemeente2019":"228","gemeentenaam2019":"Ede","year":2017,"annual_consume":112645,"num_connections":1119.3500000000001,"annual_consume_lowtarif_perc":46.30666666666667,"delivery_perc":29,"perc_of_active_connections":83.48666666666666},{"net_manager":"Liander N.V. (NW)","gemeente2019":"228","gemeentenaam2019":"Ede","year":2018,"annual_consume":114816,"num_connections":1099.3,"annual_consume_lowtarif_perc":47.73833333333332,"delivery_perc":27.833333333333332,"perc_of_active_connections":82.76583333333333},{"net_manager":"Liander N.V. (NW)","gemeente2019":"228","gemeentenaam2019":"Ede","year":2019,"annual_consume":99998,"num_connections":1000,"annual_consume_lowtarif_perc":29.211000000000002,"delivery_perc":28.7,"perc_of_active_connections":92.386}],"gas_manager":[{"net_manager":"GAS Liander","gemeente2019":"228","gemeentenaam2019":"Ede","year":2010,"annual_consume":4651534,"num_connections":189300,"annual_consume_lowtarif_perc":0,"delivery_perc":22.47649234020074,"perc_of_active_connections":98.63643951399895},{"net_manager":"GAS Liander","gemeente2019":"228","gemeentenaam2019":"Ede","year":2011,"annual_consume":4571793,
 "num_connections":190000,"annual_consume_lowtarif_perc":0,"delivery_perc":22.64315789473684,"perc_of_active_connections":97.86558421052632},{"net_manager":"GAS Liander","gemeente2019":"228","gemeentenaam2019":"Ede","year":2012,"annual_consume":4537942,"num_connections":192300,"annual_consume_lowtarif_perc":0,"delivery_perc":22.741029641185648,"perc_of_active_connections":97.77809152366095},{"net_manager":"GAS Liander","gemeente2019":"228","gemeentenaam2019":"Ede","year":2013,"annual_consume":4411068,"num_connections":193600,"annual_consume_lowtarif_perc":0,"delivery_perc":22.789772727272727,"perc_of_active_connections":97.72964359504135},{"net_manager":"GAS Liander","gemeente2019":"228","gemeentenaam2019":"Ede","year":2014,"annual_consume":4333678,"num_connections":194700,"annual_consume_lowtarif_perc":0,"delivery_perc":22.924499229583976,"perc_of_active_connections":97.31499229583976},{"net_manager":"GAS Liander","gemeente2019":"228","gemeentenaam2019":"Ede","year":2015,"annual_consume":8922180,"num_connections":384900,"annual_consume_lowtarif_perc":0,"delivery_perc":22.678098207326578,"perc_of_active_connections":98.08892179786965},{"net_manager":"GAS Liander","gemeente2019":"228","gemeentenaam2019":"Ede","year":2016,"annual_consume":4182631,"num_connections":198400,"annual_consume_lowtarif_perc":0,"delivery_perc":23.14717741935484,"perc_of_active_connections":97.1104284274194},{"net_manager":"GAS Liander","gemeente2019":"228","gemeentenaam2019":"Ede","year":2017,"annual_consume":4192644,"num_connections":200100,"annual_consume_lowtarif_perc":0,"delivery_perc":23.192903548225885,"perc_of_active_connections":97.07509745127435},{"net_manager":"GAS Liander","gemeente2019":"228","gemeentenaam2019":"Ede","year":2018,"annual_consume":4234390,"num_connections":201900,"annual_consume_lowtarif_perc":0,"delivery_perc":23.2704309063893,"perc_of_active_connections":96.75851906884597},{"net_manager":"Liander NB","gemeente2019":"228","gemeentenaam2019":"Ede","year":2019,"annual_consume":4199441,"num_connections":203500,"annual_consume_lowtarif_perc":0,"delivery_perc":23.39115479115479,"perc_of_active_connections":96.5411842751843}]};
 
-export const BarChart = (props) => {
-    // let data = props.data;
-    let data = data_test;
+export class BarChart extends Component {
+    makeChart() {
+        let data = this.props.data;
+        // let data = data_test;
 
-    if (data !== null) {
-        // Select energy source
-        let children = data[props.source];
-        
-        // Filter years
-        children = children.filter((child) => {
-            return props.years.includes(child.year);
-        });
-
-        // Aggregate attributes
-        let children2 = [];
-        children.reduce((res, val) => {
-            if (!res[val.wijknaam2019]) {
-                res[val.wijknaam2019] = { wijknaam2019: val.wijknaam2019, annual_consume: 0 };
-                children2.push(res[val.wijknaam2019]);
-            }
-            res[val.wijknaam2019].annual_consume += val.annual_consume;
-            return res;
-        }, {});
-
-        // Sort on attribute and select first 5 elements
-        children2.sort((a, b) => { return b.annual_consume - a.annual_consume });
-        data = children2.slice(0, 5);
-    
-        data = data.map((d) => {
-            var d2 = {};
-            d2.x = d.wijknaam2019;
-            d2.y = (d.annual_consume / 1000000).toFixed(2);
-            return d2;
-        });
-        console.log('BarChart', data);
-
-        const max = Math.max.apply(Math, data.map(function(d) { return d.y; }));
-        const svg = select('#'+props.id);
-
-        svg.selectAll("*")
-        .remove();
-        
-        const margin = props.settings.margin;
-        let width = props.settings.width - 2 * margin;
-        const height = props.settings.height - 2 * margin;
-
-        if (document.getElementById(props.id)) {
-            width = document.getElementById(props.id).clientWidth - 1.3 * margin;
-        }
-
-        const chart = svg.append('g')
-        .attr('transform', `translate(${margin}, ${margin})`);
-
-        const xScale = scaleBand()
-        .range([0, width])
-        .domain(data.map((d) => d.x))
-        .padding(0.4);
-        
-        const yScale = scaleLinear()
-        .range([height, 0])
-        .domain([0, Math.floor(max) + 1]);
-
-        const makeYLines = () => axisLeft()
-        .scale(yScale);
-
-        chart.append('g')
-        .attr('transform', `translate(0, ${height})`)
-        .call(axisBottom(xScale));
-
-        chart.append('g')
-        .call(axisLeft(yScale));
-
-        chart.append('g')
-        .attr('class', 'grid')
-        .call(makeYLines()
-            .tickSize(-width, 0, 0)
-            .tickFormat('')
-        );
-
-        const barGroups = chart.selectAll()
-        .data(data)
-        .enter()
-        .append('g');
-
-        barGroups.append('rect')
-        .attr('class', 'bar')
-        .attr('x', (g) => xScale(g.x))
-        .attr('y', (g) => yScale(g.y))
-        .attr('height', (g) => height - yScale(g.y))
-        .attr('width', xScale.bandwidth());
-
-        barGroups.append('text')
-        .attr('class', 'value')
-        .attr('x', (a) => xScale(a.x) + xScale.bandwidth() / 2)
-        .attr('y', (a) => yScale(a.y) + 30)
-        .attr('text-anchor', 'middle')
-        .text((a) => `${a.y}`);
-        
-        svg.append('text')
-        .attr('class', 'label')
-        .attr('x', -(height / 2) - margin)
-        .attr('y', margin / 2.4)
-        .attr('transform', 'rotate(-90)')
-        .attr('text-anchor', 'middle')
-        .text(capitalize(props.source) + ' (*10^6)');
-
-        svg.append('text')
-        .attr('class', 'label')
-        .attr('x', width / 2 + margin)
-        .attr('y', height + margin * 1.7)
-        .attr('text-anchor', 'middle')
-        .text('Wijk');
-
-        svg.append('text')
-        .attr('class', 'title')
-        .attr('x', width / 2 + margin)
-        .attr('y', 40)
-        .attr('text-anchor', 'middle')
-        .text('Top 5 consumption');
-    }
-
-    return (
-        <div className="svg-container">
-            <svg className="svg-d3" id={props.id} />
-        </div>
-    )
-}
-
-export const LineChart = (props) => {
-    // let data = props.data;
-    let data = data_test;
-
-    if (data !== null) {
-        // Select energy source
-        let children = data[props.source];
-        
-        // Filter years
-        if (props.years.length > 1) {
+        if (data !== null) {
+            // Select energy source
+            let children = data[this.props.source];
+            
+            // Filter years
             children = children.filter((child) => {
-                return props.years.includes(child.year);
+                return this.props.years.includes(child.year);
             });
-        }
 
-        // Aggregate attributes
-        let children2 = [];
-        children.reduce((res, val) => {
-            if (!res[val.year]) {
-                res[val.year] = { year: val.year, annual_consume: 0 };
-                children2.push(res[val.year]);
+            // Aggregate attributes
+            let children2 = [];
+            children.reduce((res, val) => {
+                let x;
+                switch(this.props.scope) {
+                    case 'national':
+                        x = val.gemeentenaam2019;
+                        break;
+                    case 'gemeente':
+                        x = val.wijknaam2019;
+                        break;
+                    case 'wijk':
+                        x = val.buurtnaam2019;
+                        break;
+                    case 'buurt':
+                        x = val.street;
+                        break;
+                }
+
+                if (!res[x]) {
+                    res[x] = { x: x, y: 0 };
+                    children2.push(res[x]);
+                }
+
+                switch(this.props.dataType) {
+                    case 1:
+                        res[x].y += val.annual_consume;
+                        break;
+                    case 2:
+                        res[x].y += val.annual_consume / (val.num_connections * (val.perc_of_active_connections / 100));
+                        break;
+                    case 3:
+                        res[x].y += val.annual_consume * (val.delivery_perc / 100);
+                        break;
+                    case 4:
+                        res[x].y += val.annual_consume * (val.delivery_perc / 100) / (val.num_connections * (val.perc_of_active_connections / 100));
+                        break;
+                    case 5:
+                        res[x].y += val.num_connections * (val.perc_of_active_connections / 100);
+                        break;
+                    case 6:
+                        res[x].y += val.num_connections * (val.smartmeter_perc / 100);
+                        break;
+                }
+                return res;
+            }, {});
+
+            // Sort on attribute and select first/last 5 elements
+            children2.sort((a, b) => { return b.y - a.y });
+            if (this.props.type === 'top' || children2.length <= 5) {
+                data = children2.slice(0, 5);
+            } else if (this.props.type === 'bottom') {
+                data = children2.slice(children2.length - 5);
             }
-            res[val.year].annual_consume += val.annual_consume;
-            return res;
-        }, {});
 
-        // Sort on attribute
-        children2.sort((a, b) => { return a.year - b.year });
-        data = children2;
-    
-        data = data.map((d) => {
-            var d2 = {};
-            d2.x = d.year;
-            d2.y = (d.annual_consume / 1000000).toFixed(2);
-            return d2;
-        });
-        console.log('LineChart', data);
-
-        const max = Math.max.apply(Math, data.map(function(d) { return d.y; }));
-        const svg = selectAll('#'+props.id);
-
-        svg.selectAll("*")
-        .remove();
+            const cap = calcCap(data[0].y);
         
-        const margin = props.settings.margin;
-        let width = props.settings.width - 2 * margin;
-        const height = props.settings.height - 2 * margin;
+            data = data.map((d) => {
+                var d2 = {};
+                d2.x = d.x;
+                d2.y = capValue(d.y, cap);
+                return d2;
+            });
+            // console.log('BarChart', data);
 
-        if (document.getElementById(props.id)) {
-            width = document.getElementById(props.id).clientWidth - 1.3 * margin;
+            const max = Math.max.apply(Math, data.map(function(d) { return d.y; }));
+            const svg = select('#'+this.props.id);
+
+            svg.selectAll("*")
+            .remove();
+            
+            const margin = this.props.settings.margin;
+            let width = this.props.settings.width - 2 * margin;
+            const height = this.props.settings.height - 2 * margin;
+
+            if (document.getElementById(this.props.id)) {
+                width = document.getElementById(this.props.id).clientWidth - 1.3 * margin;
+            }
+
+            const chart = svg.append('g')
+            .attr('transform', `translate(${margin}, ${margin})`);
+
+            const xScale = scaleBand()
+            .range([0, width])
+            .domain(data.map((d) => d.x))
+            .padding(0.4);
+            
+            const yScale = scaleLinear()
+            .range([height, 0])
+            .domain([0, Math.ceil(max*1.1) > 1 ? Math.ceil(max*1.1) : 1]);
+
+            const makeYLines = () => axisLeft()
+            .scale(yScale);
+
+            chart.append('g')
+            .attr('transform', `translate(0, ${height})`)
+            .attr('id', 'axis-' + this.props.id)
+            .call(axisBottom(xScale));
+
+            const labels = document.getElementById('axis-' + this.props.id).getElementsByTagName('text');
+            for (let i = 0; i < labels.length; i++) {
+                let label = labels[i].innerHTML;
+                if (label.length <= 12) {
+                    labels[i].innerHTML = `<tspan x='0' dy='8'>${label}</tspan>`;
+                } else {
+                    labels[i].innerHTML = `<tspan x='0' dy='8'>${label.substring(0, 11)}-</tspan><tspan x='0' dy='14'>${label.substring(11)}</tspan>`;
+                }
+            }
+
+            chart.append('g')
+            .call(axisLeft(yScale));
+
+            chart.append('g')
+            .attr('class', 'grid')
+            .call(makeYLines()
+                .tickSize(-width, 0, 0)
+                .tickFormat('')
+            );
+
+            const barGroups = chart.selectAll()
+            .data(data)
+            .enter()
+            .append('g');
+
+            let barColor = 'orange';
+            switch (this.props.scope) {
+                case 'gemeente':
+                    barColor = 'blue';
+                    break;
+                case 'wijk':
+                    barColor = 'green';
+                    break;
+                case 'buurt':
+                    barColor = 'red';
+                    break;
+            }
+            barGroups.append('rect')
+            .attr('class', 'bar bar-'+barColor)
+            .attr('x', (g) => xScale(g.x))
+            .attr('y', (g) => yScale(g.y))
+            .attr('height', (g) => height - yScale(g.y))
+            .attr('width', xScale.bandwidth());
+
+            barGroups.append('text')
+            .attr('class', 'value')
+            .attr('x', (a) => xScale(a.x) + xScale.bandwidth() / 2)
+            .attr('y', (a) => yScale(a.y) + 15)
+            .attr('text-anchor', 'middle')
+            .text((a) => `${a.y}`);
+            
+            let labelText = '';
+            switch(cap) {
+                case 'b':
+                    labelText = 'x1,000,000,000';
+                    break;
+                case 'm':
+                    labelText = 'x1,000,000';
+                    break;
+                case 'k':
+                    labelText = 'x1,000';
+                    break;
+            }
+            if (this.props.dataType <= 4) {
+                labelText += (this.props.source === 'gas'? ' m^3' : ' kWh');
+            }
+            svg.append('text')
+            .attr('class', 'label')
+            .attr('x', -(height / 2) - margin)
+            .attr('y', margin / 2.4)
+            .attr('transform', 'rotate(-90)')
+            .attr('text-anchor', 'middle')
+            .text(labelText);
+
+            let scopeText;
+            switch(this.props.scope) {
+                case 'national':
+                    scopeText = 'Municipality';
+                    break;
+                case 'gemeente':
+                    scopeText = 'District';
+                    break;
+                case 'wijk':
+                    scopeText = 'Neighborhood';
+                    break;
+                case 'buurt':
+                    scopeText = 'Street';
+                    break;
+            }
+            svg.append('text')
+            .attr('class', 'label')
+            .attr('x', width / 2 + margin)
+            .attr('y', height + margin * 1.9)
+            .attr('text-anchor', 'middle')
+            .text(scopeText);
+
+            svg.append('text')
+            .attr('class', 'title')
+            .attr('x', width / 2 + margin)
+            .attr('y', 40)
+            .attr('text-anchor', 'middle')
+            .text(capitalize(this.props.type) + ' 5');
         }
-
-        const chart = svg.append('g')
-        .attr('transform', `translate(${margin}, ${margin})`);
-
-        const xScale = scaleBand()
-        .range([0, width])
-        .domain(data.map((d) => d.x))
-        .padding(0.8);
-        
-        const yScale = scaleLinear()
-        .range([height, 0])
-        .domain([0, Math.floor(max) + 1]);
-
-        const makeYLines = () => axisLeft()
-        .scale(yScale);
-
-        chart.append('g')
-        .attr('transform', `translate(0, ${height})`)
-        .call(axisBottom(xScale));
-
-        chart.append('g')
-        .call(axisLeft(yScale));
-
-        chart.append('g')
-        .attr('class', 'grid')
-        .call(makeYLines()
-            .tickSize(-width, 0, 0)
-            .tickFormat('')
-        );
-
-        chart.append("path")
-        .datum(data)
-        .attr("fill", "none")
-        .attr("stroke", "#FF6200")
-        .attr("stroke-width", 1.5)
-        .attr("d", line()
-            .x(function(d) { return xScale(d.x) })
-            .y(function(d) { return yScale(d.y) })
-        );
-        
-        svg.append('text')
-        .attr('class', 'label')
-        .attr('x', -(height / 2) - margin)
-        .attr('y', margin / 2.4)
-        .attr('transform', 'rotate(-90)')
-        .attr('text-anchor', 'middle')
-        .text(capitalize(props.source) + ' (*10^6)');
-
-        svg.append('text')
-        .attr('class', 'label')
-        .attr('x', width / 2 + margin)
-        .attr('y', height + margin * 1.7)
-        .attr('text-anchor', 'middle')
-        .text('Year');
-
-        svg.append('text')
-        .attr('class', 'title')
-        .attr('x', width / 2 + margin)
-        .attr('y', 40)
-        .attr('text-anchor', 'middle')
-        .text('Annual consumption');
     }
 
-    return (
-        <div className="svg-container">
-            <svg className="svg-d3" id={props.id} />
-        </div>
-    )
+    componentDidMount() {
+        this.makeChart();
+    }
+
+    componentDidUpdate() {
+        this.makeChart();
+    }
+
+    render() {
+        return (
+            <div className="svg-container">
+                <svg className="svg-d3" id={this.props.id} />
+            </div>
+        )
+    }
 }
 
-export const PieChart = (props) => {
-    // let data = props.data;
-    let data = data_test;
+export class LineChart extends Component {
+    makeChart() {
+        let data = this.props.data;
+        // let data = data_test;
 
-    if (data !== null) {
-        // Select energy source
-        let children = data[props.source + "_manager"];
-        
-        // Filter years
-        children = children.filter((child) => {
-            return props.years.includes(child.year);
-        });
-
-        const handleManager = (netmanager) => {
-            const substring = netmanager.substring(0, 4);
-            if (substring === '8716') {
-                return 'Stedin';
-            } else if (substring === 'Enex') {
-                return 'Enexis';
-            } else {
-                return 'Liander';
+        if (data !== null) {
+            // Select energy source
+            let children = data[this.props.source];
+            
+            // Filter years
+            if (this.props.years.length > 1) {
+                children = children.filter((child) => {
+                    return this.props.years.includes(child.year);
+                });
             }
-        }
 
-        // Aggregate attributes
-        let children2 = [];
-        children.reduce((res, val) => {
-            let manager = handleManager(val.net_manager);
-            if (!res[manager]) {
-                res[manager] = { net_manager: manager, y: 0 };
-                children2.push(res[manager]);
+            // Aggregate attributes
+            let children2 = [];
+            children.reduce((res, val) => {
+                if (!res[val.year]) {
+                    res[val.year] = { year: val.year, y: 0, t: 0 };
+                    children2.push(res[val.year]);
+                }
+                switch(this.props.dataType) {
+                    case 1:
+                        res[val.year].y += val.annual_consume;
+                        res[val.year].t += val.annual_consume * (val.annual_consume_lowtarif_perc / 100);
+                        break;
+                    case 2:
+                        res[val.year].y += val.annual_consume / (val.num_connections * (val.perc_of_active_connections / 100));
+                        res[val.year].t += (val.annual_consume / (val.num_connections * (val.perc_of_active_connections / 100))) * (val.annual_consume_lowtarif_perc / 100);
+                        break;
+                    case 3:
+                        res[val.year].y += val.annual_consume * (val.delivery_perc / 100);
+                        break;
+                    case 4:
+                        res[val.year].y += val.annual_consume * (val.delivery_perc / 100) / (val.num_connections * (val.perc_of_active_connections / 100));
+                        break;
+                    case 5:
+                        res[val.year].y += val.num_connections * (val.perc_of_active_connections / 100);
+                        break;
+                    case 6:
+                        res[val.year].y += val.num_connections * (val.smartmeter_perc / 100);
+                        break;
+                }
+                return res;
+            }, {});
+
+            // Sort on attribute
+            children2.sort((a, b) => { return a.year - b.year });
+            data = children2;
+
+            const cap = calcCap(Math.max.apply(Math, data.map(function(d) { return d.y; })));
+        
+            data = data.map((d) => {
+                var d2 = {};
+                d2.x = d.year;
+                d2.y = capValue(d.y, cap);
+                d2.t = capValue(d.t, cap);
+                return d2;
+            });
+            // console.log('LineChart', data);
+
+            const max = Math.max.apply(Math, data.map(function(d) { return d.y; }));
+            const svg = selectAll('#'+this.props.id);
+
+            svg.selectAll("*")
+            .remove();
+            
+            const margin = this.props.settings.margin;
+            let width = this.props.settings.width - 2 * margin;
+            const height = this.props.settings.height - 2 * margin;
+
+            if (document.getElementById(this.props.id)) {
+                width = document.getElementById(this.props.id).clientWidth - 1.3 * margin;
             }
-            res[manager].y += val.annual_consume;
-            return res;
-        }, {});
-        // console.log('arr', children2);
 
-        // Convert array to object
-        let children3 = {};
-        children3 = children2.reduce((obj, item) => {
-            return {
-            ...obj,
-            [item['net_manager']]: (item.y / 1000000).toFixed(2),
-            };
-        }, children3);
-        // console.log("obj", children3);
+            const chart = svg.append('g')
+            .attr('transform', `translate(${margin}, ${margin})`);
 
-        data = children3;
-        console.log(data);
+            const xScale = scaleBand()
+            .range([0, width])
+            .domain(data.map((d) => d.x))
+            .padding(1);
+            
+            const yScale = scaleLinear()
+            .range([height, 0])
+            .domain([0, Math.ceil(max*1.1)]);
 
-        const svg = select('#'+props.id);
-        svg.selectAll("*")
-        .remove();
-        
-        const margin = props.settings.margin;
-        const height = props.settings.height;
-        let width = props.settings.width;
+            const makeYLines = () => axisLeft()
+            .scale(yScale);
 
-        if (document.getElementById(props.id)) {
-            width = document.getElementById(props.id).clientWidth;
+            chart.append('g')
+            .attr('transform', `translate(0, ${height})`)
+            .call(axisBottom(xScale));
+
+            chart.append('g')
+            .call(axisLeft(yScale));
+
+            chart.append('g')
+            .attr('class', 'grid')
+            .call(makeYLines()
+                .tickSize(-width, 0, 0)
+                .tickFormat('')
+            );
+
+            chart.append("path")
+            .datum(data)
+            .attr("fill", "none")
+            .attr("stroke", "#FF6200")
+            .attr("stroke-width", 1.5)
+            .attr("d", line()
+                .x(function(d) { return xScale(d.x) })
+                .y(function(d) { return yScale(d.y) })
+            );
+
+            if ((this.props.dataType === 1 || this.props.dataType === 2) && this.props.source === 'electricity') {
+                chart.append("path")
+                .datum(data)
+                .attr("fill", "none")
+                .attr("stroke", "#005cb8")
+                .attr("stroke-width", 1.5)
+                .attr("d", line()
+                    .x(function(d) { return xScale(d.x) })
+                    .y(function(d) { return yScale(d.t) })
+                );
+            }
+            
+            let labelText = '';
+            switch(cap) {
+                case 'b':
+                    labelText = 'x1,000,000,000';
+                    break;
+                case 'm':
+                    labelText = 'x1,000,000';
+                    break;
+                case 'k':
+                    labelText = 'x1,000';
+                    break;
+            }
+            if (this.props.dataType <= 4) {
+                labelText += (this.props.source === 'gas'? ' m^3' : ' kWh');
+            }
+            svg.append('text')
+            .attr('class', 'label')
+            .attr('x', -(height / 2) - margin)
+            .attr('y', margin / 2.4)
+            .attr('transform', 'rotate(-90)')
+            .attr('text-anchor', 'middle')
+            .text(labelText);
+
+            svg.append('text')
+            .attr('class', 'label')
+            .attr('x', width / 2 + margin)
+            .attr('y', height + margin * 1.9)
+            .attr('text-anchor', 'middle')
+            .text('Year');
+
+            let headingText;
+            switch(this.props.dataType) {
+                case 1:
+                    headingText = 'Energy consumption';
+                    break;
+                case 2:
+                    headingText = 'Consumption per connection';
+                    break;
+                case 3:
+                    headingText = 'Energy production';
+                    break;
+                case 4:
+                    headingText = 'Production per connection';
+                    break;
+                case 5:
+                    headingText = 'Number of connections';
+                    break;
+                case 6:
+                    headingText = 'Number of smartmeters';
+                    break;
+            }
+            if ((this.props.dataType === 1 || this.props.dataType === 2) && this.props.source === 'electricity') {
+                headingText += ' (high vs low tariff)';
+            }
+            svg.append('text')
+            .attr('class', 'title')
+            .attr('x', width / 2 + margin)
+            .attr('y', 40)
+            .attr('text-anchor', 'middle')
+            .text(headingText);
         }
-
-        const radius = Math.min(width, height) / 2 - margin;
-
-        const chart = svg.append('g')
-        .attr('transform', `translate(${width / 2}, ${height / 2})`);
-
-        const color = scaleOrdinal()
-        .domain(data)
-        .range(["#ff6200", "#ff2f00", "#ffae00"])
-
-        const piechart = pie().value(function(d) { return d.value; })
-        const data_ready = piechart(entries(data))
-
-        const arcGenerator = arc()
-        .innerRadius(0)
-        .outerRadius(radius)
-
-        chart
-        .selectAll('chart')
-        .data(data_ready)
-        .enter()
-        .append('path')
-        .attr('d', arcGenerator)
-        .attr('fill', function(d) { return(color(d.data.key)) })
-        .attr("stroke", "white")
-        .style("stroke-width", "2px")
-        .style("opacity", 0.9);
-
-        const text = chart
-        .selectAll('chart')
-        .data(data_ready)
-        .enter()
-        .append('text')
-        .attr("transform", function(d) { return "translate(" + arcGenerator.centroid(d) + ")"; })
-        .style("text-anchor", "middle");
-        
-        text
-        .append('tspan')
-        .text(function(d) { return d.data.key })
-        .attr('x', 0)
-        .attr('dy', 0);
-
-        text
-        .append('tspan')
-        .text(function(d) { return d.data.value })
-        .attr('x', 0)
-        .attr('dy', 15);
-
-        svg.append('text')
-        .attr('class', 'label')
-        .attr('x', width / 2)
-        .attr('y', height - margin / 2)
-        .attr('text-anchor', 'middle')
-        .text(capitalize(props.source) + ' (*10^6)');
-
-        svg.append('text')
-        .attr('class', 'title')
-        .attr('x', width / 2)
-        .attr('y', 40)
-        .attr('text-anchor', 'middle')
-        .text('Provider market share');
     }
 
-    return (
-        <div className="svg-container">
-            <svg className="svg-d3" id={props.id} />
-        </div>
-    )
+    componentDidMount() {
+        this.makeChart();
+    }
+
+    componentDidUpdate() {
+        this.makeChart();
+    }
+
+    render() {
+        return (
+            <div className="svg-container">
+                <svg className="svg-d3" id={this.props.id} />
+            </div>
+        )
+    }
+}
+
+export class PieChart extends Component {
+    makeChart() {
+        let data = this.props.data;
+        // let data = data_test;
+
+        if (data !== null) {
+            // Select energy source
+            let children = data[this.props.source + "_manager"];
+            
+            // Filter years
+            children = children.filter((child) => {
+                return this.props.years.includes(child.year);
+            });
+
+            const handleManager = (netmanager) => {
+                const substring = netmanager.substring(0, 4);
+                if (substring === '8716') {
+                    return 'Stedin';
+                } else if (substring === 'Enex') {
+                    return 'Enexis';
+                } else {
+                    return 'Liander';
+                }
+            }
+
+            // Aggregate attributes
+            let children2 = [];
+            children.reduce((res, val) => {
+                let manager = handleManager(val.net_manager);
+                if (!res[manager]) {
+                    res[manager] = { net_manager: manager, y: 0 };
+                    children2.push(res[manager]);
+                }
+                switch(this.props.type) {
+                    case 'cons':
+                        res[manager].y += val.annual_consume;
+                        break;
+                    case 'prod':
+                        res[manager].y += val.annual_consume * (val.delivery_perc / 100);
+                        break;
+                    case 'nuco':
+                        res[manager].y += val.num_connections * (val.perc_of_active_connections / 100);
+                        break;
+                }
+                return res;
+            }, {});
+
+            const cap = calcCap(Math.max.apply(Math, children2.map(function(d) { return d.y; })));
+
+            // Convert array to object
+            let children3 = {};
+            children3 = children2.reduce((obj, item) => {
+                return {
+                ...obj,
+                [item['net_manager']]: capValue(item.y, cap),
+                };
+            }, children3);
+
+            data = children3;
+            // console.log('PieChart', data);
+
+            const svg = select('#'+this.props.id);
+            svg.selectAll("*")
+            .remove();
+            
+            const margin = this.props.settings.margin;
+            const height = this.props.settings.height;
+            let width = this.props.settings.width;
+
+            if (document.getElementById(this.props.id)) {
+                width = document.getElementById(this.props.id).clientWidth;
+            }
+
+            const radius = Math.min(width, height) / 2 - margin;
+
+            const chart = svg.append('g')
+            .attr('transform', `translate(${width / 2}, ${height / 2})`);
+
+            const color = scaleOrdinal()
+            .domain(data)
+            .range(["#ff6200", "#ff2f00", "#ffae00"])
+
+            const piechart = pie().value(function(d) { return d.value; })
+            const data_ready = piechart(entries(data))
+
+            const arcGenerator = arc()
+            .innerRadius(0)
+            .outerRadius(radius)
+
+            chart
+            .selectAll('chart')
+            .data(data_ready)
+            .enter()
+            .append('path')
+            .attr('d', arcGenerator)
+            .attr('fill', function(d) { return(color(d.data.key)) })
+            .attr("stroke", "white")
+            .style("stroke-width", "2px")
+            .style("opacity", 0.9);
+
+            const text = chart
+            .selectAll('chart')
+            .data(data_ready)
+            .enter()
+            .append('text')
+            .attr("transform", function(d) { return "translate(" + arcGenerator.centroid(d) + ")"; })
+            .style("text-anchor", "middle");
+            
+            text
+            .append('tspan')
+            .text(function(d) { return d.data.key })
+            .attr('x', 0)
+            .attr('dy', 0);
+
+            text
+            .append('tspan')
+            .text(function(d) { return d.data.value })
+            .attr('x', 0)
+            .attr('dy', 15);
+
+            let labelText = '';
+            switch(cap) {
+                case 'b':
+                    labelText = 'x1,000,000,000';
+                    break;
+                case 'm':
+                    labelText = 'x1,000,000';
+                    break;
+                case 'k':
+                    labelText = 'x1,000';
+                    break;
+            }
+            if (this.props.type === 'prod' || this.props.type === 'cons') {
+                labelText += (this.props.source === 'gas'? ' m^3' : ' kWh');
+            }
+            svg.append('text')
+            .attr('class', 'label')
+            .attr('x', width / 2)
+            .attr('y', height - margin / 2)
+            .attr('text-anchor', 'middle')
+            .text(labelText);
+
+            let textProvider;
+            switch(this.props.type) {
+                case 'cons':
+                    textProvider = 'Energy consumption';
+                    break;
+                case 'prod':
+                    textProvider = 'Energy production';
+                    break;
+                case 'nuco':
+                    textProvider = 'Number of connections';
+                    break;
+            }
+            svg.append('text')
+            .attr('class', 'title')
+            .attr('x', width / 2)
+            .attr('y', 40)
+            .attr('text-anchor', 'middle')
+            .text(textProvider);
+        }
+    }
+
+    componentDidMount() {
+        this.makeChart();
+    }
+
+    componentDidUpdate() {
+        this.makeChart();
+    }
+
+    render() {
+        return (
+            <div className="svg-container">
+                <svg className="svg-d3" id={this.props.id} />
+            </div>
+        )
+    }
 }

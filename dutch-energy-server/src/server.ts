@@ -28,12 +28,12 @@ server.use(express.json());
 
 server.get('/', (req, res) => res.status(200).send('server running yooo'));
 
+// server.get('/national',
+//     energyRoutingFunctions.getNationalData
+// );
+
 server.get('/national',
     energyRoutingFunctions.getNationalData
-);
-
-server.get('/nationalSummary',
-    energyRoutingFunctions.getNationalDataSummary
 );
 
 server.get('/specific',

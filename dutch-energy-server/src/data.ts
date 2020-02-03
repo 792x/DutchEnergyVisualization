@@ -44,4 +44,14 @@ export async function loadData(){
     for (const file of gas_files){
         await loadFileInDatabase(datapath + 'dutch_energy_extended/Gas/' + file, 'Gas');
     }
+    const client = new Client( {
+        user: settings.username,
+        database: 'dutch_energy',
+        password: settings.password,
+        host: settings.host,
+        port: settings.port,});
+    await client.connect();
+    await client.query(`UPDATE public."Electricity" SET delivery_perc=num_connections, num_connections=delivery_perc WHERE net_manager LIKE 'Enexis%';`);
+    await client.query(`UPDATE public."Gas" SET delivery_perc=num_connections, num_connections=delivery_perc WHERE net_manager LIKE 'Enexis%';`);
+    await client.end();
 }

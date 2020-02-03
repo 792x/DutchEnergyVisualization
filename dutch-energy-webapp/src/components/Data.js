@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import { Grid, Typography, FormLabel, FormControl, Select, InputLabel, StylesProvider } from '@material-ui/core';
-import { BarChart, LineChart, PieChart } from '../components/Charts'
+import { Grid, Typography, FormLabel, Tooltip, IconButton, FormControl, Select, InputLabel, StylesProvider } from '@material-ui/core';
+import { BarChart, LineChart, PieChart } from '../components/Charts';
+import { national_data } from '../assets/national_data.js';
+import LoadingSpinner from './LoadingSpinner';
 
 
 const styles = theme => ({
@@ -22,7 +24,17 @@ const capitalize = (s) => {
     return s.charAt(0).toUpperCase() + s.slice(1);
 }
 
+const ClearIcon = () => <box-icon color="#B3B9C4"  type='search' name='x' size="sm"></box-icon>
+
+
 const SelectedItem = (props) => {
+    if (props.selectedItem === null) {
+        return (
+            <Typography variant="h6">
+                National
+            </Typography>
+        )
+    }
     let selected = {};
     if (props.specificData) {
         switch (props.scope) {
@@ -31,36 +43,40 @@ const SelectedItem = (props) => {
                 break;
 
             case 'wijk':
-                selected.gemeente = props.specificData[0].gemeentenaam2019;
-                selected.wijk = props.specificData[0].wijknaam2019;
+                selected.gemeente = props.specificData["electricity"][0].gemeentenaam2019;
+                selected.wijk = props.specificData["electricity"][0].wijknaam2019;
                 break;
 
             case 'buurt':
-                selected.gemeente = props.specificData[0].gemeentenaam2019;
-                selected.wijk = props.specificData[0].wijknaam2019;
-                selected.buurt = props.specificData[0].buurtnaam2019;
+                selected.gemeente = props.specificData["electricity"][0].gemeentenaam2019;
+                selected.wijk = props.specificData["electricity"][0].wijknaam2019;
+                selected.buurt = props.specificData["electricity"][0].buurtnaam2019;
                 break;
         }
-    } else {
-        selected.gemeente = '...';
     }
 
     if (selected.buurt) {
         return (
             <Typography variant="h6">
-                Gemeente: <strong>{selected.gemeente}</strong>, Wijk: <strong>{selected.wijk}</strong>, Buurt: <strong>{selected.buurt}</strong>
+                Municipality: <strong>{selected.gemeente}</strong>, District: <strong>{selected.wijk}</strong>, Neighborhood: <strong>{selected.buurt}</strong>
             </Typography>
         )
     } else if (selected.wijk) {
         return (
             <Typography variant="h6">
-                Gemeente: <strong>{selected.gemeente}</strong>, Wijk: <strong>{selected.wijk}</strong>
+                Municipality: <strong>{selected.gemeente}</strong>, District: <strong>{selected.wijk}</strong>
+            </Typography>
+        )
+    } else if (selected.gemeente) {
+        return (
+            <Typography variant="h6">
+                Municipality: <strong>{selected.gemeente}</strong>
             </Typography>
         )
     } else {
         return (
             <Typography variant="h6">
-                Gemeente: <strong>{selected.gemeente}</strong>
+                National
             </Typography>
         )
     }
@@ -72,8 +88,13 @@ class Data extends Component {
     state = {
         loading: false,
         energySourceSetting: 'electricity',
-        chartTypeSetting: 1,
+        dataSetting: 1,
         timeframeSetting: 1,
+        graphSettings: {
+            width: 350,
+            height: 320,
+            margin: 60,
+        },
     }
 
     handleTimeFrameSettingChange = (e) => {
@@ -81,8 +102,8 @@ class Data extends Component {
         console.log(e.target.value);
     }
 
-    handleChartTypeSettingChange = (e) => {
-        this.setState({ chartTypeSetting: e.target.value });
+    handleDataSettingChange = (e) => {
+        this.setState({ dataSetting: parseInt(e.target.value) });
         console.log(e.target.value);
     }
 
@@ -126,24 +147,44 @@ class Data extends Component {
         }
     }
 
+    componentDidMount() {
+        const boxHeight = document.getElementById('data-wrapper').clientHeight - 48;
+        document.getElementById('d3-wrapper').style.height = boxHeight+'px';
+
+        this.state.graphSettings.height = boxHeight;
+    }
 
     render() {
         const { classes } = this.props;
-        
-        const graphSettings = {
-            width: 350,
-            height: 320,
-            margin: 60,
-        };
 
         return (
             <div className={classes.root}>
-                <Grid container direction="row" justify="flex-start" style={{ height: '100%' }}>
+                <Grid container direction="row" justify="flex-start" style={{ height: '100%' }} id='data-wrapper'>
                     <Grid item style={{ height: '48px', width: '100%' }}>
                         <Grid container direction="row" justify="space-between" style={{ width: '100%', height: '48px' }} >
                             <Grid item style={{ marginTop: '10px', marginLeft: '10px' }}>
-                                <SelectedItem scope={this.props.scope} specificData={this.props.specificData}></SelectedItem>
+                                <Grid container direction="row" justify="flex-start">
+                                    <Grid item><SelectedItem scope={this.props.scope} specificData={this.props.specificData} selectedItem={this.props.selectedItem}></SelectedItem></Grid>
+                                    <Grid item>
+                                        {this.props.selectedItem && !this.state.loading ?
+                                            <Tooltip title="Clear Selection">
+                                                <IconButton color="primary" aria-label="search" style={{ marginTop: '-8px', marginLeft: '5px' }} onClick={this.props.clearSelection}>
+                                                    <ClearIcon />
+                                                </IconButton>
+                                            </Tooltip> : 
+                                            <div />}
+                                    </Grid>
+                                </Grid>
                             </Grid>
+                            {(() => {
+                                if (this.props.loading) {
+                                    return (
+                                        <Grid item>
+                                            <LoadingSpinner />
+                                        </Grid>
+                                    );
+                                }
+                            })()}
                             <Grid item>
                                 <Grid container direction="row" justify="flex-end">
                                     <Grid item style={{ paddingRight: '20px', width: '150px' }} >
@@ -184,24 +225,27 @@ class Data extends Component {
                                                 <option value={11}>Last two years</option>
                                                 <option value={12}>Last three years</option>
                                                 <option value={13}>Last five years</option>
-                                                <option value={14}>All data</option>
+                                                <option value={14}>Last ten years</option>
                                             </Select>
                                         </FormControl>
                                     </Grid>
                                     <Grid item>
                                         <FormControl >
                                             <InputLabel htmlFor="outlined-age-native-simple">
-                                                Chart Type
+                                                Data
                                             </InputLabel>
                                             <Select
                                                 native
-                                                value={this.state.chartTypeSetting}
-                                                onChange={this.handleChartTypeSettingChange}
+                                                value={this.state.dataSetting}
+                                                onChange={this.handleDataSettingChange}
                                             >
-                                                <option value={1}>Trends</option>
-                                                <option value={2}>Bar charts</option>
-                                                <option value={3}>Pie charts</option>
-                                                <option value={4}>Distributions</option>
+                                                <option value={1}>Energy consumption</option>
+                                                <option value={2}>Consumption per connection</option>
+                                                <option value={3}>Energy production</option>
+                                                <option value={4}>Production per connection</option>
+                                                <option value={5}>Number of connections</option>
+                                                <option value={6}>Number of smartmeters</option>
+                                                <option value={7}>Network manager market share</option>
                                             </Select>
                                         </FormControl>
                                     </Grid>
@@ -209,38 +253,136 @@ class Data extends Component {
                             </Grid>
                         </Grid>
                     </Grid>
-                    <Grid item style={{ display: 'flex', height: 'calc(100% - 48px)', width: '100%', paddingTop: '10px' }}>
-                        <Grid container direction="row" justify="space-between" style={{display: 'flex'}}>
-                            <Grid item style={{ width: '32%', height: '100%',}}>
-                                <BarChart
-                                    id='barchart1'
-                                    data={this.props.specificData}
-                                    settings={graphSettings}
-                                    years={this.handleTimeframe(this.state.timeframeSetting)}
-                                    source={this.state.energySourceSetting}
-                                ></BarChart>
-                            </Grid>
+                    <Grid item style={{ height: '260px', width: '100%' }} id='d3-wrapper'>
 
-                            <Grid item style={{ width: '32%',  height: '100%'}}>
-                                <PieChart
-                                    id='piechart1'
-                                    data={this.props.specificData}
-                                    settings={graphSettings}
-                                    years={this.handleTimeframe(this.state.timeframeSetting)}
-                                    source={this.state.energySourceSetting}
-                                ></PieChart>
-                            </Grid>
-
-                            <Grid item style={{ width: '32%',  height: '100%' }}>
-                                <LineChart
-                                    id='linechart1'
-                                    data={this.props.specificData}
-                                    settings={graphSettings}
-                                    years={this.handleTimeframe(this.state.timeframeSetting)}
-                                    source={this.state.energySourceSetting}
-                                ></LineChart>
-                            </Grid>
+                        {/* Example */}
+                        {/* <Grid item style={{ width: '32%' }}>
+                            <BarChart
+                                id='barchart0'
+                                data={this.props.specificData}
+                                settings={graphSettings}
+                                years={this.handleTimeframe(this.state.timeframeSetting)}
+                                source={this.state.energySourceSetting}
+                            ></BarChart>
                         </Grid>
+
+                        <Grid item style={{ width: '32%' }}>
+                            <PieChart
+                                id='piechart0'
+                                data={this.props.specificData}
+                                settings={graphSettings}
+                                years={this.handleTimeframe(this.state.timeframeSetting)}
+                                source={this.state.energySourceSetting}
+                            ></PieChart>
+                        </Grid>
+
+                        <Grid item style={{ width: '32%' }}>
+                            <LineChart
+                                id='linechart0'
+                                data={this.props.specificData}
+                                settings={graphSettings}
+                                years={this.handleTimeframe(this.state.timeframeSetting)}
+                                source={this.state.energySourceSetting}
+                            ></LineChart>
+                        </Grid> */}
+
+                        {(() => {
+                            switch (this.state.dataSetting) {
+                                case 1:
+                                case 2:
+                                case 3:
+                                case 4:
+                                case 5:
+                                case 6:
+                                    return (
+                                        /* Total consumption */
+                                        <Grid container direction="row" justify="space-between" style={{ width: '100%', height: '100%' }} >
+                                            <Grid item style={{ width: '32%' }}>
+                                                <LineChart
+                                                    id='linechart1'
+                                                    data={this.props.selectedItem === null ? national_data : this.props.specificData}
+                                                    dataType={this.state.dataSetting}
+                                                    settings={this.state.graphSettings}
+                                                    years={this.handleTimeframe(this.state.timeframeSetting)}
+                                                    source={this.state.energySourceSetting}
+                                                    scope={this.props.scope}
+                                                ></LineChart>
+                                            </Grid>
+
+                                            <Grid item style={{ width: '32%' }}>
+                                                <BarChart
+                                                    id='barchart1'
+                                                    data={this.props.selectedItem === null ? national_data : this.props.specificData}
+                                                    dataType={this.state.dataSetting}
+                                                    settings={this.state.graphSettings}
+                                                    years={this.handleTimeframe(this.state.timeframeSetting)}
+                                                    source={this.state.energySourceSetting}
+                                                    scope={this.props.selectedItem === null ? 'national' : this.props.scope}
+                                                    type='top'
+                                                ></BarChart>
+                                            </Grid>
+
+                                            <Grid item style={{ width: '32%' }}>
+                                                <BarChart
+                                                    id='barchart2'
+                                                    data={this.props.selectedItem === null ? national_data : this.props.specificData}
+                                                    dataType={this.state.dataSetting}
+                                                    settings={this.state.graphSettings}
+                                                    years={this.handleTimeframe(this.state.timeframeSetting)}
+                                                    source={this.state.energySourceSetting}
+                                                    scope={this.props.selectedItem === null ? 'national' : this.props.scope}
+                                                    type='bottom'
+                                                ></BarChart>
+                                            </Grid>
+                                        </Grid>
+                                    );
+
+                                case 7:
+                                    return (
+                                        /* Market share */
+                                        <Grid container direction="row" justify="space-between" style={{ width: '100%', height: '100%' }} >
+                                            <Grid item style={{ width: '32%' }}>
+                                                <PieChart
+                                                    id='piechart1'
+                                                    data={this.props.selectedItem === null ? national_data : this.props.specificData}
+                                                    settings={this.state.graphSettings}
+                                                    years={this.handleTimeframe(this.state.timeframeSetting)}
+                                                    source={this.state.energySourceSetting}
+                                                    scope={this.props.selectedItem === null ? 'national' : this.props.scope}
+                                                    type='cons'
+                                                ></PieChart>
+                                            </Grid>
+
+                                            <Grid item style={{ width: '32%' }}>
+                                                <PieChart
+                                                    id='piechart2'
+                                                    data={this.props.selectedItem === null ? national_data : this.props.specificData}
+                                                    settings={this.state.graphSettings}
+                                                    years={this.handleTimeframe(this.state.timeframeSetting)}
+                                                    source={this.state.energySourceSetting}
+                                                    scope={this.props.selectedItem === null ? 'national' : this.props.scope}
+                                                    type='prod'
+                                                ></PieChart>
+                                            </Grid>
+
+                                            <Grid item style={{ width: '32%' }}>
+                                                <PieChart
+                                                    id='piechart3'
+                                                    data={this.props.selectedItem === null ? national_data : this.props.specificData}
+                                                    settings={this.state.graphSettings}
+                                                    years={this.handleTimeframe(this.state.timeframeSetting)}
+                                                    source={this.state.energySourceSetting}
+                                                    scope={this.props.selectedItem === null ? 'national' : this.props.scope}
+                                                    type='nuco'
+                                                ></PieChart>
+                                            </Grid>
+                                        </Grid>
+                                    )
+
+                                default:
+                                    return null;
+                            }
+                        })()}
                     </Grid>
                 </Grid>
             </div>
