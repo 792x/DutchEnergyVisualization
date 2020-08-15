@@ -7,6 +7,7 @@ For a demo video see [https://github.com/792x/DutchEnergyVisualization/blob/mast
 
 ## Data
 The energy consumption data was retrieved from [https://www.kaggle.com/lucabasa/dutch-energy](https://www.kaggle.com/lucabasa/dutch-energy)
+
 The geojson data for The Netherlands was retrieved from [https://cartomap.github.io/nl/](https://cartomap.github.io/nl/)
 
 ## Clone repo
