@@ -1,5 +1,5 @@
 # Dutch Energy Visualization
-A full stack solution for visualizing the usage of energy in The Netherlands.
+A full stack solution for visualizing the energy usage of The Netherlands.
 
 ![https://github.com/792x/DutchEnergyVisualization/blob/master/overview_tool.PNG](https://github.com/792x/DutchEnergyVisualization/blob/master/overview_tool.PNG)
 
