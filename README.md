@@ -10,7 +10,9 @@ The energy consumption data was retrieved from [https://www.kaggle.com/lucabasa/
 
 The geojson data for The Netherlands was retrieved from [https://cartomap.github.io/nl/](https://cartomap.github.io/nl/)
 
-## Clone repo
+## Setup
+
+### Clone repo
 
 ```
 git clone https://github.com/792x/DutchEnergyVisualization.git
@@ -20,9 +22,9 @@ git clone https://github.com/792x/DutchEnergyVisualization.git
 cd DutchEnergyVisualization
 ```
 
-## Server
+### Server
 
-### Installation
+#### Installation
 ```
 cd dutch-energy-server
 ```
@@ -39,7 +41,7 @@ Make sure the 'postgres' user can access this folder.
 DATAPATH=/tmp/data/
 ```
 
-### Running
+#### Running
 Running the server for the first time and importing the files, this also drops the tables (read: empties database).
 ```
 npm run start-overwrite
@@ -64,9 +66,9 @@ The server expects the following postgres configuration but can be changed in ``
 ```
 
 
-## Webapp
+### Webapp
 
-### Installation
+#### Installation
 ```
 cd dutch-energy-webapp
 ```
@@ -75,7 +77,7 @@ cd dutch-energy-webapp
 npm install
 ```
 
-### Running
+#### Running
 ```
 npm start
 ```
