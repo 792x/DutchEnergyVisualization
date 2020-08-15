@@ -4,7 +4,7 @@ A full stack solution for visualizing the usage of energy in the netherlands.
 ## Clone repo
 
 ```
-git clone https://github.com/caspertjuh/DutchEnergyVisualization.git
+git clone https://github.com/792x/DutchEnergyVisualization.git
 ```
 
 ```
