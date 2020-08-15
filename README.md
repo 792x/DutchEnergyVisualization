@@ -3,10 +3,10 @@ A full stack solution for geographically visualizing the energy usage of The Net
 
 ![https://github.com/792x/DutchEnergyVisualization/blob/master/overview_tool.PNG](https://github.com/792x/DutchEnergyVisualization/blob/master/overview_tool.PNG)
 
-For a demo video see [https://github.com/792x/DutchEnergyVisualization/blob/master/screencast.mp4](screencast.mp4)
+For a demo video see [screencast.mp4](https://github.com/792x/DutchEnergyVisualization/blob/master/screencast.mp4)
 
 
-For the whitepaper see [https://github.com/792x/DutchEnergyVisualization/blob/master/DutchEnergyVisualization.pdf](DutchEnergyVisualization.pdf)
+For the whitepaper see [DutchEnergyVisualization.pdf](https://github.com/792x/DutchEnergyVisualization/blob/master/DutchEnergyVisualization.pdf)
 
 ## Data
 The energy consumption data was retrieved from [https://www.kaggle.com/lucabasa/dutch-energy](https://www.kaggle.com/lucabasa/dutch-energy)
