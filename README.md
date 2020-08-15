@@ -1,5 +1,13 @@
 # Dutch Energy Visualization
-A full stack solution for visualizing the usage of energy in the netherlands.
+A full stack solution for visualizing the usage of energy in The Netherlands.
+
+![https://github.com/792x/DutchEnergyVisualization/blob/master/overview_tool.PNG](https://github.com/792x/DutchEnergyVisualization/blob/master/overview_tool.PNG)
+
+For a demo video see [https://github.com/792x/DutchEnergyVisualization/blob/master/screencast.mp4](https://github.com/792x/DutchEnergyVisualization/blob/master/screencast.mp4)
+
+## Data
+The energy consumption data was retrieved from [https://www.kaggle.com/lucabasa/dutch-energy](https://www.kaggle.com/lucabasa/dutch-energy)
+The geojson data for The Netherlands was retrieved from [https://cartomap.github.io/nl/](https://cartomap.github.io/nl/)
 
 ## Clone repo
 
