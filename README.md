@@ -1,4 +1,4 @@
-#Dutch Energy Visualization
+# Dutch Energy Visualization
 A full stack solution for visualizing the usage of energy in the netherlands.
 
 ## Clone repo
