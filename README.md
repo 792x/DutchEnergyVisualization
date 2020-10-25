@@ -1,5 +1,5 @@
 # Dutch Energy Visualization
-A full stack solution for geographically visualizing the energy usage of The Netherlands across various dimensions.
+A dashboard for geographically visualizing the energy usage of The Netherlands across various dimensions.
 
 ![https://github.com/792x/DutchEnergyVisualization/blob/master/overview_tool.PNG](https://github.com/792x/DutchEnergyVisualization/blob/master/overview_tool.PNG)
 
